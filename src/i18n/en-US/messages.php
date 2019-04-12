@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Lombardia Informatica S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    lispa\amos\community\i18n\en-US
+ * @category   CategoryName
+ */
+
+return [
+    /* network_scope layout */
+    '#network_scope_bottom_label_community' => 'The currently visible contents are related to this community',
+    '#network_scope_bottom_label_event' => 'The currently visible contents are related to this event',
+    '#network_scope_exit' => 'Exit',
+    '#network_scope_exit_from_community' => 'Exit from community',
+    '#network_scope_return_to' => 'Go to',
+    '#network_scope_view_details' => 'Show details',
+    '#search_description' => 'Enter one or more keywords to refine your search further',
+    '#search' => 'Search',
+    '#under_construction' => 'Under construction',
+    '#online_soon' => 'WE WILL BE SOON ONLINE',
+    '#come_back' => 'Come back to see us',
+];
