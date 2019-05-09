@@ -6,20 +6,20 @@ var krajeeDefaultValues = {
     "alert": {
         "type": "type-info",
         "title": "Informazione",
-        "buttonLabel": "<span class=\"glyphicon glyphicon-ok\"></span> lajax.t('Ok')"
+        "buttonLabel": "<span class=\"glyphicon glyphicon-ok\"></span> " + lajax.t('Ok')
     },
     "confirm": {
         "type": "type-warning",
-        "title": "lajax.t('Conferma')",
+        "title": lajax.t('Conferma'),
         "btnOKClass": "btn-warning",
-        "btnOKLabel": "<span class=\"glyphicon glyphicon-ok\"></span> lajax.t('Ok')",
-        "btnCancelLabel": "<span class=\"glyphicon glyphicon-ban-circle\"></span> lajax.t('Annulla')",
+        "btnOKLabel": "<span class=\"glyphicon glyphicon-ok\"></span> " + lajax.t('Ok'),
+        "btnCancelLabel": "<span class=\"glyphicon glyphicon-ban-circle\"></span> " + lajax.t('Annulla'),
     },
     "prompt": {
         "draggable": false,
         "title": "Informazione",
-        "buttons": [{"label": "lajax.t('Annulla')", "icon": "glyphicon glyphicon-ban-circle"}, {
-            "label": "lajax.t('Ok')",
+        "buttons": [{"label": lajax.t('Annulla'), "icon": "glyphicon glyphicon-ban-circle"}, {
+            "label": lajax.t('Ok'),
             "icon": "glyphicon glyphicon-ok",
             "cssClass": "btn-primary"
         }],
@@ -27,14 +27,14 @@ var krajeeDefaultValues = {
     },
     "dialog": {
         "draggable": true,
-        "title": "lajax.t('Informazione')",
+        "title": lajax.t('Informazione'),
         "buttons": [
             {
-                "label": "lajax.t('Annulla')",
+                "label": lajax.t('Annulla'),
                 "icon": "glyphicon glyphicon-ban-circle"
             },
             {
-                "label": "lajax.t('Ok')",
+                "label": lajax.t('Ok'),
                 "icon": "glyphicon glyphicon-ok",
                 "cssClass": "btn-primary"
             }

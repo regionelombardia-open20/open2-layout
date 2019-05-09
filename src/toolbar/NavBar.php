@@ -216,6 +216,7 @@ class NavBar extends YiiNavBar
                         '#search').'</span></button>'
                     .'</form>'
                     .'<p>'.Module::t('amoslayout', '#search_description').'</p>'
+                    .'<p>'.'<a id="show-advanced-search" href="/search/search?advancedSearch=1">'.Module::tHtml('amossearch', 'Ricerca avanzata').'</a></p>'
                     .'</div></li>'
                 ],
                 'options' => [
@@ -239,7 +240,7 @@ class NavBar extends YiiNavBar
             $menuItems[] = $chatLink;
         }
 
-        if (\Yii::$app->getModule('myactivities')) {
+        if (\Yii::$app->getModule('myactivities')  && !\Yii::$app->user->isGuest) {
             $widget      = new \lispa\amos\myactivities\widgets\icons\WidgetIconMyActivities();
             $bulletCount = $widget->getBulletCount();
             $chatLink    = Html::tag('li',

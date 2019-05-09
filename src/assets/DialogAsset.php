@@ -14,14 +14,13 @@ use yii\web\AssetBundle;
 
 class DialogAsset extends AssetBundle
 {
-
-    public $css = [
-
+    public $css     = [
     ];
-    public $js = [
+    public $js      = [
         'js/dialog.js',
     ];
     public $depends = [
+        'lispa\amos\layout\assets\LajaxAsset',
         'kartik\dialog\DialogBootstrapAsset',
         'kartik\dialog\DialogYiiAsset',
     ];
@@ -31,7 +30,7 @@ class DialogAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = __DIR__ . '/resources/dialog';
+        $this->sourcePath = __DIR__.'/resources/dialog';
 
         parent::init();
     }

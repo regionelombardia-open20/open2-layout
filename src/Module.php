@@ -43,6 +43,12 @@ class Module extends AmosModule implements ModuleInterface, BootstrapInterface
     public $viewMaintenanceMode = '@vendor/lispa/amos-layout/src/views/maintenance/maintenance';
 
     /**
+     * Choose to display a single logout action in the navbar or multiple ones
+     * @var boolean $advancedLogoutActions
+     */
+    public $advancedLogoutActions = false;
+
+    /**
      * @inheritdoc
      */
     public function init()

@@ -149,6 +149,7 @@ use yii\helpers\Url;
                             '#search').'</span></button>'
                         .'</form>'
                         .'<p>'.Module::t('amoslayout', '#search_description').'</p>'
+                        .'<p>'.'<a id="show-advanced-search" href="/search/search?advancedSearch=1">'.Module::tHtml('amossearch', 'Ricerca avanzata').'</a></p>'
                         .'</div></li>'
                     ],
                     'options' => [
@@ -157,6 +158,29 @@ use yii\helpers\Url;
                     'linkOptions' => ['title' => Module::t('amoslayout', '#search')]
                 ];
                 $items[]   = $search;
+            }
+
+            $btnsLogout = '';
+            $btnsEsci = '';
+            if(Yii::$app->getModule('layout')->advancedLogoutActions) {
+                // Logout button (after logout redirects to login page)
+                $btnsLogout = [
+                    'label' => Yii::t('amoscore', 'Logout'),
+                    'url' => ['/admin/security/logout'],
+                    'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'logout')]
+                ];
+                // Exit button (after logout redirects to main frontend page set in params['platform']['frontendUrl'])
+                $btnsEsci = [
+                    'label' => Yii::t('amoscore', 'Esci'),
+                    'url' => ['/admin/security/logout', 'goToFrontPage' => true],
+                    'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'esci')]
+                ];
+            } else {
+                $btnsEsci = [
+                    'label' => Yii::t('amoscore', 'Esci'),
+                    'url' => ['/admin/security/logout'],
+                    'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'esci')]
+                ];
             }
 
             $userMenu = [
@@ -178,11 +202,8 @@ use yii\helpers\Url;
                     'url' => ['/admin/user-profile/update', 'id' => CurrentUser::getUserProfile()->id],
                     'linkOptions' => ['title' => Yii::t('amoscore', 'Il mio profilo')]
                     ]),
-                    [
-                        'label' => Yii::t('amoscore', 'Esci'),
-                        'url' => ['/site/logout'],
-                        'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'esci')]
-                    ],
+                    $btnsLogout,
+                    $btnsEsci,
                     ($hasPrivacyLink || $hasCookiesLink) ?
                     '<li class="divider"></li>
                      <li class="dropdown-header">'.Yii::t('amoscore', 'Informative').'</li>
@@ -292,7 +313,7 @@ use yii\helpers\Url;
                 $menuItems[] = $chatLink;
             }
 
-            if (\Yii::$app->getModule('myactivities')) {
+            if (\Yii::$app->getModule('myactivities')  && !\Yii::$app->user->isGuest) {
                 $widget      = new \lispa\amos\myactivities\widgets\icons\WidgetIconMyActivities();
                 $bulletCount = $widget->getBulletCount();
                 $chatLink    = Html::tag('li',

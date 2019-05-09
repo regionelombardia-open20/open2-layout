@@ -31,6 +31,7 @@ class BaseAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\jui\JuiAsset',
+        'lispa\amos\layout\assets\LajaxAsset',
         'yii\bootstrap\BootstrapAsset',
         'kartik\select2\Select2Asset',
         'lispa\amos\layout\assets\IEAssets',
@@ -40,7 +41,7 @@ class BaseAsset extends AssetBundle
         'lispa\amos\layout\assets\IconAsset',
         'lispa\amos\layout\assets\FontAsset',
         'lispa\amos\layout\assets\DialogAsset',
-
+        'lispa\amos\layout\assets\LajaxAsset',
     ];
 
     /**
