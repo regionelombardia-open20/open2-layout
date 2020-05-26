@@ -1,14 +1,14 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout
+ * @package    open20\amos\layout
  * @category   CategoryName
  */
 
-use lispa\amos\layout\assets\BaseAsset;
+use open20\amos\layout\assets\BaseAsset;
 
 $asset = BaseAsset::register($this);
 ?>

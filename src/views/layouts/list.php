@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\dashboard\models\AmosWidgets;
 
 ////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 /* @var $this \yii\web\View */
@@ -114,7 +114,7 @@ if ($countArrayUrl) {
                             }
                         }
 
-                        echo \lispa\amos\core\toolbar\Nav::widget([
+                        echo \open20\amos\core\toolbar\Nav::widget([
                             'items' => $items,
                             'encodeLabels' => false,
                             'options' => ['class' => 'nav nav-tabs'],

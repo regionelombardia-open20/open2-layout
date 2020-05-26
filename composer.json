@@ -1,16 +1,17 @@
 {
-    "name": "lispa/amos-layout",
+    "name": "open20/amos-layout",
     "description": "Amos Basic Layout",
     "keywords": ["amos", "yii2", "less", "css", "layout"],
-    "homepage": "https://bitbucket.org/lispa/amos-layout",
+    "homepage": "https://bitbucket.org/elite_division/amos-layout",
     "type": "component",
     "require": {
         "php": ">=5.4.0",
-        "lispa/amos-core" : "*"
+        "open20/amos-core":"^1.9.58",
+        "bower-asset/sticky-sidebar": "^3.2.0"
     },
     "autoload": {
         "psr-4": {
-            "lispa\\amos\\layout\\": "src"
+            "open20\\amos\\layout\\": "src"
         }
     }
 }

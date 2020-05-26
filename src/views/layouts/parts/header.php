@@ -1,23 +1,24 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\core\utilities\CurrentUser;
-use lispa\amos\dashboard\AmosDashboard;
-use lispa\amos\layout\Module;
-use lispa\amos\layout\toolbar\Nav;
-use lispa\amos\layout\toolbar\NavBar;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
+use open20\amos\core\utilities\CurrentUser;
+use open20\amos\dashboard\AmosDashboard;
+use open20\amos\layout\Module;
+use open20\amos\layout\toolbar\Nav;
+use open20\amos\layout\toolbar\NavBar;
 use yii\web\JsExpression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use open20\amos\core\widget\WidgetAbstract;
 
 /**
  * @var $this \yii\web\View
@@ -29,11 +30,11 @@ use yii\helpers\Url;
     <?php
     /* Configuration of Slideshow - begin */
     if (\Yii::$app->getModule('slideshow') && isset(\Yii::$app->params['slideshow']) && \Yii::$app->params['slideshow'] === TRUE) {
-        $slideshow      = new \lispa\amos\slideshow\models\Slideshow;
+        $slideshow      = new \open20\amos\slideshow\models\Slideshow;
         $route          = "/".\Yii::$app->request->getPathInfo();
         $idSlideshow    = $slideshow->hasSlideshow($route);
         $slideshowLabel = ($idSlideshow) ? $slideshow->findOne($idSlideshow)->label : NULL;
-        echo \lispa\amos\slideshow\widgets\SlideshowWidget::widget([]);
+        echo \open20\amos\slideshow\widgets\SlideshowWidget::widget([]);
     }
     /** @var bool|false $disablePlatformLinks - if true all the links to dashboard, settings, etc are disabled */
     $disablePlatformLinks = isset(\Yii::$app->params['disablePlatformLinks']) ? \Yii::$app->params['disablePlatformLinks']
@@ -85,7 +86,7 @@ use yii\helpers\Url;
     /* Configuration of Slideshow - end  */
 
     /* Configuration header menu: field translation */
-    $headerMenu      = new lispa\amos\core\views\common\HeaderMenu();
+    $headerMenu      = new open20\amos\core\views\common\HeaderMenu();
     $menuTranslation = $headerMenu->getTranslationField();
     $menuCustom      = $headerMenu->getCustomContent();
     /* echo Translation button */
@@ -94,11 +95,21 @@ use yii\helpers\Url;
 
     <header>
         <?php
+
+        if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS):
+            $innerContainerOptions = [
+                'class' => 'no-container'
+            ];
+        else:
+            $innerContainerOptions = [];
+        endif;
+
         NavBar::begin([
             'options' => [
                 'class' => 'navbar-default',
             ],
-            'disablePlatformLinks' => $disablePlatformLinks
+            'disablePlatformLinks' => $disablePlatformLinks,
+            'innerContainerOptions' => $innerContainerOptions,
         ]);
 
         if (!CurrentUser::getUserIdentity()) {
@@ -123,10 +134,17 @@ use yii\helpers\Url;
             $url                                       = $model->getAvatarUrl('original');
             Yii::$app->imageUtility->methodGetImageUrl = 'getAvatarUrl';
             $roundImage                                = Yii::$app->imageUtility->getRoundImage($model);
+
+            if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS):
+                $style = "";
+            else:
+                $style = "margin-left: ".$roundImage['margin-left']."%; margin-top: ".$roundImage['margin-top']."%;";
+            endif;
+
             $imgAvatar                                 = Html::img($url,
                     [
                     'class' => $roundImage['class'],
-                    'style' => "margin-left: ".$roundImage['margin-left']."%; margin-top: ".$roundImage['margin-top']."%;",
+                    'style' => $style,
                     'alt' => Yii::t('amoscore', 'Avatar dell\'utente')
             ]);
 
@@ -149,7 +167,7 @@ use yii\helpers\Url;
                             '#search').'</span></button>'
                         .'</form>'
                         .'<p>'.Module::t('amoslayout', '#search_description').'</p>'
-                        .'<p>'.'<a id="show-advanced-search" href="/search/search?advancedSearch=1">'.Module::tHtml('amossearch', 'Ricerca avanzata').'</a></p>'
+                        .'<a id="show-advanced-search" href="/search/search?advancedSearch=1">'.Module::tHtml('amossearch', 'Ricerca avanzata').'</a>'
                         .'</div></li>'
                     ],
                     'options' => [
@@ -162,26 +180,39 @@ use yii\helpers\Url;
 
             $btnsLogout = '';
             $btnsEsci = '';
+            $btnLogoutUrl = ['/admin/security/logout'];
+            /** @var \open20\amos\socialauth\Module $socialAuthModule */
+            $socialAuthModule = Yii::$app->getModule('socialauth');
+            if (YII_ENV_PROD && !is_null($socialAuthModule) && ($socialAuthModule->enableSpid === true)) {
+                $btnLogoutUrl['backTo'] = Url::to([
+                    '/Shibboleth.sso/Logout',
+                    'return' => 'https://idpcwrapper.crs.lombardia.it/PublisherMetadata/Logout?dest=' . urlencode(Url::to('/', true))
+                ], true);
+            }
+            $btnEsciUrl = $btnLogoutUrl;
+            $btnEsciUrl['goToFrontPage'] = true;
             if(Yii::$app->getModule('layout')->advancedLogoutActions) {
                 // Logout button (after logout redirects to login page)
                 $btnsLogout = [
                     'label' => Yii::t('amoscore', 'Logout'),
-                    'url' => ['/admin/security/logout'],
+                    'url' => $btnLogoutUrl,
                     'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'logout')]
                 ];
                 // Exit button (after logout redirects to main frontend page set in params['platform']['frontendUrl'])
                 $btnsEsci = [
                     'label' => Yii::t('amoscore', 'Esci'),
-                    'url' => ['/admin/security/logout', 'goToFrontPage' => true],
+                    'url' => $btnEsciUrl,
                     'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'esci')]
                 ];
             } else {
                 $btnsEsci = [
                     'label' => Yii::t('amoscore', 'Esci'),
-                    'url' => ['/admin/security/logout'],
+                    'url' => $btnLogoutUrl,
                     'linkOptions' => ['data-method' => 'post', 'title' => Yii::t('amoscore', 'esci')]
                 ];
             }
+
+        $disableMyprofile = (!empty(\Yii::$app->params['disableMenuUser']) && \Yii::$app->params['disableMenuUser'] == true);
 
             $userMenu = [
                 'label' => '<div class="container-round-img-xs">'.$imgAvatar.'</div>'
@@ -197,7 +228,7 @@ use yii\helpers\Url;
                     '<li class="dropdown-header">'.$benvenuto.'</li>',
                     '<li class="divider"></li>',
                     //'<li class="dropdown-header">Azioni</li>',
-                    'myProfile' => $disablePlatformLinks ? '' : ([
+                    'myProfile' => ($disablePlatformLinks || $disableMyprofile) ? '' : ([
                     'label' => Yii::t('amoscore', 'Il mio profilo'),
                     'url' => ['/admin/user-profile/update', 'id' => CurrentUser::getUserProfile()->id],
                     'linkOptions' => ['title' => Yii::t('amoscore', 'Il mio profilo')]
@@ -220,7 +251,7 @@ use yii\helpers\Url;
             ];
             $settingsItemsElements = [];
             $atLeastOneElement     = false;
-            if (\Yii::$app->controller instanceof \lispa\amos\dashboard\controllers\base\DashboardController) {
+            if (\Yii::$app->controller instanceof \open20\amos\dashboard\controllers\base\DashboardController) {
                 $atLeastOneElement       = true;
                 $settingsItemsElements[] = [
                     'label' => Yii::t('amoscore', 'Ordinamenti dashboard'),
@@ -271,6 +302,7 @@ use yii\helpers\Url;
                     'class' => 'am-2',
                 ]).'<span class="sr-only">'.Yii::t('amoscore', 'De-Impersonate').'</span>',
                 'url' => '/admin/security/deimpersonate',
+                'options' => ['class' => 'impersonate'],
                 'linkOptions' => [
                     'title' => Yii::t('amoscore', 'De-impersonate')
                 ]
@@ -286,6 +318,7 @@ use yii\helpers\Url;
 
             $items[] = $userMenu;
 
+
             $menuItems = $items;
 
             //Add menu of translation
@@ -300,33 +333,34 @@ use yii\helpers\Url;
 
 
             if (\Yii::$app->getModule('chat')) {
-                $widget      = new \lispa\amos\chat\widgets\icons\WidgetIconChat();
+                $widget      = new \open20\amos\chat\widgets\icons\WidgetIconChat();
                 $bulletCount = $widget->getBulletCount();
                 $chatLink    = Html::tag('li',
                         Html::a(
                             AmosIcons::show('comments-o', [], 'dash')."<span class='badge'>".(($bulletCount > 0 ) ? $bulletCount
                                 : "" )."</span>"
                             , '/messages',
-                            ['title' => \lispa\amos\chat\AmosChat::t('amoschat', 'Messaggi privati')]
+                            ['title' => \open20\amos\chat\AmosChat::t('amoschat', 'Messaggi privati')]
                         ), ['class' => 'header-plugin-icon']
                 );
                 $menuItems[] = $chatLink;
             }
 
-            if (\Yii::$app->getModule('myactivities')  && !\Yii::$app->user->isGuest) {
-                $widget      = new \lispa\amos\myactivities\widgets\icons\WidgetIconMyActivities();
+            if (\Yii::$app->getModule('myactivities') && !\Yii::$app->user->isGuest) {
+                $widget      = new \open20\amos\myactivities\widgets\icons\WidgetIconMyActivities();
                 $bulletCount = $widget->getBulletCount();
                 $chatLink    = Html::tag('li',
                         Html::a(
                             AmosIcons::show('bell', [], 'dash')."<span class='badge'>".(($bulletCount > 0 ) ? $bulletCount
                                 : "" )."</span>"
                             , '/myactivities/my-activities/index',
-                            ['title' => \lispa\amos\myactivities\AmosMyActivities::t('amosmyactivities',
+                            ['title' => \open20\amos\myactivities\AmosMyActivities::t('amosmyactivities',
                                 'My activities')]
                         ), ['class' => 'header-plugin-icon']
                 );
                 $menuItems[] = $chatLink;
             }
+
 
 
             /**
@@ -363,6 +397,11 @@ use yii\helpers\Url;
                 );
                 $menuItems[]   = $dashboardLink;
             } /* end link dashboard */
+        }
+
+        $disableHeaderMenu = isset(\Yii::$app->params['disableHeaderMenu']) ? \Yii::$app->params['disableHeaderMenu'] : false;
+        if ($disableHeaderMenu) {
+            $menuItems = [];
         }
 
         echo Nav::widget([

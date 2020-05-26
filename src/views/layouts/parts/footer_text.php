@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-use lispa\amos\core\icons\AmosIcons;
+use open20\amos\core\icons\AmosIcons;
 use yii\helpers\Html;
 
 ?>
@@ -18,7 +18,7 @@ use yii\helpers\Html;
     <div class="footer-text-container">
         <div class="footer-text">
             <div class="container">
-                <!-- code here -->
+                <p class="power-by-open">Powered by OPEN 2.0</p>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
@@ -8,7 +8,7 @@
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
 use yii\web\AssetBundle;
 
@@ -20,7 +20,7 @@ class DialogAsset extends AssetBundle
         'js/dialog.js',
     ];
     public $depends = [
-        'lispa\amos\layout\assets\LajaxAsset',
+        'open20\amos\layout\assets\LajaxAsset',
         'kartik\dialog\DialogBootstrapAsset',
         'kartik\dialog\DialogYiiAsset',
     ];

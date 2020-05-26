@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
 use yii\web\AssetBundle;
 
@@ -19,6 +19,7 @@ class IconAsset extends AssetBundle
         'icon-dash/style.css',          //genereted by icon-moon
         'icon-am/style.css',            //genereted by icon-moon
         'icon-flag/css/flag-icon.css',  //http://flag-icon-css.lip.is
+        'icon-ic/style.css',  //genereted by icon-moon
     ];
     
     public $js = [

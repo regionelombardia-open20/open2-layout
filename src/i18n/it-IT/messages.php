@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\community\i18n\it-IT
+ * @package    open20\amos\community\i18n\it-IT
  * @category   CategoryName
  */
 
@@ -21,5 +21,11 @@ return [
     '#search_description' => 'Inserisci uno o più parole chiave per affinare ulteriormente la ricerca',
     '#under_construction' => 'Sito in costruzione',
     '#online_soon' => 'SAREMO PRESTO ONLINE',
+    '#back_to_event_scope' => "Torna all'evento",
     '#come_back' => 'Torna a trovarci',
+    '#network_scope_enter_community' => 'Accedi alla community',
+    '#add_event_calendar' => 'Aggiungi evento al tuo calendario',
+    '#from' => 'dal ',
+    '#to' => 'al ',
+    "Benvenuto nell'area di lavoro del tuo team" => "Benvenuto nell'area di lavoro del tuo team"
 ];

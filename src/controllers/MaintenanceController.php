@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\admin\controllers
+ * @package    open20\amos\admin\controllers
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\controllers;
+namespace open20\amos\layout\controllers;
 
-use lispa\amos\admin\models\UserProfileReactivationRequest;
-use lispa\amos\core\controllers\BackendController;
-use lispa\amos\core\forms\FirstAccessForm;
+use open20\amos\admin\models\UserProfileReactivationRequest;
+use open20\amos\core\controllers\BackendController;
+use open20\amos\core\forms\FirstAccessForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
  * Class SecurityController
- * @package lispa\amos\admin\controllers
+ * @package open20\amos\admin\controllers
  */
 class MaintenanceController extends BackendController
 {

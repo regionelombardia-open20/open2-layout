@@ -3,6 +3,7 @@
 /*HEADER DEFAULT VARIABLES*/
 @color-navbar: @custom-color;
 @contrast-navbar: contrast(@color-navbar);
+@navbar-height: 38px;
 
 .navbar-default {
   background-color: @custom-color;
@@ -15,10 +16,11 @@
 }
 
 .container-header {
+
   .navbar {
     margin-bottom: 0;
-    height: 38px;
-    min-height: 38px !important;
+    height: @navbar-height;
+    min-height: @navbar-height !important;
     border-radius: 0;
     > .container {
       position: relative;
@@ -28,6 +30,7 @@
   .navbar-collapse {
     padding: 0;
     margin-right: 20px;
+
     .toFrontend,
     .toDashboard,
     .btn-toggle-search {
@@ -51,6 +54,7 @@
     }
     .header-plugin-icon {
       padding: 5px;
+      height: @navbar-height;
       > a {
         .flexbox;
         .flexbox-row;
@@ -262,6 +266,7 @@
       background-color: #fff;
       padding: @padding-medium 0;
       position: absolute;
+      width: 100%;
     }
 
     .toFrontend,
@@ -318,6 +323,7 @@
   background-color: #ffffff;
   padding: @padding-min 0;
 
+  > .container-custom ,
   > .container {
     .flexbox;
     .flexbox-wrap(nowrap);
@@ -403,6 +409,13 @@
 .search-bar-toggle {
   //form {
   position: relative;
+
+  #show-advanced-search {
+    background-color: @primary-color;
+    padding: 5px 15px;
+    margin-top: 10px;
+    float: right;
+  }
 
   input {
     border-radius: 0;

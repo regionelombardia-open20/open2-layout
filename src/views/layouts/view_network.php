@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-use lispa\amos\core\components\AmosView;
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\core\components\AmosView;
+use open20\amos\dashboard\models\AmosWidgets;
 use yii\helpers\Url;
 
 ////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
@@ -92,7 +92,7 @@ if ($countArrayUrl) {
 
             </div>
 
-                <?php if ($this instanceof \lispa\amos\core\components\AmosView): ?>
+                <?php if ($this instanceof \open20\amos\core\components\AmosView): ?>
                     <?php $this->beginViewContent() ?>
                 <?php endif; ?>
                 <?= $content ?>

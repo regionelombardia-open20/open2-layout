@@ -1,6 +1,6 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
@@ -8,7 +8,7 @@
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
 use yii\web\AssetBundle;
 
@@ -22,7 +22,7 @@ class TabsAsset extends AssetBundle
         'js/tabs.js',
     ];
     public $depends = [
-        'lispa\amos\layout\assets\BaseAsset',
+        'open20\amos\layout\assets\BaseAsset',
     ];
 
     /**

@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout
+ * @package    open20\amos\layout
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
 use yii\web\AssetBundle;
 
 /**
  * Class AppAsset
- * @package lispa\amos\layout\assets
+ * @package open20\amos\layout\assets
  */
 
 class ConflictJuiBootstrap extends AssetBundle {
 
-    public $sourcePath = '@vendor/lispa/amos-core/views/assets/web';
+    public $sourcePath = '@vendor/open20/amos-core/views/assets/web';
     
     public $js = [
         'js/conflictJuiBootstrap.js',

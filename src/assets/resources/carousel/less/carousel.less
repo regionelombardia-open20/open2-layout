@@ -1,8 +1,8 @@
 /**
 IMPORT AMOS-LAYOUT VARIABLES
  */
-@import (optional) "../../vendor/lispa/amos-layout/src/assets/resources/base/less/variables.less";
-@import (optional) "../../vendor/lispa/amos-layout/src/assets/resources/base/less/utility.less";
+@import (optional) "../../vendor/open20/amos-layout/src/assets/resources/base/less/variables.less";
+@import (optional) "../../vendor/open20/amos-layout/src/assets/resources/base/less/utility.less";
 /**
 IMPORT STYLE-CUSTOM
  */
@@ -21,9 +21,9 @@ IMPORT STYLE-CUSTOM
   height: 400px;
   @media(max-width: 520px){
     padding: @padding-medium 30px;
-    @media(max-width: 420px){
-      padding: 0;
-    }
+  }
+  @media(max-width: 420px){
+    padding: 0;
   }
   .carousel-inner {
     height: 350px;
@@ -155,9 +155,9 @@ IMPORT STYLE-CUSTOM
             .text {
               display: none;
             }
-            @media(max-width: 420px){
-              height: 60%;
-            }
+          }
+          @media(max-width: 420px){
+            height: 60%;
           }
         }
         .evidence-footer {
@@ -202,10 +202,10 @@ IMPORT STYLE-CUSTOM
     text-decoration: none;
     @media (max-width: 991px) {
       width: 7%;
-      @media(max-width: 420px){
-          width: 20%;
-          top: 89%;
-      }
     }
+    @media(max-width: 420px){
+          width: 20%;
+          top: 85%;
+      }
   }
 }

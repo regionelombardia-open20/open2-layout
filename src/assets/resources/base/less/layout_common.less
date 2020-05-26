@@ -11,7 +11,6 @@ html {
   position: relative;
   min-height: 100%;
 }
-
 body {
   background-color: @main-background-color;
   background-image: @image-background-default;
@@ -27,8 +26,11 @@ body {
   margin: 0;
   overflow-x: hidden;
 
+  .flexbox;
+  .flexbox-column;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  //padding-bottom: 125px;
 
   #bk-page {
     > .container {
@@ -56,7 +58,8 @@ LAYOUTS
     font-size: 2.36em;
     line-height: 1.1;
   }
-  .title + .text-help-layout{
+  .title + .text-help-layout {
+    margin-top: @margin-min;
     padding: 0;
     background-color: lighten(saturate(spin(@info-color, 14.2595), 33.5025), 35.6863);
   }
@@ -254,14 +257,22 @@ NETWORK SCOPE
       }
     }
   }
+
   + .page-content.network-breadcrumb { /* for community dashboard */
     margin-bottom: 0; /* override */
+  }
+
+  &.community-network-container ~ .network-breadcrumb {
+    display: none;
   }
 }
 
 /**
 WIDGET BODY CONTENT
-contains report-dropdown widget and socialshare-dropdown widget
+contains
+- report-dropdown widget
+- socialshare-dropdown widget
+- like widget
 in view (amos-news, amos-documenti, amos-discussioni)
  */
 .widget-body-content {
@@ -277,6 +288,9 @@ in view (amos-news, amos-documenti, amos-discussioni)
   .btn.dropdown-toggle {
     color: @text-primary-color;
     padding: 2px @padding-min;
+    max-height: 32px;
+    margin-left: 3px;
+
     .am-flag, .am-share {
       font-size: 2em;
     }
@@ -289,6 +303,32 @@ in view (amos-news, amos-documenti, amos-discussioni)
       border-right: 6px solid transparent;
       border-left: 6px solid transparent;
       margin-left: @margin-medium;
+    }
+  }
+  .container-like {
+    margin-right: auto;
+    #like.likeme > .btn {
+      color: @danger-color;
+    }
+    .btn {
+      border: none;
+      box-shadow: none;
+      padding: 6px 0;
+      text-transform: none;
+      color: @text-primary-color;
+    }
+    + .modal {
+      .modal-header {
+        .dash-heart {
+          color: @danger-color;
+          margin-right: @margin-min;
+        }
+      }
+      .modal-body {
+        .container-round-img-sm {
+          margin: 0;
+        }
+      }
     }
   }
 }
@@ -686,6 +726,10 @@ div[class*="-view"] {
     .flexbox;
     align-items: center;
     justify-content: center;
+    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+      /* fix IE11 */
+      display: block;
+    }
     .img-responsive {
       margin: 0 auto;
     }

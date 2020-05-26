@@ -144,6 +144,11 @@ TOOL USERS
       color: contrast(@primary-color);
     }
   }
+  
+  &.col-xs-2 {
+    position: absolute;
+    right: 0;
+  }
 
   .manage-menu {
     width: 55px;
@@ -286,6 +291,12 @@ show list of tags
   }
   .tags-list-single {
     .flexer;
+    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* fix IE11 */
+      display: block;
+      > div:first-child{
+        float: left;
+      }
+    }
     width: 100%;
     margin-bottom: @margin-min;
     background-color: @white-color;

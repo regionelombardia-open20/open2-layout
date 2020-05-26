@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
@@ -16,7 +16,8 @@ use yii\helpers\Html;
 $js = $this->registerJs('
 // Full Screen Slider
 (function () {
-    $(".bg-fullHeight").height($(window).height()-$("footer").outerHeight()-$(".header-wrapper").outerHeight());
+    // $(".bg-fullHeight").height($(window).height()-$("footer").outerHeight()-$(".header-wrapper").outerHeight()); // TODO FIX
+    $(".bg-fullHeight").height($(window).height());
 
     $(window).resize(function(){
         $(".bg-fullHeight").height($(window).height()-$("footer").outerHeight()-$(".header-wrapper").outerHeight());

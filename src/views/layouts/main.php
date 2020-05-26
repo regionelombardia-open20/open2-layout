@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-use lispa\amos\core\components\AmosView;
+use open20\amos\core\components\AmosView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 ////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 
-/** @var $this \lispa\amos\core\components\AmosView */
+/** @var $this \open20\amos\core\components\AmosView */
 /** @var $content string */
 
 $urlCorrente = Url::current();

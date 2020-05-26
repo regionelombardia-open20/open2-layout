@@ -1,27 +1,31 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout
+ * @package    open20\amos\layout
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
+use open20\amos\core\widget\WidgetAbstract;
 use yii\web\AssetBundle;
 
 /**
  * Class AppAsset
- * @package lispa\amos\layout\assets
+ * @package open20\amos\layout\assets
  */
 class BaseAsset extends AssetBundle
 {
     public $js = [
         'js/bootstrap-tabdrop.js',
         'js/globals.js',
+        'js/device-detect.js',
+        'js/tooltip-component.js',
+        'js/footer.js'
     ];
 
     public $css = [
@@ -31,17 +35,17 @@ class BaseAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\jui\JuiAsset',
-        'lispa\amos\layout\assets\LajaxAsset',
+        'open20\amos\layout\assets\LajaxAsset',
         'yii\bootstrap\BootstrapAsset',
         'kartik\select2\Select2Asset',
-        'lispa\amos\layout\assets\IEAssets',
-        'lispa\amos\layout\assets\JqueryUiTouchPunchImprovedAsset',
-        'lispa\amos\layout\assets\ConflictJuiBootstrap',
-        'lispa\amos\layout\assets\TourAsset',
-        'lispa\amos\layout\assets\IconAsset',
-        'lispa\amos\layout\assets\FontAsset',
-        'lispa\amos\layout\assets\DialogAsset',
-        'lispa\amos\layout\assets\LajaxAsset',
+        'open20\amos\layout\assets\IEAssets',
+        'open20\amos\layout\assets\JqueryUiTouchPunchImprovedAsset',
+        'open20\amos\layout\assets\ConflictJuiBootstrap',
+        'open20\amos\layout\assets\TourAsset',
+        'open20\amos\layout\assets\IconAsset',
+        'open20\amos\layout\assets\FontAsset',
+        'open20\amos\layout\assets\DialogAsset',
+        'open20\amos\layout\assets\LajaxAsset',
     ];
 
     /**
@@ -50,7 +54,9 @@ class BaseAsset extends AssetBundle
     public function init()
     {
         $this->sourcePath = __DIR__ . '/resources/base';
-
+        if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS){
+            $this->css = ['less/main_fullsize.less'];
+        }
         parent::init();
     }
 }

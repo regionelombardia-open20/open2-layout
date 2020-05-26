@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\community\i18n\en-US
+ * @package    open20\amos\community\i18n\en-US
  * @category   CategoryName
  */
 
@@ -21,5 +21,7 @@ return [
     '#search' => 'Search',
     '#under_construction' => 'Under construction',
     '#online_soon' => 'WE WILL BE SOON ONLINE',
+    '#back_to_event_scope' => 'Back to event',
     '#come_back' => 'Come back to see us',
+    '#network_scope_enter_community' => 'Enter the community',
 ];

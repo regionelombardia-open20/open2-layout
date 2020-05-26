@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout
+ * @package    open20\amos\layout
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout;
+namespace open20\amos\layout;
 
-use lispa\amos\core\module\AmosModule;
-use lispa\amos\core\module\ModuleInterface;
-use lispa\amos\layout\components\Layout;
+use open20\amos\core\module\AmosModule;
+use open20\amos\core\module\ModuleInterface;
+use open20\amos\layout\components\Layout;
 use yii\base\BootstrapInterface;
 
 /**
  * Class Module
- * @package lispa\amos\socialauth
+ * @package open20\amos\socialauth
  */
 class Module extends AmosModule implements ModuleInterface, BootstrapInterface
 {
@@ -34,13 +34,13 @@ class Module extends AmosModule implements ModuleInterface, BootstrapInterface
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'lispa\amos\layout\controllers';
+    public $controllerNamespace = 'open20\amos\layout\controllers';
 
     /**
      * View path of maintenance page
      * @var string $viewMaintenanceMode
      */
-    public $viewMaintenanceMode = '@vendor/lispa/amos-layout/src/views/maintenance/maintenance';
+    public $viewMaintenanceMode = '@vendor/open20/amos-layout/src/views/maintenance/maintenance';
 
     /**
      * Choose to display a single logout action in the navbar or multiple ones

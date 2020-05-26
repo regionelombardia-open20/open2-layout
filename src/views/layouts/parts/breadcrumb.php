@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 use yii\widgets\Breadcrumbs;
-use lispa\amos\core\helpers\Html;
+use open20\amos\core\widget\WidgetAbstract;
 
 /* $urlCorrente = yii\helpers\Url::current();
   $posizioneEsclusione = strpos($urlCorrente, '?');
@@ -21,43 +21,50 @@ use lispa\amos\core\helpers\Html;
 ?>
 <?php
 if (!empty($this->params['breadcrumbs'])):
-    foreach ((array) $this->params['breadcrumbs'] as $key => $value) {
+
+    if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
+        $homeLink = \open20\amos\core\icons\AmosIcons::show('dashboard', [], \open20\amos\core\icons\AmosIcons::DASH);
+    } else {
+        $homeLink = \Yii::t('amoscore', 'Dashboard');
+    }
+
+
+    foreach ((array)$this->params['breadcrumbs'] as $key => $value) {
         if (!isset($value['title']) && !empty($value['label'])) {
             $this->params['breadcrumbs'][$key]['title'] = $this->params['breadcrumbs'][$key]['label'];
         }
     }
     ?>
-    <div class="breadcrumb_left">
-        <?php
-        $session = Yii::$app->session;
-        if (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi'] == true && isset($session["cwh-scope"]) && !empty($session['cwh-scope']['community'])
-            && $session['cwh-scope']['community'] == 2750) {
-            ?>
-            <?=
-            Breadcrumbs::widget([
-                'homeLink' => [
-                    'label' => '',
-                    'url' => '',
-                    'encode' => false,
-                    'title' => ''
-                ],
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])
-            ?>
-        <?php } else { ?>
-            <?=
-            Breadcrumbs::widget([
-                'homeLink' => [
-                    'label' => (!empty(\Yii::$app->params['homeName'])? \Yii::$app->params['homeName'] : \Yii::t('amoscore', 'Dashboard')),
-                    'url' => Yii::$app->homeUrl,
-                    'encode' => false,
-                    'title' => 'home'
-                ],
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])
-            ?>
-        <?php } ?>
-    </div>
+    <?php
+    $session = Yii::$app->session;
+    if (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi'] == true && isset($session["cwh-scope"]) && !empty($session['cwh-scope']['community'])
+        && $session['cwh-scope']['community'] == 2750
+    ) {
+        ?>
+        <?=
+        Breadcrumbs::widget([
+            'homeLink' => [
+                'label' => '',
+                'url' => '',
+                'encode' => false,
+                'title' => ''
+            ],
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ])
+        ?>
+    <?php } else { ?>
+        <?=
+        Breadcrumbs::widget([
+            'homeLink' => [
+                'label' => (!empty(\Yii::$app->params['homeName']) ? \Yii::$app->params['homeName'] : $homeLink),
+                'url' => Yii::$app->homeUrl,
+                'encode' => false,
+                'title' => 'home'
+            ],
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ])
+        ?>
+    <?php } ?>
 <?php endif; ?>
 <!--div id="bk-generalTools" class="show breadcrumb-tools">
     <a href="<?php //echo $urlFaq;   ?>"><button>

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
@@ -13,7 +13,6 @@ use yii\helpers\FileHelper;
 
 /* @var $this \yii\web\View */
 ?>
-    <div class="container-help container"></div>
 <?php
 if (array_key_exists('help', $this->params) && isset($this->params['help']['filename'])) {
     echo '<div class="container-help container">';

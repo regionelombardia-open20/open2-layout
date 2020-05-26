@@ -89,9 +89,31 @@
       .row {
         margin: 0;
       }
+      .title-login{
+        margin-top: 0;
+      }
     }
 
     //HEADER
+    .btn.btn-spid { //single button to spid login
+      background-color: @spid;
+      color: contrast(@spid);
+      border-color: @spid;
+      border-radius: 0;
+      width: 100%;
+      font-size: 2em;
+      line-height: 1;
+      padding: @padding-min 0;
+      white-space: normal;
+      > span:last-child {
+        text-transform: initial;
+        font-size: 0.8em;
+        white-space: nowrap;
+      }
+      @media(max-width: 420px){
+        font-size: 1.5em;
+      }
+    }
     .social-buttons {
       text-align: center;
       display: inline-flex;

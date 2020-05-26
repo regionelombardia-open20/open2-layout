@@ -1,16 +1,17 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-use lispa\amos\core\module\BaseAmosModule;
+use open20\amos\core\module\BaseAmosModule;
 use yii\helpers\Html;
+use open20\amos\core\widget\WidgetAbstract;
 
 /** @var bool|false $disablePlatformLinks - if true all the links to dashboard, settings, etc are disabled */
 $disablePlatformLinks = isset(Yii::$app->params['disablePlatformLinks']) ? Yii::$app->params['disablePlatformLinks'] : false;
@@ -18,7 +19,12 @@ $disablePlatformLinks = isset(Yii::$app->params['disablePlatformLinks']) ? Yii::
 ?>
 
 <div class="container-logo">
-    <div class="container">
+
+    <?php if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS): ?>
+        <div class="<?= isset($class) ? $class : 'container-custom' ?>">
+    <?php else: ?>
+        <div class="<?= isset($class) ? $class : 'container' ?>">
+    <?php endif; ?>
 
         <?php if (isset(Yii::$app->params['logoConfigurations']) && is_array(Yii::$app->params['logoConfigurations']) && !empty(Yii::$app->params['logoConfigurations'])): ?>
 

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout
+ * @package    open20\amos\layout
  * @category   CategoryName
  */
 
@@ -31,16 +31,16 @@
 
             <div class="page-header">
                 <?php if (!is_null($this->title)): ?>
-                    <h1 class="title"><?= \lispa\amos\core\helpers\Html::encode($this->title) ?></h1>
+                    <h1 class="title"><?= \open20\amos\core\helpers\Html::encode($this->title) ?></h1>
                     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
                 <?php endif; ?>
             </div>
 
-            <?php if ($this instanceof \lispa\amos\core\components\AmosView): ?>
+            <?php if ($this instanceof \open20\amos\core\components\AmosView): ?>
                 <?php $this->beginViewContent() ?>
             <?php endif; ?>
             <?= $content ?>
-            <?php if ($this instanceof \lispa\amos\core\components\AmosView): ?>
+            <?php if ($this instanceof \open20\amos\core\components\AmosView): ?>
                 <?php $this->endViewContent() ?>
             <?php endif; ?>
         </div>

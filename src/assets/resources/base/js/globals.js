@@ -404,3 +404,38 @@ jQuery.propHooks.disabled = {
         }
     }
 };
+
+if($amos === undefined) {
+    var $amos = {};
+}
+
+
+// Vanilla JS functions-------------------
+$amos.ready = (function(domIsReady) {
+    var isBrowserIeOrNot = function() {
+       return (!document.attachEvent || typeof document.attachEvent === "undefined" ? 'not-ie' : 'ie');
+    }
+ 
+    domIsReady = function(callback) {
+       if(callback && typeof callback === 'function'){
+          if(isBrowserIeOrNot() !== 'ie') {
+             document.addEventListener("DOMContentLoaded", function() {
+                return callback();
+             });
+          } else {
+             document.attachEvent("onreadystatechange", function() {
+                if(document.readyState === "complete") {
+                   return callback();
+                }
+             });
+          }
+       }
+    }
+ 
+    return domIsReady;
+ })();
+ 
+ $amos.matches = function (el, selector) {
+    return (el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector).call(el, selector);
+};
+// ---------------------------------------

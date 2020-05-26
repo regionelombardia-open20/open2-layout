@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
 /* use bedezign\yii2\audit\assets\JSLoggingAsset; */
 use yii\helpers\Html;
-use lispa\amos\layout\assets\BaseAsset;
+use open20\amos\layout\assets\BaseAsset;
 
 BaseAsset::register($this);
 

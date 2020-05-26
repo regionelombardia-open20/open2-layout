@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'dashboard';
-  src:  url('fonts/dashboard.eot?c0oetr');
-  src:  url('fonts/dashboard.eot?c0oetr#iefix') format('embedded-opentype'),
-    url('fonts/dashboard.ttf?c0oetr') format('truetype'),
-    url('fonts/dashboard.woff?c0oetr') format('woff'),
-    url('fonts/dashboard.svg?c0oetr#dashboard') format('svg');
+  src:  url('fonts/dashboard.eot?29o5ts');
+  src:  url('fonts/dashboard.eot?29o5ts#iefix') format('embedded-opentype'),
+    url('fonts/dashboard.ttf?29o5ts') format('truetype'),
+    url('fonts/dashboard.woff?29o5ts') format('woff'),
+    url('fonts/dashboard.svg?29o5ts#dashboard') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -500,4 +500,13 @@
 }
 .dash-aziende:before {
   content: "\e993";
+}
+.dash-heart:before {
+  content: "\e994";
+}
+.dash-doc-www:before {
+  content: "\e995";
+}
+.dash-doc-html:before {
+  content: "\e996";
 }

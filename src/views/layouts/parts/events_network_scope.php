@@ -1,30 +1,46 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout\views\layouts\parts
+ * @package    open20\amos\layout\views\layouts\parts
  * @category   CategoryName
  */
 
-use lispa\amos\community\models\Community;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\events\models\Event;
-use lispa\amos\layout\Module;
+use open20\amos\community\models\Community;
+use open20\amos\core\helpers\Html;
+use open20\amos\events\AmosEvents;
+use open20\amos\events\models\Event;
+use open20\amos\events\utility\EventsUtility;
+use open20\amos\layout\Module;
+
+/**
+ * @var \open20\amos\events\models\Event $model
+ */
+
+/** @var AmosEvents $eventsModule */
+$eventsModule = AmosEvents::instance();
+
+$showGoToCommunityButton = (
+    !$eventsModule->hasProperty('enableCommunitySections') ||
+    ($eventsModule->hasProperty('enableCommunitySections') && EventsUtility::showCommunityButtonInView($model, $eventsModule))
+);
 
 if (isset($model)) {
 
     if ($model instanceof Community) {
-        $model = Event::findOne(['community_id' => $community->id]);
+        /** @var Event $eventModel */
+        $eventModel = $eventsModule->createModel('Event');
+        $model = $eventModel::findOne(['community_id' => $community->id]);
     }
 
     $viewUrl = $model->getFullViewUrl();
     $controller = Yii::$app->controller;
     $isActionUpdate = ($controller->action->id == 'update');
     $confirm = $isActionUpdate ? [
-        'confirm' => \lispa\amos\core\module\BaseAmosModule::t('amoscore', '#confirm_exit_without_saving')
+        'confirm' => \open20\amos\core\module\BaseAmosModule::t('amoscore', '#confirm_exit_without_saving')
     ] : null;
     ?>
 
@@ -85,11 +101,17 @@ if (isset($model)) {
                     <?= $modelName ?>
                 </p>
                 <span class="network-bottom-label"><?php echo Module::t('amoslayout', '#network_scope_bottom_label_event') ?></span>
-                <?= Html::a(Module::t('amoslayout', '#network_scope_view_details'), $viewUrl, [
-                    'title' => Module::t("amosevents", "View event"),
-                    'class' => 'btn btn-primary pull-right',
-                    'data' => $confirm
-                ]) ?>
+                <?php
+                $appController = Yii::$app->controller;
+                $hideButton = (($appController->id == 'event') && ($appController->action->id == 'view'));
+                ?>
+                <?php if (!$hideButton): ?>
+                    <?= Html::a(Module::t('amoslayout', '#network_scope_view_details'), $viewUrl, [
+                        'title' => Module::t("amosevents", "View event"),
+                        'class' => 'btn btn-primary pull-right',
+                        'data' => $confirm
+                    ]) ?>
+                <?php endif; ?>
             </div>
 
         </div>

@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\layout\views\layouts\parts
+ * @package    open20\amos\layout\views\layouts\parts
  * @category   CategoryName
  */
 
-use lispa\amos\core\controllers\CrudController;
-use lispa\amos\core\forms\ContentSettingsMenuWidget;
-use lispa\amos\core\forms\CreateNewButtonWidget;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\core\views\ChangeView;
-use lispa\amos\core\views\grid\ActionColumn;
-use lispa\amos\slideshow\models\Slideshow;
-use lispa\amos\core\forms\editors\ExportMenu;
+use open20\amos\core\controllers\CrudController;
+use open20\amos\core\forms\ContentSettingsMenuWidget;
+use open20\amos\core\forms\CreateNewButtonWidget;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
+use open20\amos\core\views\ChangeView;
+use open20\amos\core\views\grid\ActionColumn;
+use open20\amos\slideshow\models\Slideshow;
+use open20\amos\core\forms\editors\ExportMenu;
 use yii\base\Event;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
@@ -39,7 +39,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
         <?php endif; ?>
 
         <?php if (isset($this->params['additionalButtons'])): ?>
-            <?= \lispa\amos\core\forms\ChangeViewButtonWidget::widget($this->params['additionalButtons']); ?>
+            <?= \open20\amos\core\forms\ChangeViewButtonWidget::widget($this->params['additionalButtons']); ?>
         <?php endif; ?>
         <div class="tools-right">
             <?php

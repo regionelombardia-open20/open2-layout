@@ -92,7 +92,10 @@
     }
     a {
       padding-top: @padding-default;
-      color: @text-main-color;
+      &:not(.btn){
+        color: @text-main-color;
+      }
+
     }
     @media (max-width: 480px) {
       width: 78%;

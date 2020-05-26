@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\core
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
-namespace lispa\amos\layout\assets;
+namespace open20\amos\layout\assets;
 
 use yii\web\AssetBundle;
 
@@ -23,7 +23,7 @@ class FormAsset extends AssetBundle
         'js/form.js',      
     ];
     public $depends = [
-        //'lispa\amos\layout\assets\BaseAsset',
+        //'open20\amos\layout\assets\BaseAsset',
     ];
 
     /**
