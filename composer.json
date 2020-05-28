@@ -2,11 +2,12 @@
     "name": "open20/amos-layout",
     "description": "Amos Basic Layout",
     "keywords": ["amos", "yii2", "less", "css", "layout"],
-    "homepage": "https://bitbucket.org/elite_division/amos-layout",
+    "homepage": "https://bitbucket.org/open20/amos-layout",
     "type": "component",
     "require": {
         "php": ">=5.4.0",
         "open20/amos-core":"^1.9.58",
+        "open20/amos-dashboard":"^1.9.0",
         "bower-asset/sticky-sidebar": "^3.2.0"
     },
     "autoload": {

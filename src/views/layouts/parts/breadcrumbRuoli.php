@@ -25,6 +25,7 @@ $urlFaq = Yii::$app->getUrlManager()->createUrl(['/faq/faq', 'FaqSearch[rotte]' 
     <div class="breadcrumb_left">
         <?=
         Breadcrumbs::widget([
+            'encodeLabels' => false,
             'homeLink' => [
                 'label' => (!empty(\Yii::$app->params['homeName'])? \Yii::$app->params['homeName'] : \Yii::t('amoscore', 'Dashboard')),
                 'url' => Yii::$app->homeUrl,

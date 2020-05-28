@@ -663,7 +663,7 @@ ATTACHMENT SECTION
     /* hide attachment name too long */
     overflow: hidden;
     position: relative;
-    top: 8px;
+    text-overflow: ellipsis;
   }
 
   .file-caption.form-control.kv-fileinput-caption {
@@ -1156,6 +1156,10 @@ div[class*="-view"] {
       width: 100%;
       min-height: 350px;
       margin-top: 20px;
+    }
+    img{
+      max-width: 100%;
+      height: auto;
     }
   }
 }

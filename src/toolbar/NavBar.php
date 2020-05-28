@@ -133,7 +133,7 @@ class NavBar extends YiiNavBar {
           ];
         }
 
-        if (\Yii::$app->controller->module->id == AmosDashboard::getModuleName()) {
+        if (\Yii::$app->controller->module->id == AmosDashboard::getModuleName() && Yii::$app->user->can('CAN_MANAGE_DASHBOARD')) {
           $atLeastOneSettingsElement = true;
           $settingsItemsElements[] = [
             'label' => \Yii::t('amoscore', 'Gestisci widget'),
@@ -221,6 +221,19 @@ class NavBar extends YiiNavBar {
       $menuItems[] = $search;
     }
 
+    if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader'] == true)){		
+      if (\Yii::$app->getModule('tickets')) {
+          $ticketsLink    = Html::tag('li',
+                  Html::a(
+                      AmosIcons::show("help-outline")
+                      , '/ticket/assistenza/cerca-faq',
+                      ['title' => \backend\modules\tickets\Module::t('tickets', 'Faq')]
+                  ), ['class' => 'header-plugin-icon']
+          );
+          $menuItems[] = $ticketsLink;	
+      }
+  }
+
     if (\Yii::$app->getModule('chat')) {
       $widget = new \open20\amos\chat\widgets\icons\WidgetIconChat();
       $bulletCount = $widget->getBulletCount();
@@ -241,7 +254,12 @@ class NavBar extends YiiNavBar {
 
     if (\Yii::$app->getModule('myactivities') && !\Yii::$app->user->isGuest) {
       $widget = new \open20\amos\myactivities\widgets\icons\WidgetIconMyActivities();
-      $bulletCount = $widget->getBulletCount();
+        if (isset(\Yii::$app->params['disableBulletCounters']) && (\Yii::$app->params['disableBulletCounters'] === true)) {
+            $bulletCount = 0;
+        }
+        else {
+            $bulletCount =  $widget->getBulletCount();
+        }
       
       $chatLink = Html::tag('li',
           Html::a(

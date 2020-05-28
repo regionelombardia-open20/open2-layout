@@ -71,14 +71,14 @@ if (isset($model)) {
                                     <p class="event-day">
                                         <span class="event-month">
                                             <?php if ($model->end_date_hour != NULL) : ?>
-                                                <?= Module::t('amoslayout', '#from') ?>
+                                                <?= ((date("d", strtotime($model->begin_date_hour)) != date("d", strtotime($model->end_date_hour)))? Module::t('amoslayout', '#from') : '')?>
                                             <?php endif; ?>
                                         </span>
                                         <?= date("d", strtotime($model->begin_date_hour)) ?>
                                         <span class="event-month"><?= Yii::$app->formatter->asDate($model->begin_date_hour, 'MMM') ?></span>
                                     </p>
                                     <!--                                <p class="event-year">< ?= date("Y", strtotime($model->begin_date_hour)) ?></p>-->
-                                    <?php if ($model->end_date_hour != NULL) : ?>
+                                    <?php if ($model->end_date_hour != NULL && date("d", strtotime($model->begin_date_hour)) != date("d", strtotime($model->end_date_hour))): ?> 
                                         <p class="event-day">
                                             <span class="event-month">
                                                 <?= Module::t('amoslayout', '#to') ?>
@@ -113,7 +113,12 @@ if (isset($model)) {
                             </div>
                         </div>
                     </div>
-
+                <?php 
+                   if(isset(Yii::$app->params['isPoi']) && (Yii::$app->params['isPoi'] === true) && ($community->id == 2965))
+                   {
+                       $viewUrl = \Yii::$app->params['platform']['backendUrl']."/community/join?id=2965";
+                   }
+                ?>
                     <div class="control-event">
                         <?php $modelName = ''; ?>
                         <?php $modelName = Html::a($model->getTitle(), $viewUrl, [
@@ -261,10 +266,13 @@ if (isset($model)) {
                                     break;
                             }
                         }
+                        $hideButton = $hideButton || (isset(Yii::$app->params['isPoi']) && (Yii::$app->params['isPoi'] === true) && ($community->id == 2965));
                         ?>
-
-                        <?= Html::a($button['text'], $button['url'], $button['options']) ?>
-
+                        <?php if (!$hideButton): ?>
+                            <?=
+                                    Html::a($button['text'], $button['url'], $button['options'])
+                            ?>
+                        <?php endif; ?>
                         <!-- ICS download -->
                         <?php
                         if (EventsUtility::checkManager($model)) {

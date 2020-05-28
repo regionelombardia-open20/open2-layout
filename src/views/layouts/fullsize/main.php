@@ -71,7 +71,8 @@ if ($countArrayUrl) {
 
     <section id="bk-page">
 
-        <?php if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS): ?>
+        <?php if((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
+		&& (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)): ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
         <?php endif; ?>
 
@@ -91,7 +92,7 @@ if ($countArrayUrl) {
 
                 <div class="page-header">
                     <?php if (!is_null($this->title)): ?>
-                        <h1 class="title"><?= Html::encode($this->title) ?></h1>
+                        <h1 class="title"><?= \Yii::$app->formatter->asHtml($this->title) ?></h1>
                         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
                     <?php endif; ?>
                 </div>

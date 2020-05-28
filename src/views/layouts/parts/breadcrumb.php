@@ -23,15 +23,16 @@ use open20\amos\core\widget\WidgetAbstract;
 if (!empty($this->params['breadcrumbs'])):
 
     if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
-        $homeLink = \open20\amos\core\icons\AmosIcons::show('dashboard', [], \open20\amos\core\icons\AmosIcons::DASH);
+        $homeLink = \open20\amos\core\icons\AmosIcons::show('dashboard', [],
+                \open20\amos\core\icons\AmosIcons::DASH);
     } else {
         $homeLink = \Yii::t('amoscore', 'Dashboard');
     }
 
 
-    foreach ((array)$this->params['breadcrumbs'] as $key => $value) {
+    foreach ((array) $this->params['breadcrumbs'] as $key => $value) {
         if (!isset($value['title']) && !empty($value['label'])) {
-            $this->params['breadcrumbs'][$key]['title'] = $this->params['breadcrumbs'][$key]['label'];
+            $this->params['breadcrumbs'][$key]['title'] = html_entity_decode($this->params['breadcrumbs'][$key]['label']);
         }
     }
     ?>
@@ -43,6 +44,7 @@ if (!empty($this->params['breadcrumbs'])):
         ?>
         <?=
         Breadcrumbs::widget([
+            'encodeLabels' => false,
             'homeLink' => [
                 'label' => '',
                 'url' => '',
@@ -55,6 +57,7 @@ if (!empty($this->params['breadcrumbs'])):
     <?php } else { ?>
         <?=
         Breadcrumbs::widget([
+            'encodeLabels' => false,
             'homeLink' => [
                 'label' => (!empty(\Yii::$app->params['homeName']) ? \Yii::$app->params['homeName'] : $homeLink),
                 'url' => Yii::$app->homeUrl,
@@ -67,7 +70,7 @@ if (!empty($this->params['breadcrumbs'])):
     <?php } ?>
 <?php endif; ?>
 <!--div id="bk-generalTools" class="show breadcrumb-tools">
-    <a href="<?php //echo $urlFaq;   ?>"><button>
+    <a href="<?php //echo $urlFaq;     ?>"><button>
         <span>FAQ</span><span class="sr-only">Leggi le faq relative al plugin</span>
         </button></a>
 </div-->

@@ -8,17 +8,18 @@
  * @package    open20\amos\core
  * @category   CategoryName
  */
+
 use open20\amos\core\helpers\Html;
 use open20\amos\core\icons\AmosIcons;
 use open20\amos\core\utilities\CurrentUser;
+use open20\amos\core\widget\WidgetAbstract;
 use open20\amos\dashboard\AmosDashboard;
 use open20\amos\layout\Module;
 use open20\amos\layout\toolbar\Nav;
 use open20\amos\layout\toolbar\NavBar;
-use yii\web\JsExpression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use open20\amos\core\widget\WidgetAbstract;
+use yii\web\JsExpression;
 
 /**
  * @var $this \yii\web\View
@@ -41,18 +42,7 @@ use open20\amos\core\widget\WidgetAbstract;
             : false;
 
     /** @var bool|false $disableSettings - if true hide the settings link in the navbar */
-    $canDisablePlatform = false;
-// if the params hideSettings == true or the user as has at least one of the provided roles, hide the link settings
-    if (isset(\Yii::$app->params['hideSettings']['roles']) && is_array(\Yii::$app->params['hideSettings']['roles'])) {
-        $can = false;
-        foreach (\Yii::$app->params['hideSettings']['roles'] as $role) {
-            $can = $can || \Yii::$app->user->can($role);
-        }
-        $canDisablePlatform = $can;
-    }
-    $disableSettings = (isset(\Yii::$app->params['hideSettings']) && !is_array(\Yii::$app->params['hideSettings']) && \Yii::$app->params['hideSettings'])
-        || $canDisablePlatform;
-
+    $disableSettings = ((isset(\Yii::$app->params['hideSettings']) && (\Yii::$app->params['hideSettings'] === true)) || !\Yii::$app->user->can('VIEW_SETTINGS'));
 
     $hasSlideshow = (\Yii::$app->getModule('slideshow') && isset(\Yii::$app->params['slideshow']) && \Yii::$app->params['slideshow']
         === TRUE && $idSlideshow) ? TRUE : FALSE;
@@ -178,6 +168,19 @@ use open20\amos\core\widget\WidgetAbstract;
                 $items[]   = $search;
             }
 
+            if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader'] == true)){		
+                if (\Yii::$app->getModule('tickets')) {
+                    $ticketsLink    = Html::tag('li',
+                            Html::a(
+                                AmosIcons::show("help-outline")
+                                , '/ticket/assistenza/cerca-faq',
+                                ['title' => \backend\modules\tickets\Module::t('tickets', 'Faq')]
+                            ), ['class' => 'header-plugin-icon']
+                    );
+                    $items[] = $ticketsLink;	
+                }
+            }
+            
             $btnsLogout = '';
             $btnsEsci = '';
             $btnLogoutUrl = ['/admin/security/logout'];
@@ -264,7 +267,7 @@ use open20\amos\core\widget\WidgetAbstract;
                     'linkOptions' => ['title' => Yii::t('amoscore', 'Impostazioni')]
                 ];
             }
-            if ($this->context->module->id == AmosDashboard::getModuleName()) {
+            if ($this->context->module->id == AmosDashboard::getModuleName() && Yii::$app->user->can('CAN_MANAGE_DASHBOARD')) {
                 $atLeastOneElement       = true;
                 $settingsItemsElements[] = [
                     'label' => Yii::t('amoscore', 'Gestisci widget'),
@@ -346,10 +349,17 @@ use open20\amos\core\widget\WidgetAbstract;
                 $menuItems[] = $chatLink;
             }
 
-            if (\Yii::$app->getModule('myactivities') && !\Yii::$app->user->isGuest) {
+            if (\Yii::$app->getModule('myactivities') && !\Yii::$app->user->isGuest && Yii::$app->user->can('MYACTIVITIES_READ')) {
                 $widget      = new \open20\amos\myactivities\widgets\icons\WidgetIconMyActivities();
-                $bulletCount = $widget->getBulletCount();
-                $chatLink    = Html::tag('li',
+                if (
+                    (isset(\Yii::$app->params['disableBulletCounters']) && (\Yii::$app->params['disableBulletCounters'] === true)) &&
+                    (!isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) || (isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) && (\Yii::$app->params['enableMyActivitiesBulletCounters'] === false)))
+                ) {
+                    $bulletCount = 0;
+                } else {
+                    $bulletCount = $widget->getBulletCount();
+                }
+                $myActivitiesLink    = Html::tag('li',
                         Html::a(
                             AmosIcons::show('bell', [], 'dash')."<span class='badge'>".(($bulletCount > 0 ) ? $bulletCount
                                 : "" )."</span>"
@@ -358,7 +368,7 @@ use open20\amos\core\widget\WidgetAbstract;
                                 'My activities')]
                         ), ['class' => 'header-plugin-icon']
                 );
-                $menuItems[] = $chatLink;
+                $menuItems[] = $myActivitiesLink;
             }
 
 
@@ -371,14 +381,26 @@ use open20\amos\core\widget\WidgetAbstract;
                 /**
                  * get params from platform/common/config/params-local.php
                  */
-                $frontendLink = Html::tag('li',
+
+                if (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank']) {
+                    $frontendLink = Html::tag('li',
                         Html::a(
-                            AmosIcons::show('globe-alt').Html::tag('p', Yii::t('amoscore', '#frontend'))
+                            AmosIcons::show('globe-alt') . Html::tag('p', Yii::t('amoscore', '#frontend'))
+                            , Url::to(\Yii::$app->params['platform']['frontendUrl']),
+                            ['title' => Yii::t('amoscore', '#frontend')]
+                        ), ['class' => 'toFrontend']
+                    );
+                    $menuItems[] = $frontendLink;
+                } else {
+                    $frontendLink = Html::tag('li',
+                        Html::a(
+                            AmosIcons::show('globe-alt') . Html::tag('p', Yii::t('amoscore', '#frontend'))
                             , Url::to(\Yii::$app->params['platform']['frontendUrl']),
                             ['title' => Yii::t('amoscore', '#frontend'), 'target' => '_blank']
                         ), ['class' => 'toFrontend']
-                );
-                $menuItems[]  = $frontendLink;
+                    );
+                    $menuItems[] = $frontendLink;
+                }
             } /* end link frontend */
 
             /**

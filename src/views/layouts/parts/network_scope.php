@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Aria S.p.A.
  * OPEN 2.0
@@ -8,10 +7,10 @@
  * @package    open20\amos\layout\views\layouts\parts
  * @category   CategoryName
  */
-
-$moduleCwh = Yii::$app->getModule('cwh');
+$moduleCwh       = Yii::$app->getModule('cwh');
 $moduleCommunity = Yii::$app->getModule('community');
-$eventsModule = Yii::$app->getModule('events');
+$eventsModule    = Yii::$app->getModule('events');
+$layoutModule    = Yii::$app->getModule('layout');
 
 $scope = null;
 if (!empty($moduleCwh)) {
@@ -21,14 +20,14 @@ if (!empty($moduleCwh)) {
 if (!empty($scope)) {
     if (isset($scope['community'])) {
         $communityId = $scope['community'];
-        $community = \open20\amos\community\models\Community::findOne($communityId);
+        $community   = \open20\amos\community\models\Community::findOne($communityId);
     }
 }
-$controller = Yii::$app->controller;
+$controller     = Yii::$app->controller;
 $isActionUpdate = ($controller->action->id == 'update');
-$confirm = $isActionUpdate ? [
+$confirm        = $isActionUpdate ? [
     'confirm' => \open20\amos\core\module\BaseAmosModule::t('amoscore', '#confirm_exit_without_saving')
-] : null;
+    ] : null;
 
 $model = null;
 
@@ -56,16 +55,16 @@ if (isset($community)) {
 
     if (!is_null($eventsModule) && ($community->context == $eventsModule->model('Event'))) {
         echo $this->render('events_network_scope', $viewParams);
-    }
-    else if ($community->context == \open20\amos\community\models\Community::className()) {
+    } else if ($community->context == \open20\amos\community\models\Community::className()) {
         $viewScope = 'community_network_scope';
         echo $this->render($viewScope, $viewParams);
-    }
-    else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
+    } else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
         $viewScope = 'community_network_scope';
         echo $this->render($viewScope, $viewParams);
     } else {
-        $viewScope = 'community_network_scope';
-        echo $this->render($viewScope, $viewParams);
+        if (!in_array($community->context, $layoutModule->excludeNetworkView)) {
+            $viewScope = 'community_network_scope';
+            echo $this->render($viewScope, $viewParams);
+        }
     }
 }

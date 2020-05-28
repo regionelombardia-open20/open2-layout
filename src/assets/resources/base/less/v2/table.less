@@ -7,16 +7,19 @@
 // GENERAL TABLE RULES
 //-----------------------------------------------
 table.table {
-  > thead {
-    > tr {
-      > th {
+  >thead {
+    >tr {
+      >th {
         font-size: 13px;
         border-bottom: 0;
         text-transform: uppercase;
         color: @text-primary-color;
-        a { //sorting field icon
+
+        a {
+          //sorting field icon
           color: @text-primary-color;
           text-decoration: none;
+
           &:after {
             content: '\f312';
             font-family: Amos-font;
@@ -28,12 +31,14 @@ table.table {
             font-family: Amos-font;
             margin-left: 5px
           }
+
           &.desc::after {
             content: '\f2f9';
             font-family: Amos-font;
             margin-left: 5px
           }
         }
+
         .checkbox {
           margin: 0;
           position: relative;
@@ -42,17 +47,23 @@ table.table {
       }
     }
   }
-  > tbody {
-    > tr {
+
+  >tbody {
+    >tr {
 
       &:first-child {
-        > td {
+        >td {
           border-top: 0;
         }
       }
-      > td {
+
+      >td {
         padding: 20px;
         vertical-align: middle;
+
+        p {
+          word-break: break-word; //PR-562
+        }
       }
     }
   }
@@ -62,8 +73,9 @@ table.table {
 // GENERAL RESPONSIVE RULES
 // custom layout for mobile table - class table_switch
 //-----------------------------------------------
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .table_switch {
+
     table,
     tbody,
     th,
@@ -75,19 +87,22 @@ table.table {
     }
 
     table.table {
-      > thead {
+      >thead {
         display: none;
       }
-      > tbody {
-        > tr {
-          > td {
+
+      >tbody {
+        >tr {
+          >td {
             border: none;
             border-bottom: 1px solid @table-border-color;
             position: relative;
             padding-left: 40%;
             min-height: 40px;
             white-space: normal;
-            &:before { /* get table header attribute and insert before */
+
+            &:before {
+              /* get table header attribute and insert before */
               content: attr(title);
               font-weight: bold;
               position: absolute;
@@ -96,6 +111,7 @@ table.table {
               width: 45%;
               padding-right: 10px;
             }
+
             @media (max-width: 500px) {
               &:not(:last-child) {
                 padding-left: 50%;
@@ -114,19 +130,22 @@ table.table {
 .grid-view {
   .table_switch.table-responsive {
     overflow-x: inherit; //override bootstrap not show vertical scroll-bar
+
     tbody {
-      > tr {
-        > td {
+      >tr {
+        >td {
           &:last-child .container-action {
             font-size: 1.2em;
             display: inline-flex;
             white-space: nowrap;
             float: right;
-            .btn + .btn,
-            .btn + .modal + .btn {
+
+            .btn+.btn,
+            .btn+.modal+.btn {
               margin-left: 3px;
             }
           }
+
           .container-img img,
           .gridview-image {
             max-width: 70px;
@@ -135,29 +154,35 @@ table.table {
       }
     }
   }
+
   &.excel-grid {
     .table_switch.table-responsive {
       overflow-x: auto;
-      > table {
+
+      >table {
         table-layout: auto;
         margin-bottom: 0;
-        thead > tr > th {
+
+        thead>tr>th {
           border: 1px solid @table-border-color;
           border-top: none;
           border-bottom-color: @primary-color;
           text-align: center;
           line-height: 5px;
         }
-        tbody{
-          > tr{
+
+        tbody {
+          >tr {
             background-color: @white-color;
             border-left: 1px solid @primary-color;
-            > td {
+
+            >td {
               white-space: normal;
               word-wrap: break-word;
               border: 1px solid @table-border-color;
               padding: 5px;
-              &:first-child{
+
+              &:first-child {
                 border-left: none;
               }
             }
@@ -167,25 +192,29 @@ table.table {
     }
   }
 }
+
 /**
 excel grid sheet out grid-view (amos-statistics)
  */
-.excel-grid-sheet{
+.excel-grid-sheet {
   border: 1px solid @border-color-default;
   text-align: center;
   float: left;
   width: fit-content;
-  > span{
+
+  >span {
     padding: 2px @padding-medium;
   }
-  &.active{
+
+  &.active {
     color: @primary-color;
     font-weight: bold;
     border-bottom: 3px solid @primary-color;
   }
 }
 
-.gridview-image { //used in more plugin outside grid-view class
+.gridview-image {
+  //used in more plugin outside grid-view class
   max-width: 70px;
 }
 
@@ -209,6 +238,7 @@ used only into
     text-align: center;
     margin-bottom: @margin-default;
   }
+
   .more-info {
     width: 100%;
     float: left;
@@ -220,6 +250,7 @@ used only into
 
 .table-info {
   width: 100%;
+
   tr {
     border-bottom: 1px solid @primary-color;
   }

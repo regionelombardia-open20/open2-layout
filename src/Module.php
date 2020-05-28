@@ -48,6 +48,10 @@ class Module extends AmosModule implements ModuleInterface, BootstrapInterface
      */
     public $advancedLogoutActions = false;
 
+    public $breadcrumbsIconHomeText = false;
+
+    public $excludeNetworkView = ['amos\planner\models\PlanWork'];
+
     /**
      * @inheritdoc
      */

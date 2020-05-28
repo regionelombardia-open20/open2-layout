@@ -8,12 +8,12 @@
  * @package    open20\amos\layout\views\layouts\fullsize\parts
  * @category   CategoryName
  */
-
 use open20\amos\events\models\Event;
 
-$moduleCwh = Yii::$app->getModule('cwh');
+$moduleCwh       = Yii::$app->getModule('cwh');
 $moduleCommunity = Yii::$app->getModule('community');
-$eventsModule = Yii::$app->getModule('events');
+$eventsModule    = Yii::$app->getModule('events');
+$layoutModule    = Yii::$app->getModule('layout');
 
 $scope = null;
 if (!empty($moduleCwh)) {
@@ -23,14 +23,14 @@ if (!empty($moduleCwh)) {
 if (!empty($scope)) {
     if (isset($scope['community'])) {
         $communityId = $scope['community'];
-        $community = \open20\amos\community\models\Community::findOne($communityId);
+        $community   = \open20\amos\community\models\Community::findOne($communityId);
     }
 }
-$controller = Yii::$app->controller;
+$controller     = Yii::$app->controller;
 $isActionUpdate = ($controller->action->id == 'update');
-$confirm = $isActionUpdate ? [
+$confirm        = $isActionUpdate ? [
     'confirm' => \open20\amos\core\module\BaseAmosModule::t('amoscore', '#confirm_exit_without_saving')
-] : null;
+    ] : null;
 
 $model = null;
 
@@ -41,7 +41,7 @@ if ($controller->hasProperty('model')) {
     $model = $controller->model;
     if ($model->hasProperty('community_id')) {
         $communityId = $model->community_id;
-        $community = \open20\amos\community\models\Community::findOne($communityId);
+        $community   = \open20\amos\community\models\Community::findOne($communityId);
     }
 }
 
@@ -62,16 +62,18 @@ if (isset($community)) {
     } else {
         if (!is_null($eventsModule) && ($community->context == $eventsModule->model('Event'))) {
             /** @var Event $eventModel */
-            $eventModel = $eventsModule->createModel('Event');
-            $event = $eventModel::findOne(['community_id' => $community->id]);
+            $eventModel          = $eventsModule->createModel('Event');
+            $event               = $eventModel::findOne(['community_id' => $community->id]);
             $viewParams['model'] = $event;
             echo $this->render('events_network_scope', $viewParams);
-        }  else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
+        } else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
             $viewScope = 'challenge_network_scope';
             echo $this->render($viewScope, $viewParams);
         } else {
-            $viewScope = 'community_network_scope';
-            echo $this->render($viewScope, $viewParams);
+            if (!in_array($community->context, $layoutModule->excludeNetworkView)) {
+                $viewScope = 'community_network_scope';
+                echo $this->render($viewScope, $viewParams);
+            }
         }
     }
 }

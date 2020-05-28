@@ -87,7 +87,12 @@ if (isset($model)) {
             </div>
 
             <div class="col-sm-10 col-xs-10 nop network-infos">
-                <?php /*echo CreatedUpdatedWidget::widget(['model' => $model, 'isTooltip' => true])*/ ?>
+                <?php /*echo CreatedUpdatedWidget::widget(['model' => $model, 'isTooltip' => true])*/
+                   if(isset(Yii::$app->params['isPoi']) && (Yii::$app->params['isPoi'] === true) && ($community->id == 2965))
+                   {
+                       $viewUrl = \Yii::$app->params['platform']['backendUrl']."/community/join?id=2965";
+                   }
+                ?>
                 <?php $modelName = ''; ?>
                 <?php $modelName = Html::a($model->getTitle(), $viewUrl, [
                     'title' => Module::t("amosevents", "View events"),
@@ -104,6 +109,7 @@ if (isset($model)) {
                 <?php
                 $appController = Yii::$app->controller;
                 $hideButton = (($appController->id == 'event') && ($appController->action->id == 'view'));
+                $hideButton = $hideButton || (isset(Yii::$app->params['isPoi']) && (Yii::$app->params['isPoi'] === true) && ($community->id == 2965));
                 ?>
                 <?php if (!$hideButton): ?>
                     <?= Html::a(Module::t('amoslayout', '#network_scope_view_details'), $viewUrl, [
