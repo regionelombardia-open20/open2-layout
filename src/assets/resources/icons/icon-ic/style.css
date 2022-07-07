@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'ic';
-  src:  url('fonts/ic.eot?6oafc5');
-  src:  url('fonts/ic.eot?6oafc5#iefix') format('embedded-opentype'),
-    url('fonts/ic.ttf?6oafc5') format('truetype'),
-    url('fonts/ic.woff?6oafc5') format('woff'),
-    url('fonts/ic.svg?6oafc5#ic') format('svg');
+  src:  url('fonts/ic.eot?pabd0a');
+  src:  url('fonts/ic.eot?pabd0a#iefix') format('embedded-opentype'),
+    url('fonts/ic.ttf?pabd0a') format('truetype'),
+    url('fonts/ic.woff?pabd0a') format('woff'),
+    url('fonts/ic.svg?pabd0a#ic') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 [class^="ic-"], [class*=" ic-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'ic' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -162,4 +162,31 @@
 }
 .ic-een-world:before {
   content: "\e92d";
+}
+.ic-whatsapp:before {
+  content: "\e92e";
+}
+.ic-telegram1:before {
+  content: "\e92f";
+}
+.ic-view_list:before {
+  content: "\e930";
+}
+.ic-library:before {
+  content: "\e931";
+}
+.ic-facebook:before {
+  content: "\e932";
+}
+.ic-linkedin:before {
+  content: "\e933";
+}
+.ic-telegram:before {
+  content: "\e934";
+}
+.ic-twitter:before {
+  content: "\e935";
+}
+.ic-whatsapp1:before {
+  content: "\e936";
 }
