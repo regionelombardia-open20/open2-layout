@@ -542,19 +542,19 @@
   }
 }
 
-
-
 .container-logo {
   height: @container-logo-height;
   display: flex;
 
   img {
-    width: inherit !important;
+    //width: inherit !important;
   }
 
   .img-responsive {
-    max-height: inherit;
+    //max-height: inherit;
     padding: 0;
+    height: 100%;
+    width: auto;
 
     img {
       height: 54px;
@@ -574,6 +574,12 @@
 
 
 // EFFETTO SHRINK
+#headerFixed {
+  position: relative !important;
+  width: 100%;
+  z-index: 999;
+}
+
 .shrink {
   .container-header {
     .navbar {
@@ -594,9 +600,9 @@
   .container-logo {
     height: @container-logo-height-shrink;
     transform: translateY(@navbar-top-height-shrink);
-    position: fixed;
-    width: 100%;
-    z-index: 990;
+    // position: fixed;
+    // width: 100%;
+    // z-index: 990;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     /* animation magic */
     transition: all 0.4s ease-in-out;

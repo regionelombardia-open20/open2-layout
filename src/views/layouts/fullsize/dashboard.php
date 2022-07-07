@@ -65,7 +65,6 @@ if ($countArrayUrl) {
 </head>
 
 <body>
-
     <?php $this->beginBody() ?>
 
     <?php if (Yii::$app->get('menu', false)) { ?>
@@ -165,9 +164,10 @@ if ($countArrayUrl) {
         ]); ?>
         <!--< ?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>-->
     <?php } else { ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
+        <div id="headerFixed">
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+        </div>
     <?php } ?>
 
 

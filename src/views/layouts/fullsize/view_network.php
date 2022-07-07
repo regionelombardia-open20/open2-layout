@@ -177,7 +177,6 @@ if ($countArrayUrl) {
     <?php } else { ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
     <?php } ?>
 
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>

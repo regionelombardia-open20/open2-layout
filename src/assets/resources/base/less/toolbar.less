@@ -1,7 +1,7 @@
 /* AMOS-LAYOUT */
 
 /* TOOLBAR DEFAULT VARIABLES */
-@toolbar-background-color: @light-background-primary-color;
+@toolbar-background-color: transparent;
 
 /* CONTAINER TOOLS
 toolbar used for search and add element in create/update view
@@ -77,10 +77,7 @@ toolbar on views used for add element, order, download, search, change view, hig
   .btn-tools-container {
     width: 100%;
     float: left;
-    //.flexbox;
-    //.flexbox-wrap;
-    //align-items: center;
-    //justify-content: space-between;
+    padding: @padding-default 0;
 
     > .btn + .btn,
     > .btn-group + .btn { /*all btn not in tools-right*/

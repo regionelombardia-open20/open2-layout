@@ -181,7 +181,6 @@ if ($countArrayUrl) {
             <!-- TODO fix -->
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
             <div class="container m-t-20">
-                
                 <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
             </div>
         </div>

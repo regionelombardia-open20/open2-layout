@@ -26,7 +26,7 @@ PLACEHOLDER FORM OVERRIDE
 }
 
 .login-page {
-  margin-top: @margin-top-blocks;
+  margin: @margin-top-blocks 0;
 
   .container-messages {
     width: 100%;
@@ -89,6 +89,7 @@ PLACEHOLDER FORM OVERRIDE
   .title-login {
     font-size: 1.3em;
     margin-top: 0;
+    color: @main-background-color;
   }
 
   h3.title-login {
@@ -99,6 +100,8 @@ PLACEHOLDER FORM OVERRIDE
     max-width: 100%;
     background-color: @white-color;
     padding: @padding-login 0;
+    .flexbox;
+    align-items: flex-end;
 
     .login-logo-and-text {
       .flexbox;
@@ -106,18 +109,18 @@ PLACEHOLDER FORM OVERRIDE
       justify-content: flex-start;
       align-items: center;
       padding-left: @padding-login;
-
       @media (max-width: 991px) {
         .flexbox-wrap;
       }
     }
 
     .login-logo-text {
-      font-size: 2.36em;
-      font-weight: 500;
-      line-height: 1.1;
+      font-size: 18px;
+      color: @brand-secondary-color;
+      font-weight: 600;
+      line-height: 1.3;
       display: block;
-      padding-left: @padding-login;
+      //padding-left: @padding-login;
 
       a {
         margin: 0 auto;
@@ -126,7 +129,10 @@ PLACEHOLDER FORM OVERRIDE
         display: inline-flex;
         background-color: #fff;
         padding: @padding-min @padding-large;
+
       }
+
+
     }
 
     // FIX FOR IE11
@@ -146,12 +152,14 @@ PLACEHOLDER FORM OVERRIDE
 
   .login-block {
     background-color: @white-color;
-    padding: 0px @padding-login 0px;
+    //padding: 0px @padding-login 0px;
+    padding: 0px;
+    margin-top: @margin-top-blocks;
 
     .login-body {
-      padding: 35px @padding-login @padding-login;
-      background-color: @brand-primary-color;
-      color: @placeholder-color;
+      padding: 35px @padding-login 0 @padding-login;
+
+      //color: @placeholder-color;
 
       .form-group {
         margin-bottom: @margin-min;
@@ -189,6 +197,9 @@ PLACEHOLDER FORM OVERRIDE
         align-items: center;
         justify-content: space-between;
         margin-top: @margin-medium;
+        .btn{
+          border-radius: 0;
+        }
 
         @media (min-width: 420px) {
           .btn {
@@ -198,35 +209,41 @@ PLACEHOLDER FORM OVERRIDE
       }
     }
 
-    .rememberme .remember-me {
-      text-transform: uppercase;
+    .rememberme {
+      padding: 0px @padding-login ;
+      .form-group{
+        margin: 0;
+        .remember-me {
+          text-transform: uppercase;
 
-      input[type="checkbox"] {
-        top: -1px;
+          input[type="checkbox"] {
+            top: -1px;
+          }
+        }
       }
+
     }
 
     .title-login {
       color: contrast(@brand-primary-color);
     }
 
+
+
+
     .forgot-password a {
-      color: contrast(@brand-primary-color);
+      color: @brand-primary-color;
       text-transform: uppercase;
     }
 
     &.registration-block {
       //registration view
-      margin-top: 0;
-      padding: @padding-login;
+      margin-top: 30px;
 
       .login-body {
         background-color: inherit;
-        border: 1px solid @brand-primary-color;
 
-        .title-login {
-          color: @brand-primary-color;
-        }
+
 
         .cookie-privacy {
           font-size: 0.9em;
@@ -271,20 +288,27 @@ PLACEHOLDER FORM OVERRIDE
           .flexbox;
           flex-direction: row-reverse;
           justify-content: space-between;
-          background: @brand-primary-color;
+
           padding: @padding-medium @padding-login;
 
           button,
           a {
             margin: 0;
           }
+          .btn-primary, .btn-navigation-primary{
+            border-radius: 0;
+            &:hover{
+              border-radius: 0;
+            }
+          }
         }
       }
 
       +.reactivate-profile-block {
-        padding: 0 45px @padding-login;
+        padding: 0  @padding-login @padding-login;
         background: @white-color;
         text-transform: uppercase;
+        margin-bottom: @margin-top-blocks;
 
         a {
           color: contrast(@white-color);
@@ -352,7 +376,7 @@ PLACEHOLDER FORM OVERRIDE
       }
 
       .cookie-privacy,
-      .cookie-privacy a {
+      .cookie-privacy a, .cookie-privacy .has-error .radio label, .cookie-privacy .has-success .radio label{
         color: @white-color;
       }
 
@@ -400,7 +424,7 @@ PLACEHOLDER FORM OVERRIDE
         .action {
           flex-direction: row;
           text-align: center;
-          color: @white-color;
+          //color: @white-color;
         }
       }
     }
@@ -409,11 +433,11 @@ PLACEHOLDER FORM OVERRIDE
   .social-block {
     margin-top: @margin-top-blocks;
     background: rgba(0, 0, 0, 0.5);
-    padding: @padding-login;
-
+    padding: @padding-login !important;
     &.social-register-block {
       background: @light-background-color;
-      margin-top: 0;
+      margin-top: @margin-top-blocks;
+      padding: 0 25px 25px;
 
       .title-login {
         color: contrast(@light-background-color);
@@ -423,17 +447,22 @@ PLACEHOLDER FORM OVERRIDE
     +.spid-block {
       margin-top: 0;
     }
-
     .title-login {
       color: contrast(@black-color);
     }
-
     .social-buttons {
       text-align: center;
       display: inline-flex;
       .flexbox-wrap(nowrap);
       justify-content: space-between;
 
+      .button-container .btn{
+        margin: 5px;
+        padding: 6px;
+      }
+      .btn-apple, .btn-farmlab {
+        border: 1px solid black;
+      }
       @media (max-width: 480px) {
         .flexbox-wrap;
       }
@@ -443,16 +472,11 @@ PLACEHOLDER FORM OVERRIDE
       }
 
       .btn {
-        .btn-border(transparent; 0%; 0%);
         width: 95%;
         padding: 6px 0;
         font-weight: normal;
         font-size: 1.1em;
         line-height: 1.2em;
-
-        span.am {
-          //padding-right: 5px;
-        }
 
         span.text {
           text-align: center;
@@ -462,8 +486,7 @@ PLACEHOLDER FORM OVERRIDE
   }
 
   .spid-block {
-    margin-top: @margin-top-blocks;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(255, 255, 255);
     padding: @padding-login;
 
     .title-login {
@@ -504,6 +527,7 @@ PLACEHOLDER FORM OVERRIDE
 
   .register-block {
     margin-top: @margin-top-blocks;
+    margin-bottom: @margin-top-blocks;
     background: @white-color;
     padding: @padding-login;
 

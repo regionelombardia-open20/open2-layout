@@ -222,34 +222,6 @@ TOOL USERS
 }
 
 /**
-AMOS-TOOLTIP
-show info into (i) icon
- */
-.amos-tooltip {
-  // font-size: 1.65em;
-  // color: @font-color-icon-tooltip;
-}
-
-.amos-tooltip+.tooltip.fade.top.in .tooltip-inner {
-  /* override bootstrap */
-  // max-width: 250px;
-  // width: 250px;
-  // background-color: @background-color-tooltip;
-  // color: @font-color-tooltip;
-  // border-radius: 0px;
-}
-
-.amos-tooltip+.tooltip.in {
-  /* override bootstrap */
-  // opacity: 1;
-}
-
-.amos-tooltip+.tooltip.fade.top.in .tooltip-arrow {
-  /* override bootstrap */
-  // border-top-color: @background-color-tooltip;
-}
-
-/**
 INTERACTION-WIDGET //TODO tenuto per retrocompatibilità
 flag signal
  */
@@ -287,6 +259,10 @@ used in view into widget-body-content container
     .share-wrap-button {
       text-align: center;
 
+      .social-network {
+        color: transparent;
+      }
+
       .social-network .am {
         font-size: 42px;
         /* 3em change in px for fix all view */
@@ -301,8 +277,33 @@ used in view into widget-body-content container
         padding: 0 @padding-min;
 
       }
+
+      .social-network .ic {
+        font-size: 42px;
+        /* 3em change in px for fix all view */
+        color: @black-color;
+        padding: 0 @padding-min;
+
+        &.ic-whatsapp {
+          font-size: 36px;
+          margin-bottom: 1px;
+          margin-top: 4px;
+          position: relative;
+          display: block;
+          top: 0;
+          left: 0;
+        }
+
+        &.ic-telegram {
+          font-size: 44px;
+          position: relative;
+          display: block;
+          top: 0;
+          left: 0;
+        }
+      }
     }
-    
+
     .container-social-share{
       @media (max-width:575px){
           flex-direction:column;
@@ -313,6 +314,14 @@ used in view into widget-body-content container
               text-decoration: none;
           }
       }
+    }
+  }
+
+  .container-social-share {
+    display: block;
+
+    >.share-wrap-button+.share-wrap-button {
+      padding-left: 0;
     }
   }
 }

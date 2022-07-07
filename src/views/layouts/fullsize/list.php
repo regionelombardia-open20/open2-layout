@@ -187,6 +187,10 @@ if ($countArrayUrl) {
 
     <section id="bk-page" class="fullsizeListLayout">
 
+        <?php if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) : ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+        <?php endif; ?>
+
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
@@ -259,7 +263,7 @@ if ($countArrayUrl) {
                 </div>
 
                 <?php if (array_key_exists('currentDashboard', $this->params) && !(!empty(\Yii::$app->params['befe']) && \Yii::$app->params['befe'] == true)) : ?>
-                    <div class="col-xs-12 nop">
+                    <div class="col-xs-12 nop tabs-container">
                         <?php
                         $items                = [];
                         $widgetsIcons         = $thisDashboardWidgets = $this->params['currentDashboard']->getAmosWidgetsSelectedIcon(true);

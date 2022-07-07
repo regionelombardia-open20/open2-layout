@@ -1,6 +1,6 @@
 <?php
-use open20\amos\layout\Module;
+use open20\design\Module;
 
-$modelLabel = (isset($modelLabel)) ? $modelLabel : Module::t('amoslayout','elementi');
+$modelLabel = (isset($modelLabel)) ? $modelLabel : Module::t('amosdesign','elementi');
 ?>
 

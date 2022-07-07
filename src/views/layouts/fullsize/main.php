@@ -14,7 +14,7 @@ use yii\helpers\Url;
 use open20\amos\core\widget\WidgetAbstract;
 use open20\amos\layout\assets\BiLessAsset;
 use app\components\CmsHelper;
-use yii\helpers\Html;
+use open20\amos\core\helpers\Html;
 
 
 /** @var $this \open20\amos\core\components\AmosView */
@@ -162,9 +162,10 @@ if ($countArrayUrl) {
         ]); ?>
         <!--< ?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>-->
     <?php } else { ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
+        <div id="headerFixed">
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+        </div>
     <?php } ?>
     
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
@@ -172,6 +173,12 @@ if ($countArrayUrl) {
     <?php endif; ?>
 
     <section id="bk-page" class="fullsizeMainLayout">
+
+        <?php if ((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
+            && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
+        ) : ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+        <?php endif; ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 

@@ -33,6 +33,7 @@ body {
   min-height: 100vh;
 
   #bk-page {
+    //margin-top: 50px !important;
     >.container {
       //padding-bottom: 60px; commented because container-message it's too distance
       padding-top: 10px;
@@ -48,9 +49,9 @@ body {
 LAYOUTS
 */
 .page-header {
-  margin: 30px 0 0 0;
+  margin: calc(3*@margin-default) 0 0 0;
   color: @text-primary-color;
-  border-bottom: 1px solid @text-primary-color;
+  border: none;
 
   h1,
   .title {
@@ -93,6 +94,7 @@ LAYOUTS
       color: @white-color;
     }
   }
+
 }
 
 .icon-view,

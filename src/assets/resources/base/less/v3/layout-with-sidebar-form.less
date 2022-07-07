@@ -1,15 +1,18 @@
 @width-sidebar: 190px;
 
 .btn-sidebar {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 152px;
   left: 0;
   border-radius: 0;
   background-color: #2F3948;
   color: #fff;
   z-index: 9;
   line-height: 1;
-  padding: 6px;
+  padding: 12px 12px 12px 24px;
+  border: 1px solid #FFF;
+  border-left: none;
+  border-top: none;
   @media (min-width:768px) {
     display: none;
   }
@@ -22,7 +25,6 @@
   }
 
 }
-
 a.btn-sidebar[aria-expanded="true"] {
   .mdi-flip-h::before {
     -webkit-transform: scaleX(1);
@@ -31,8 +33,7 @@ a.btn-sidebar[aria-expanded="true"] {
 }
 
 .layout-sidebarForm {
-  // ATTIVARE IL FLEX QUANDO SARà ATTIVA LA SIDEBAR PER I FORM
-  // display: flex; 
+  display: flex; 
   position: relative;
   // overflow: hidden;
   .sidebarForm {
@@ -56,13 +57,13 @@ a.btn-sidebar[aria-expanded="true"] {
       transform: translateX(-100%);
       -webkit-transition: .2s cubic-bezier(.29, .85, .5, .99);
       transition: .2s cubic-bezier(.29, .85, .5, .99);
-      position: absolute;
+      position: fixed;
       z-index: 9;
       bottom: 0;
       left: 0;
-      top: 0;
+      top: 152px;
       height: 100%;
-
+      overflow-y: auto;
       &.in {
         -webkit-transform: translateX(0);
         transform: translateX(0);
@@ -84,7 +85,10 @@ a.btn-sidebar[aria-expanded="true"] {
       padding: 24px 0;
       width: @width-sidebar;
       position: relative;
-
+      @media (max-width:767px) {
+        width: 160px;
+        padding-top: 58px;
+      }
       .nav {
         display: flex;
         flex-wrap: wrap;
@@ -133,7 +137,7 @@ a.btn-sidebar[aria-expanded="true"] {
             &:hover,
             &:focus {
               color: darken(#FFF, 20);
-              background-color: transparent;
+              // background-color: transparent;
             }
 
             svg,
@@ -176,9 +180,31 @@ a.btn-sidebar[aria-expanded="true"] {
   }
 
   .main-with-sidebar {
-    padding: 12px 24px;
-    border: 1px solid #efefef;
     position: relative;
     width: 100%;
+    @media (max-width:767px) {
+      padding-top: 24px;
+    }
+    @media (min-width:768px) {
+      padding: 12px 24px;
+      border: 1px solid #efefef;
+    }
   }
+}
+
+.shrink {
+  .btn-sidebar { 
+    top:100px;
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+  }
+  .sidebarForm { 
+    @media (max-width:767px) {
+    top:100px;
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    }
+  } 
 }

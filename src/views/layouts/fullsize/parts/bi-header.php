@@ -64,10 +64,8 @@ if (!$disableSettings) {
 }
 
 /* languages */
-//$actualLang = PlanUtility::getAppLanguage();
-//$languages = PlanUtility::getTranslationMenu();
-$actualLang = '';
-$languages = '';
+$actualLang = \open20\amos\core\utilities\HeaderUtility::getAppLanguage();
+$languages = \open20\amos\core\utilities\HeaderUtility::getTranslationMenu();
 if (!empty($languages) && ($languages != '')) {
     foreach ($languages as $lang) {
         $menuLanguages .= Html::tag('li', $lang);
@@ -246,6 +244,12 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                         'My activities'
                                     )
                                     ?>">
+                                        <?php if (
+                                            !((isset(\Yii::$app->params['disableBulletCounters']) && (\Yii::$app->params['disableBulletCounters'] === true)) &&
+                                            (!isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) || (isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) && (\Yii::$app->params['enableMyActivitiesBulletCounters'] === false)))
+                                        )) : ?>
+                                            <?= $menuMyActivitiesModuleBulletCount ?>
+                                        <?php endif; ?>
                                         <svg class="icon">
                                             <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_notifications"></use>
                                         </svg>
@@ -253,6 +257,9 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                 </div>
                             <?php endif; ?>
 
+                            <?php
+                            if (!empty($menuLanguages)):
+                            ?>
                             <div class="nav-item dropdown menu-translation mr-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuTranslation"
                                    data-toggle="dropdown" aria-expanded="false">
@@ -269,6 +276,9 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                            endif;
+                            ?>
 
                             <!-- TO FRONTEND LINK -->
                             <?php if (isset(\Yii::$app->params['toFrontendLink']) && \Yii::$app->params['toFrontendLink']) : ?>

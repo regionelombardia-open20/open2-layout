@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Aria S.p.A.
  * OPEN 2.0
@@ -7,6 +8,7 @@
  * @package    open20\amos\community\i18n\it-IT
  * @category   CategoryName
  */
+
 return [
     /* network_scope layout */
     '#network_scope_bottom_label_community' => 'I contenuti attualmente visibili sono relativi a questa community',
@@ -33,4 +35,15 @@ return [
     'AUTHOR' => 'Autore',
     'EDITOR' => 'Redattore',
     'Non hai il permesso per creare contenuti' => 'Non hai il permesso per creare contenuti',
+    '#error_title_page' => '',
+    '#error_title_404' => 'error <strong>404</strong> page not found',
+    '#error_text_404' => 'Pagina non trovata',
+    '#error_title_403' => 'error <strong>403</strong> access denied',
+    '#error_text_403' => 'Accesso negato',
+    '#error_title_generic' => 'error <strong>403</strong> access denied',
+    '#error_text_generic' => 'Si è verificato un errore',
+    '#error_goback_btn' => 'Torna indietro',
+    '#error_go_dash' => 'Torna alla dashboard',
+    '#error_goback_ask_auth' => 'chiedi autorizzazione',
+    '#error_contact_helpdesk' => 'contatta assistenza',
 ];

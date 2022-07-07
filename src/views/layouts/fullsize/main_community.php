@@ -163,9 +163,10 @@ if ($countArrayUrl) {
             'pageSearchLink' => \Yii::$app->params['linkConfigurations']['pageSearchLinkCommon'],
         ]); ?>
     <?php } else { ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
+        <div id="headerFixed">
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+        </div>
     <?php } ?>
 
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>

@@ -1081,7 +1081,11 @@ input[type="checkbox"] {
     }
   }
 }
-
+#container-day-of-week {
+  .custom-control {
+    @extend .mr-5;
+  }
+}
 .gridview-image {
   width: 70px;
 }

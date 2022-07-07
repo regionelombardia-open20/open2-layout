@@ -78,7 +78,7 @@ use yii\helpers\Html;
             <?php if (isset($logoConf['logoImg'])) : ?>
                 <?php
 
-                $logoImg = Html::img($logoConf['logoImg'], ['alt' => $logoAlt]);
+                $logoImg = Html::img($logoConf['logoImg'], ['class' => 'img-responsive', 'alt' => $logoAlt]);
 
                 if (isset($logoConf['logoUrl'])) {
                     $logo = Html::a(Html::tag('div', $logoImg, ['class' => 'it-brand-text d-block']), $logoUrl, $logoOptions);

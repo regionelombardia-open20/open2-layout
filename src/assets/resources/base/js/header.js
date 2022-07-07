@@ -1,6 +1,12 @@
 //   EFFETTO SHRINK HEADER
+$(document).ready(function(){
+  $('#headerFixed').css('position','fixed');
+  var marginHeader = $('#headerFixed').outerHeight();
+$('#bk-page').css('margin-top',marginHeader);
+});
+
 $(document).on("scroll", function () {
-  if ($(document).scrollTop() > ($('body > .container-header').outerHeight() + $('body > .container-logo').outerHeight())) {
+  if ($(document).scrollTop() > $('#headerFixed').outerHeight()) { 
     $("body").addClass("shrink");
   } else {
     $("body").removeClass("shrink");
@@ -32,3 +38,18 @@ $(function() {
     $('body,html').animate({ scrollTop: 0 }, 800)
   })
 })
+
+// MARGIN TOP bkPage
+function calcMainContentMarginTop() {
+  var marginHeader = $('#headerContent').outerHeight();
+  var spaceFromHeaderToMainContent = '0';
+  $('#bk-page').css('margin-top', Number(marginHeader) + Number(spaceFromHeaderToMainContent));
+};
+
+$(document).ready(function () {
+  calcMainContentMarginTop();
+});
+
+$(window).on('resize',function () {
+  calcMainContentMarginTop();
+});

@@ -222,7 +222,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
 <?php endif ?>
 
 
-<div class="it-header-wrapper <?= ($enableHeaderSticky) ? 'it-header-sticky' : 'navbar-fixed-top' ?>">
+<div id="headerContent" class="it-header-wrapper <?= ($enableHeaderSticky) ? 'it-header-sticky' : 'navbar-fixed-top' ?>">
     <div class="it-header-slim-wrapper flexbox align-items-center py-0">
         <div class="<?= ($fluidContainerHeader) ? 'container-fluid' : 'container' ?>">
             <!--fino qui ok-->
@@ -473,10 +473,6 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                         <div class="it-header-center-content-wrapper flexbox">
                             <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu) ? 'pl-0' : 'pl-lg-0' ?>">
                                 <?= $this->render("bi-less-logo"); ?>
-
-
-
-
                             </div>
                             <div class="it-right-zone flexbox">
                                 <?php if ($showSocial) : ?>
@@ -522,12 +518,18 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                     <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> -->
                                     <div class="navbar-collapsable" id="hamburgerMenu" style="display: none;">
                                         <div class="overlay" style="display: none;"></div>
-                                        <div class="close-div">
-                                            <button class="btn close-menu" type="button" aria-controls="hamburgerMenu" aria-expanded="flase" aria-label="Toggle navigation" data-toggle="collapse" data-target="#hamburgerMenu">
-                                                <span class="text-muted am am-close-circle-o"> </span>
-                                            </button>
-                                        </div>
                                         <div class="menu-wrapper z-index-1">
+
+                                            <div class="header-logo-hamburger close-div">
+                                                <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu) ? 'pl-0' : 'pl-lg-0' ?>">
+                                                    <?= $this->render("bi-less-logo"); ?>
+                                                </div>
+
+                                                <button class="btn close-menu" type="button" aria-controls="hamburgerMenu" aria-expanded="flase" aria-label="Toggle navigation" data-toggle="collapse" data-target="#hamburgerMenu">
+                                                    <span class="text-muted am am-close-circle-o"> </span>
+                                                </button>
+                                            </div>
+
                                             <?= $cmsDefaultMenu ?>
                                         </div>
                                     </div>
