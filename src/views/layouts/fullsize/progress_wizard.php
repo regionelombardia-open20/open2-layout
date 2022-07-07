@@ -109,7 +109,7 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->get('menu', false)) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
     ]); ?>
 </head>
 
@@ -117,7 +117,7 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 
     <?php $this->beginBody() ?>
 
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu    = '<span class="am am-chevron-right am-4"> </span>';
 
@@ -275,7 +275,7 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
         </div>
     </section>
 
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
         $cmsFooterMenu  = app\components\CmsHelper::BiHamburgerMenuRender(

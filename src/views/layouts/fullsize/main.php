@@ -59,7 +59,7 @@ if ($countArrayUrl) {
 
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->get('menu', false)) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
     ]); ?>
 </head>
 
@@ -85,8 +85,7 @@ if ($countArrayUrl) {
                 'container' => $mainMenu
             ]),
             $iconSubmenu,
-            false,
-            $currentAsset
+            false
         );
 
         $cmsDefaultMenuFooter = CmsHelper::BiHamburgerMenuRender(
@@ -95,8 +94,7 @@ if ($countArrayUrl) {
                 'container' => $mainMenu
             ]),
             $iconSubmenu,
-            true,
-            $currentAsset
+            true
         );
 
         $cmsFooterMenu  = CmsHelper::BiHamburgerMenuRender(
@@ -131,6 +129,9 @@ if ($countArrayUrl) {
         $cmsFooterMenu = $cmsDefaultMenuFooter . $cmsFooterMenu;
 
         $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
+        if ((!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) && (!\Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'])) :
+            $cmsDefaultMenu .= $cmsPluginMenu;
+        endif;
         ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -167,18 +168,12 @@ if ($countArrayUrl) {
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
         </div>
     <?php } ?>
-    
+
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
     <section id="bk-page" class="fullsizeMainLayout">
-
-        <?php if ((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
-            && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
-        ) : ?>
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
-        <?php endif; ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
@@ -225,31 +220,33 @@ if ($countArrayUrl) {
 
     </section>
 
-
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
-        $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
-        $cmsFooterMenu  = app\components\CmsHelper::BiHamburgerMenuRender(
-            Yii::$app->menu->findAll([
-                'depth' => 1,
-                'container' => 'footer'
-            ]),
-            $iconSubmenu,
-            'cms-menu-container-footer',
-            true
-        );
-        if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) :
-
+        if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) {
             $customPlatformFooter = \Yii::$app->params['layoutConfigurations']['customPlatformFooter'];
-            echo $this->render($customPlatformFooter, [
+            echo $this->render(
+                $customPlatformFooter,
+                [
+                    'currentAsset' => $currentAsset,
+                    'cmsFooterMenu' => $cmsFooterMenu
+                ]
+            );
+        } else {
+            echo $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-footer", [
                 'currentAsset' => $currentAsset,
-                'cmsFooterMenu' => $cmsFooterMenu
-            ]);
+                'cmsFooterMenu' => $cmsFooterMenu,
+                'showSocial' => \Yii::$app->params['layoutConfigurations']['showSocialFooter'],
 
-        endif;
+            ]);
+        }
         ?>
-    <?php } else { ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
+<?php if ((!isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) || (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar']) && !(\Yii::$app->params['layoutConfigurations']['hideCookieBar']))) : ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
+                'currentAsset' => $currentAsset,
+                'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
+            ]); ?>
+        <?php endif ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-backtotop-button"); ?>    <?php } else { ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
     <?php } ?>
 

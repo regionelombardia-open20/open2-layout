@@ -20,7 +20,7 @@
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->get('menu', false)) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
     ]); ?>
 </head>
 <body>

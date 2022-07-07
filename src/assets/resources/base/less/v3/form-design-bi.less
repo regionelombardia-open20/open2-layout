@@ -45,15 +45,21 @@ div[class*="-create"],
 div[class*="-update "],
 div[class*="-update"] {
   padding: 0;
-  width: 100%;
-  float: left;
+  width: inherit;
+  float: inherit;
 }
 
 div[class*="-form "]:not(.section-form),
 div[class*="-form"]:not(.section-form) {
   width: 100%;
   float: left;
-
+  &.row {
+    width: auto;
+    float: inherit;
+    .nav-tabs {
+      padding: 0 15px;
+    } 
+  }
   .section-form {
     margin-bottom: 24px;
   }
@@ -244,8 +250,13 @@ form {
   //container form action buttons
   margin: @margin-default 0;
 
-  @media (min-width: 420px) {
-    //float: right;
+  @media (max-width: 479px) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+        display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin: @margin-default -3px;
   }
 
   .btn {
@@ -253,7 +264,7 @@ form {
     &[type=button],
     //add for amos-invitations
     &[type=submit] {
-      @media (min-width: 420px) {
+      @media (min-width: 480px) {
         margin-left: @margin-min;
         float: right;
       }
@@ -404,7 +415,7 @@ form {
       }
 
       .select2-selection__clear {
-        bottom: 7px;
+        bottom: 13px;
         right: 25px;
       }
     }

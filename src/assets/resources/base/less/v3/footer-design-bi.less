@@ -1,5 +1,8 @@
 #footerContent {
   margin-top: auto;
+  .bullet-navbar {
+    display: none !important;
+  }
 }
 
 .it-footer {
@@ -23,46 +26,44 @@
   .it-footer-main {
     font-size: 18px;
     background-color: @tertiary-color;
-
     padding: 24px 0;
 
-    @media (min-width: 768px) {
-      .colonna-menu {
-        .link-list-wrapper {
-          // column-count: 2;
-          // column-gap: 200px;
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-          margin-right: -6px;
-          margin-left: -6px;
+    // A COSA SERVE QUESTO CODICE RICCARDO??
+    // @media (min-width: 768px) {
+    //   .link-list-wrapper {
+    //     .flexbox;
+    //     .flexbox-row;
+    //     .flexbox-wrap;
+    //     align-items: flex-start;
+    //     justify-content: flex-start;
 
-          ul {
-            -ms-flex-preferred-size: 0;
-            flex-basis: 0;
-            -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-            min-width: 0;
-            max-width: 100%;
-            position: relative;
-            width: 100%;
-            padding-right: 6px;
-            padding-left: 6px;
-          }
-        }
-      }
-    }
+    //     ul {
+    //       -ms-flex-preferred-size: 0;
+    //       flex-basis: 0;
+    //       -webkit-box-flex: 1;
+    //       -ms-flex-positive: 1;
+    //       flex-grow: 1;
+    //       min-width: 0;
+    //       max-width: 100%;
+    //       position: relative;
+    //       width: 100%;
+    //     }
+    //   }
+    // }
 
     .link-list-wrapper {
       padding: 24px 0;
       margin-bottom: 24px;
-
+      display: flex;
+      flex-direction: column;
+      @media (min-width: 768px) { 
+        flex-direction: row;
+      } 
       ul {
         list-style-type: none;
         padding: 0;
+        width: 100%;
+        flex-grow: 1;
 
         li {
 
@@ -73,13 +74,14 @@
             color: contrast(@tertiary-color);
             padding-bottom: 16px;
             display: block;
-            @media (max-width: 575.98px){
+
+            @media (max-width: 575.98px) {
               text-decoration: underline;
             }
+
             &.active {
               color: contrast(@tertiary-color);
-              font-weight: bold;
-              
+              //font-weight: bold; tenere commentato finchè non abbiamo active sulle voci dei plugin
             }
 
             &:hover {
@@ -123,6 +125,7 @@
                 align-items: center;
                 justify-content: center;
                 margin: 8px 0;
+
                 span {
                   display: inline-block;
                   font-size: 16px;

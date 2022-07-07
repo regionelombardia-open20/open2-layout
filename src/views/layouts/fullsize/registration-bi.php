@@ -10,15 +10,17 @@
  */
 
 use open20\amos\core\components\AmosView;
-use open20\amos\dashboard\models\AmosWidgets;
 use yii\helpers\Url;
 use app\components\CmsHelper;
+use open20\amos\core\helpers\Html;
+use open20\amos\admin\assets\ModuleAdminAsset;
 
 
-////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
+ModuleAdminAsset::register(Yii::$app->view);
 
-/* @var $this \yii\web\View */
-/* @var $content string */
+
+/** @var $this \open20\amos\core\components\AmosView */
+/** @var $content string */
 
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
@@ -49,16 +51,11 @@ if ($countArrayUrl) {
             'filename' => $vista
         ];
     }
-    if (file_exists($basePath . '/' . $percorso . '/intro/' . $vista . '.php')) {
-        $this->params['intro'] = [
-            'filename' => $vista
-        ];
-    }
 }
 ?>
 
-<?php $this->beginPage() ?>
 
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 
@@ -69,13 +66,9 @@ if ($countArrayUrl) {
 </head>
 
 <body>
-
-    <!-- add for fix error message Parametri mancanti -->
-    <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
-
     <?php $this->beginBody() ?>
 
-    <?php if (Yii::$app->isCmsApplication()) { ?>
+    <?php if (Yii::$app->get('menu', false)) { ?>
         <?php
         $iconSubmenu    = '<span class="am am-chevron-right am-4"> </span>';
 
@@ -94,8 +87,7 @@ if ($countArrayUrl) {
                 'container' => $mainMenu
             ]),
             $iconSubmenu,
-            false,
-            $currentAsset
+            false
         );
 
         $cmsDefaultMenuFooter = CmsHelper::BiHamburgerMenuRender(
@@ -104,8 +96,7 @@ if ($countArrayUrl) {
                 'container' => $mainMenu
             ]),
             $iconSubmenu,
-            true,
-            $currentAsset
+            true
         );
 
         $cmsFooterMenu  = CmsHelper::BiHamburgerMenuRender(
@@ -140,6 +131,10 @@ if ($countArrayUrl) {
         $cmsFooterMenu = $cmsDefaultMenuFooter . $cmsFooterMenu;
 
         $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
+
+        if ((!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) && (!\Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'])) : 
+            $cmsDefaultMenu .= $cmsPluginMenu;
+        endif;
         ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -167,56 +162,56 @@ if ($countArrayUrl) {
             'disableThemeLight' => \Yii::$app->params['layoutConfigurations']['disableThemeLightHeader'],
             'disableSmallHeader' => \Yii::$app->params['layoutConfigurations']['disableSmallHeader'],
             'enableHeaderSticky' => \Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader'],
-            'frontendUrl' => \Yii::$app->params['platform']['frontendUrl'],
             'pageSearchLink' => \Yii::$app->params['linkConfigurations']['pageSearchLinkCommon'],
         ]); ?>
-        <!--< ?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>-->
-    <?php } else { ?>
-        <div id="headerFixed">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-        </div>
     <?php } ?>
 
-    <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
-        <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
-    <?php endif; ?>
+    <section id="bk-page" class="fullsizeRegistrationBiLayout">
 
-    <section id="bk-page" class="community-page">
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-        <div class="dashboard-content">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
 
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+        <div class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
 
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+            <div class="page-content">
 
-            <div class="container-custom">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "box_widget_header"); ?>
-            </div>
-
-            <!--        <div class="network-breadcrumb">-->
-            <!--            < ?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>-->
-            <!--        </div>-->
-            <div class="page-content-noMargin">
-                <?php if ($this instanceof \open20\amos\core\components\AmosView) : ?>
+                <?php if ($this instanceof AmosView) : ?>
                     <?php $this->beginViewContent() ?>
                 <?php endif; ?>
-
                 <?= $content ?>
-
                 <?php if ($this instanceof AmosView) : ?>
                     <?php $this->endViewContent() ?>
                 <?php endif; ?>
             </div>
         </div>
+
     </section>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
+    <?php if (Yii::$app->get('menu', false)) { ?>
+        <?php
+        $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
+        $cmsFooterMenu  = app\components\CmsHelper::BiHamburgerMenuRender(
+            Yii::$app->menu->findAll([
+                'depth' => 1,
+                'container' => 'footer'
+            ]),
+            $iconSubmenu,
+            'cms-menu-container-footer',
+            true
+        );
+        if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) :
 
-    <?php /* echo $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); */ ?>
+            $customPlatformFooter = \Yii::$app->params['layoutConfigurations']['customPlatformFooter'];
+            echo $this->render($customPlatformFooter, [
+                'currentAsset' => $currentAsset,
+                'cmsFooterMenu' => $cmsFooterMenu
+            ]);
+
+        endif;
+        ?>
+    <?php } ?>
 
     <?php $this->endBody() ?>
 

@@ -6,11 +6,11 @@
 @nav-tabs-no-active-color: @text-primary-color;
 @nav-tabs-background-color: @white-color;
 @nav-tabs-border-color: @border-color-default;
-@font-size-tabs: 1.4em;
+@font-size-tabs: 1.0rem;
 @font-weight-tabs: 500;
 @font-weight-active-tabs: 700;
 @font-weight-hover-tabs: 700;
-@line-height-tabs: 1.1;
+@line-height-tabs: 1.3;
 
 .tabHover {
   background-color: lighten(@brand-primary-color, 50%);
@@ -76,7 +76,7 @@
 
     &.active,
     &.active:hover {
-      >a {
+      >a, >a:focus {
         .tabActive;
       }
 
@@ -97,7 +97,7 @@
 
 
   /* if there is only one tab, hide it. Not for mobile */
-  @media(min-width: 420px) {
+  @media(min-width: 320px) {
     .dropdown+li:last-child {
       display: none;
     }
@@ -111,5 +111,21 @@
   float: left;
   padding: @padding-default 0;
   background: #fff;
+  h4{
+    font-size: 1.25em;
+    margin-top: 12px;
+  }
+  h3 {
+    margin-top: 25px;
+  }
+  h2.subtitle-form{
+    margin-top: 25px !important;
+  }
+  input{
+    margin-right: 5px;
+  }
+  label{
+    margin-right: 10px;
+  }
 }
 

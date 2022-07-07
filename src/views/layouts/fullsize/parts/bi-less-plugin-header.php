@@ -34,7 +34,7 @@ $titlePreventCreate = (!empty($titlePreventCreate)) ? $titlePreventCreate : Modu
     'Accedi o registrati alla piattaforma {platformName} per creare un contenuto',
     ['platformName' => \Yii::$app->name]
 );
-$titleCanNotCreate = (!empty($titlePreventCreate)) ? $titlePreventCreate : Module::t(
+$titleCanNotCreate = (!empty($titleCanNotCreate)) ? $titleCanNotCreate : Module::t(
     'amoslayout',
     'Non hai il permesso per creare un contenuto della piattaforma {platformName}',
     ['platformName' => \Yii::$app->name]
@@ -56,6 +56,7 @@ if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
             $canCreateMemberActive = \open20\amos\community\utilities\CommunityUtil::userIsCommunityMemberActive($community->id, \Yii::$app->user->id);
 
             $canSecondAction = $canCreate && $canCreateMemberActive;
+            $canCreate = $canCreate && $canCreateMemberActive;
             $communityName = $community->name;
             $titleScopePreventSecondAction = (isset($titleScopePreventSecondAction)) ? $titleScopePreventSecondAction : Module::t(
                 'amoslayout',
@@ -83,8 +84,8 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
 
     foreach ($manageLinks as $k => $v) {
         if (
-            (!empty($v['url'] && ($currentUrl == $v['url']))) ||
-            (!empty($v['url'] && $v['url'] == $urlLinkAll))
+            (!empty($v['url']) && ($currentUrl == $v['url'])) ||
+            (!empty($v['url']) && $v['url'] == $urlLinkAll)
         ) {
             unset($manageLinks[$k]);
         }
@@ -100,7 +101,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
         </div>
         <?php if (!empty($urlLinkAll)) : ?>
             <a href="<?= $urlLinkAll ?>"
-               class="link-all-<?= $modelLabel ?> text-uppercase flexbox align-items-center small"
+               class="link-all-<?= $modelLabel ?> text-uppercase align-items-center small"
                title="<?= $titleLinkAll ?>">
                 <span><?= $labelLinkAll ?></span>
                 <span class="icon mdi mdi-arrow-right-circle-outline"></span>
@@ -169,11 +170,14 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                     ?>
                     <div class="flexbox manage-cta-container">
                         <?php if (!$hideCreate) { ?>
-                            <?php if ($canCreate && !empty($urlCreate)) { ?>
-                                <?= \yii\helpers\Html::a(" <span class=\"am am-plus-circle-o\"></span><span>$labelCreate</span>", $urlCreate, [
-                                    'class' => "cta link-create-$modelLabel flexbox align-items-center btn btn-xs btn-primary",
-                                    'title' => $titleCreate
-                                ]); ?>
+                            <?php if ($canCreate && !empty($urlCreate)) {
+                                $parameters['class'] = "cta link-create-$modelLabel flexbox align-items-center btn btn-xs btn-primary";
+                                $parameters['title'] = $titleCreate;
+                                if (isset($dataConfirmCreate) && !empty($dataConfirmCreate)) {
+                                    $parameters['data-confirm'] = $dataConfirmCreate;
+                                }
+                                ?>
+                                <?= \yii\helpers\Html::a(" <span class=\"am am-plus-circle-o\"></span><span>$labelCreate</span>", $urlCreate, $parameters); ?>
                             <?php } else { ?>
                                 <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events"
                                         data-toggle="tooltip" title="<?= ($isGuest ? $titlePreventCreate : $titleCanNotCreate) ?>">

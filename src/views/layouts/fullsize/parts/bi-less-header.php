@@ -10,6 +10,7 @@ use open20\amos\chat\AmosChat;
 use open20\amos\myactivities\AmosMyActivities;
 use open20\amos\admin\AmosAdmin;
 use open20\amos\layout\Module;
+use yii\helpers\Url;
 
 ?>
 
@@ -122,11 +123,29 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
     );
 
     /* logout */
+    if (!empty($customUserMenuLogoutLink)) {
+        $btnLogoutUrl = [$customUserMenuLogoutLink];
+        $redirectLogoutParam = 'redir';
+    } elseif (Yii::$app->isCmsApplication()) {
+        $btnLogoutUrl = ['/site/logout'];
+        $redirectLogoutParam = 'redir';
+    } else {
+        $btnLogoutUrl = ['/' . AmosAdmin::getModuleName() . '/security/logout'];
+        $redirectLogoutParam = 'backTo';
+    }
+    /** @var \open20\amos\socialauth\Module $socialAuthModule */
+    $socialAuthModule = Yii::$app->getModule('socialauth');
+    if (YII_ENV_PROD && !is_null($socialAuthModule) && ($socialAuthModule->enableSpid === true)) {
+        $btnLogoutUrl[$redirectLogoutParam] = Url::to([
+            '/Shibboleth.sso/Logout',
+            'return' => 'https://idpcwrapper.crs.lombardia.it/PublisherMetadata/Logout?dest=' . urlencode(Url::to('/', true))
+        ], true);
+    }
     $menuUser .= Html::tag(
         'li',
         Html::a(
             Html::tag('span', Yii::t('amoscore', 'Esci')),
-            [!empty($customUserMenuLogoutLink) ? $customUserMenuLogoutLink : '/admin/security/logout'],
+            $btnLogoutUrl,
             [
                 'class' => 'list-item p-0',
                 'title' => Yii::t('amoscore', 'Esci')
@@ -471,7 +490,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                 <div class="row flexbox">
                     <div class="col-12">
                         <div class="it-header-center-content-wrapper flexbox">
-                            <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu) ? 'pl-0' : 'pl-lg-0' ?>">
+                            <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu) ? 'pl-0' : 'pl-md-0' ?>">
                                 <?= $this->render("bi-less-logo"); ?>
                             </div>
                             <div class="it-right-zone flexbox">
@@ -531,6 +550,15 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             </div>
 
                                             <?= $cmsDefaultMenu ?>
+                                            <?php if($customPlatformPluginMenu):
+                                                echo $this->render($customPlatformPluginMenu, [
+                                                    'currentAsset' => $currentAsset,
+                                                ]);
+                                                endif;
+                                            ?>
+                                            <?php if ($showSecondaryMenu) : ?>
+                                                <?= $cmsSecondaryMenu ?>
+                                            <?php endif ?>
                                         </div>
                                     </div>
                                 </nav>
@@ -554,7 +582,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
     <?php
     $isMail = ((isset(Yii::$app->params['assistance']['type']) && Yii::$app->params['assistance']['type'] == 'email') || (!isset(Yii::$app->params['assistance']['type']) && isset(\Yii::$app->params['email-assistenza']))) ? true : false;
     $mailAddress = isset(Yii::$app->params['assistance']['email']) ? Yii::$app->params['assistance']['email'] : (isset(\Yii::$app->params['email-assistenza']) ? \Yii::$app->params['email-assistenza'] : '');
-    $urlAssistance = !empty(Yii::$app->params['assistance']['url']) ? \Yii::$app->params['platform']['backendUrl'] . '/' . Yii::$app->params['assistance']['url'] : '#';
+    $urlAssistance = !empty(Yii::$app->params['assistance']['url']) ? \Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->params['assistance']['url']) : '#';
     ?>
     <?= $this->render("bi-less-assistance", [
         'currentAsset' => $currentAsset,

@@ -28,6 +28,11 @@
   justify-content: center;
   display: inline-flex !important;
 }
+.preview-pane {
+  .hidden {
+    display: none !important;
+  }
+}
 /* set button font */
 .btn-font(@size: @btn-font-size; @weight: @btn-font-weight; @transform: uppercase) {
   font-size: @size;
@@ -161,7 +166,9 @@ span {
     //default for all button
     &:not(.btn-file) {
       /*upload file button*/
-      margin-top: 5px;
+      //margin-top: 5px;
+      margin-left: 3px;
+      margin-right: 3px;
     }
   }
 
@@ -330,11 +337,11 @@ span {
   }
 
   &.btn-danger-inverse {
-    .btn-color(contrast(@danger-color); @danger-color);
+    .btn-color(@danger-color; contrast(@danger-color));
     .btn-min-size(36px; 36px);
     max-height: 36px;
     .btn-border(@danger-color);
-    .btn-hover-change-color(@danger-color; contrast(@danger-color));
+    .btn-hover-change-color(contrast(@danger-color); @danger-color);
 
     .am-close {
       font-size: 1.3em;
@@ -418,8 +425,8 @@ span {
 
 a[class*='link-all'] {
   align-items: center;
-  display: flex;
-  text-decoration: none;
+  display: inline-flex;
+  text-decoration: none; 
   padding: @padding-medium 0;
   margin-top: @margin-min;
   .icon {
@@ -428,8 +435,13 @@ a[class*='link-all'] {
     margin-right: 5px;
   }
 }
-.btn + .btn {
-  margin-left: 4px;
+.btn + .btn:not(.btn-block) {
+  margin-left: 3px;
+  margin-right: 3px;
+  @media (max-width: 479px){
+    margin-left: 3px;
+    margin-right: 3px;
+  }
 }
 
 .input-group-btn {

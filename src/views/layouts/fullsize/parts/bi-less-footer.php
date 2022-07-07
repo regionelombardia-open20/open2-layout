@@ -17,11 +17,9 @@ use yii\helpers\Html;
           <div class="py-1 py-md-4">
             <div class="row">
               <?php if (isset($cmsFooterMenu)) { ?>
-                <div class="col-md-8 colonna-menu">
+                <div class="col-xs-12">
                   <div class="link-list-wrapper">
-
                     <?= $cmsFooterMenu ?>
-
                   </div>
                 </div>
               <?php } ?>
@@ -50,3 +48,11 @@ use yii\helpers\Html;
     </div>
   </div>
 </footer>
+
+<?php
+if ($socialModule = \Yii::$app->getModule('social') && class_exists('\kartik\social\GoogleAnalytics')):
+    if (YII_ENV_PROD && !empty($socialModule->googleAnalytics)):
+        echo \kartik\social\GoogleAnalytics::widget([]);
+    endif;
+endif;
+?>

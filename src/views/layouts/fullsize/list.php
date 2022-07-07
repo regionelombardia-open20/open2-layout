@@ -63,7 +63,7 @@ if ($countArrayUrl) {
 
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->get('menu', false)) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
     ]); ?>
 </head>
 
@@ -74,7 +74,7 @@ if ($countArrayUrl) {
 
     <?php $this->beginBody() ?>
 
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu    = '<span class="am am-chevron-right am-4"> </span>';
 
@@ -139,6 +139,9 @@ if ($countArrayUrl) {
         $cmsFooterMenu = $cmsDefaultMenuFooter . $cmsFooterMenu;
 
         $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
+        if ((!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) && (!\Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'])) :
+            $cmsDefaultMenu .= $cmsPluginMenu;
+        endif;
         ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -162,6 +165,7 @@ if ($countArrayUrl) {
                 'customUserMenu' => \Yii::$app->params['layoutConfigurations']['customUserMenuHeader'],
                 'customUserNotLogged' => \Yii::$app->params['layoutConfigurations']['customUserNotLoggedHeader'],
                 'customUserMenuLoginLink' => \Yii::$app->params['linkConfigurations']['loginLinkCommon'],
+                'customPlatformPluginMenu' => \Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'],
                 'userProfileLinkCommon' => \Yii::$app->params['linkConfigurations']['userProfileLinkCommon'],
                 'customUserMenuLogoutLink' => \Yii::$app->params['linkConfigurations']['logoutLinkCommon'],
                 'showSocial' => \Yii::$app->params['layoutConfigurations']['showSocialHeader'],
@@ -186,10 +190,6 @@ if ($countArrayUrl) {
     <?php endif; ?>
 
     <section id="bk-page" class="fullsizeListLayout">
-
-        <?php if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) : ?>
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
-        <?php endif; ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
@@ -221,7 +221,7 @@ if ($countArrayUrl) {
                 <?php endif; ?>
 
                 <div class="page-header">
-                    <?php if ((Yii::$app->get('menu', false)) && is_array($this->params)) { ?>
+                    <?php if ((Yii::$app->isCmsApplication()) && is_array($this->params)) { ?>
                         <?=
                         $this->render(
                             "parts" . DIRECTORY_SEPARATOR . "bi-less-plugin-header",
@@ -238,6 +238,7 @@ if ($countArrayUrl) {
                                 'urlCreate' => $this->params['urlCreate'],
                                 'labelCreate' =>  $this->params['labelCreate'],
                                 'titleCreate' => $this->params['titleCreate'],
+                                'dataConfirmCreate' => $this->params['dataConfirmCreate'],
 
                                 'hideSecondAction' =>  $this->params['hideSecondAction'],
                                 'urlSecondAction' =>  $this->params['urlSecondAction'],
@@ -297,10 +298,7 @@ if ($countArrayUrl) {
 
     </section>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-backtotop-button"); ?>
-
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) {
             $customPlatformFooter = \Yii::$app->params['layoutConfigurations']['customPlatformFooter'];
@@ -320,7 +318,15 @@ if ($countArrayUrl) {
             ]);
         }
         ?>
-    <?php } else { ?>
+        <?php if ((!isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) || (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar']) && !(\Yii::$app->params['layoutConfigurations']['hideCookieBar']))) : ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
+                'currentAsset' => $currentAsset,
+                'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
+            ]); ?>
+        <?php endif ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-backtotop-button"); ?>
+        <?php } else { ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
     <?php } ?>
 

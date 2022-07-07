@@ -114,7 +114,7 @@ table.table {
 
             @media (max-width: 500px) {
               &:not(:last-child) {
-                padding-left: 50%;
+                //padding-left: 50%;
               }
             }
           }
@@ -129,26 +129,32 @@ table.table {
 //-----------------------------------------------
 .grid-view {
   .table_switch.table-responsive {
-    overflow-x: inherit; //override bootstrap not show vertical scroll-bar
-
+   
     tbody {
       >tr {
         >td {
           &:last-child .container-action {
-            font-size: 1.2em;
-            display: inline-flex;
-            white-space: nowrap;
-            float: right;
-
+            @media (max-width:768px){
+              font-size: 1.2em;
+              display: inline-flex;
+              white-space: nowrap;
+              float: right;
+            }
+            
             .btn+.btn,
             .btn+.modal+.btn {
-              margin-left: 3px;
+              @media (max-width:768px){
+                margin-left: 3px;
+              }
+              
             }
           }
 
           .container-img img,
           .gridview-image {
-            max-width: 70px;
+            @media (max-width:768px){
+              max-width: 70px;
+            }
           }
         }
       }
@@ -160,30 +166,37 @@ table.table {
       overflow-x: auto;
 
       >table {
-        table-layout: auto;
-        margin-bottom: 0;
-
+        @media (max-width:768px){
+          table-layout: auto;
+          margin-bottom: 0;
+        }
         thead>tr>th {
-          border: 1px solid @table-border-color;
-          border-top: none;
-          border-bottom-color: @primary-color;
-          text-align: center;
-          line-height: 5px;
+          @media (max-width:768px){
+            border: 1px solid @table-border-color;
+            border-top: none;
+            border-bottom-color: @primary-color;
+            text-align: center;
+            line-height: 5px;
+          }
         }
 
         tbody {
           >tr {
-            background-color: @white-color;
-            border-left: 1px solid @primary-color;
-
+            @media (max-width:768px){
+              background-color: @white-color;
+              border-left: 1px solid @primary-color;
+            }
             >td {
-              white-space: normal;
-              word-wrap: break-word;
-              border: 1px solid @table-border-color;
-              padding: 5px;
-
+              @media (max-width:768px){
+                white-space: normal;
+                word-wrap: break-word;
+                border: 1px solid @table-border-color;
+                padding: 5px;
+              }
               &:first-child {
-                border-left: none;
+                @media (max-width:768px){
+                  border-left: none;
+                }
               }
             }
           }

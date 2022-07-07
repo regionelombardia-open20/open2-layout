@@ -1,21 +1,39 @@
 //   EFFETTO SHRINK HEADER
-$(document).ready(function(){
+$(window).ready(function(){
   $('#headerFixed').css('position','fixed');
   var marginHeader = $('#headerFixed').outerHeight();
-$('#bk-page').css('margin-top',marginHeader);
+  $('#bk-page').css('margin-top',marginHeader);
+
+  $('#headerContent').css('position','fixed');
+  var marginHeader = $('#headerContent').outerHeight();
+  $('#bk-page').css('margin-top',marginHeader);
+ 
 });
 
-$(document).on("scroll", function () {
-  if ($(document).scrollTop() > $('#headerFixed').outerHeight()) { 
+$(window).on("scroll", function () {
+  if ($(window).scrollTop() > $('#headerContent').outerHeight()) { 
     $("body").addClass("shrink");
+    
   } else {
     $("body").removeClass("shrink");
+    var marginHeader = $('#headerContent').outerHeight();
+    $('#bk-page').css('margin-top',marginHeader);
+    
+    
+  }
+  if ($(window).scrollTop() > $('#headerFixed').outerHeight()) { 
+    
+    $("body").addClass("shrink");
+    
+  } else {
+    $("body").removeClass("shrink");
+  
   } 
 });
 // PUSH UP ASSISTANNCE
-$(document).on("scroll", function () {
+$(window).on("scroll", function () {
   if
-    ($(document).scrollTop() >= 99) {
+    ($(window).scrollTop() >= 99) {
     $(".bi-assistance").addClass("push-up");
   }
   else {
@@ -38,18 +56,3 @@ $(function() {
     $('body,html').animate({ scrollTop: 0 }, 800)
   })
 })
-
-// MARGIN TOP bkPage
-function calcMainContentMarginTop() {
-  var marginHeader = $('#headerContent').outerHeight();
-  var spaceFromHeaderToMainContent = '0';
-  $('#bk-page').css('margin-top', Number(marginHeader) + Number(spaceFromHeaderToMainContent));
-};
-
-$(document).ready(function () {
-  calcMainContentMarginTop();
-});
-
-$(window).on('resize',function () {
-  calcMainContentMarginTop();
-});

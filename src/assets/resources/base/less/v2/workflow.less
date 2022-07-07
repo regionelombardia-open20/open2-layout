@@ -53,6 +53,13 @@ workflow buttons on bottom page in create/update view
 .workflow-transition-button-widget {
   margin-top: @margin-large;
   margin-bottom: @margin-default;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width:992px){
+    flex-direction: column;
+  }
 
   .workflow-button-container .btn { //reset button not into container
     margin-top: @margin-medium;
@@ -60,7 +67,7 @@ workflow buttons on bottom page in create/update view
   .workflow-buttons-container {
     display: inline-flex;
     .flexbox-row;
-    .flexbox-wrap;
+    flex-wrap: nowrap;
     justify-content: flex-end;
     //width: 100%;
     text-align: center;

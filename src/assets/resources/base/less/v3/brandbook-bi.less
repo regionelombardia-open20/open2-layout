@@ -1,7 +1,7 @@
 /* BRANDBOOK RL 25-7-19 */
 
 /* COLORS */
-@brandbook-primary-color: #2a7a38;
+@brandbook-primary-color: #297a38;
 @brandbook-secondary-color: #003354;
 
 @brandbook-neutral-1-color: #e6e9f2;
@@ -18,7 +18,7 @@
 
 /* LOGHI RL */
 @global-height-logo: 54px;
-@margin-between-logo: 24px;
+@space-between-logo: 24px;
 @height-logo-RL: @global-height-logo;
 @width-logo-RL: 194px;
 @height-logo-ARIA: @global-height-logo;
@@ -26,16 +26,16 @@
 @height-logo-RL-top: 38px;
 @width-logo-RL-top: 184px;
 
-.logo-RL-design {
-    // max-width: @width-logo-RL;
-    // height: @height-logo-RL;
-    margin-right: @margin-between-logo;
+.logo-RL-design > .it-brand-text > img {
+    width: @width-logo-RL;
+    height: @height-logo-RL;
+    margin-right: @space-between-logo;
 }
-.logo-RL-top-design {
-    width: @width-logo-RL-top;
-    // height: @height-logo-RL-top;
+.logo-RL-top-design > img {
+    width: auto;
+    height: @height-logo-RL-top;
 }
-.logo-ARIA-design {
+.logo-ARIA-design > .it-brand-text > img {
     width: @width-logo-ARIA;
     height: @height-logo-ARIA;
 }

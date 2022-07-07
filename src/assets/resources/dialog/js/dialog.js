@@ -43,3 +43,27 @@ var krajeeDefaultValues = {
 };
 var krajeeDialog = new KrajeeDialog(true, krajeeModalOptions, krajeeDefaultValues);
 krajeeYiiConfirm('krajeeDialog');
+
+
+/**
+ * 
+ * Bug: Html a with data-confirm inside a form should not submit a form #17624
+ * 
+ */
+$(document).on('click', 'a[data-url-confirm]', function (e){
+    var link                = $(this);
+    var address             = link.attr('href');
+
+    krajeeDialog.confirm($(e.currentTarget).data('urlConfirm'),function (result)
+                    {
+                            if(result){
+                                window.location.href = address;
+                                return true;
+                            }else{
+                                return true;
+                            }
+                    });
+	e.preventDefault();
+	return false;
+    }
+);

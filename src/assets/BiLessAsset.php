@@ -30,13 +30,19 @@ class BiLessAsset extends AssetBundle
         'less/main-bi.less'
     ];
 
+    public $depends = [
+        'open20\amos\layout\assets\CookieBarAsset',
+    ];
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         $this->sourcePath = __DIR__ . '/resources/base';
-        
+        if( !(isset(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader'])) || (isset(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader']) && !(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader']))){
+            $this->js[] = 'js/header-height.js';
+        }
         parent::init();
     }
 }

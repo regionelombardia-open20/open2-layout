@@ -187,7 +187,7 @@ form {
   }
 }
 
-.wrap-button { //container form action buttons
+.wrap-button, .btn-add-admin { //container form action buttons
   margin: @margin-default 0;
 
   @media (min-width: 420px) {
@@ -197,13 +197,14 @@ form {
   .btn {
     &[type=button], //add for amos-invitations
     &[type=submit] {
-      @media (min-width: 420px) {
+      @media (min-width: 480px) {
         margin-left: @margin-min;
         float: right;
       }
     }
-    @media (max-width: 419px) {
+    @media (max-width: 479px) {
       width: 100%;
+      margin-bottom: 5px;
     }
   }
 

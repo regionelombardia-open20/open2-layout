@@ -12,12 +12,18 @@
 
       .language-item, .pluginName {
         font-size: 14.4px !important;
-        hyphens: auto;
+        //hyphens: auto;
       }
       .badge {
         border-radius: 100px;
-        background: @primary-color;
-        font-size: 1rem;
+        background: @danger-color;
+        font-size: 0; //nascosti numeri su befe
+        &:empty {
+          display: inline-flex !important;
+          height: 14px;
+          width: 14px;
+          padding: 0;
+        }
       }
     }
   }

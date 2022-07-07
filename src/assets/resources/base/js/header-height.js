@@ -1,13 +1,18 @@
+// MARGIN TOP bkPage
 function calcMainContentMarginTop() {
-    var marginHeader = $('#headerContent').outerHeight();
-    var spaceFromHeaderToMainContent = '0';
-    $('#mainContent > main').css('margin-top', Number(marginHeader) + Number(spaceFromHeaderToMainContent));
+  var headerHeight = $('#headerContent').outerHeight();
+  var footerHeight = $('#footerContent').outerHeight();
+  var viewportHeight = window.innerHeight;
+  var spaceFromHeaderToMainContent = '0';
+  $('#bk-page').css('margin-top', Number(headerHeight) + Number(spaceFromHeaderToMainContent));
+  $('#bk-page').css('min-height', Number(viewportHeight) - (Number(headerHeight) + Number(footerHeight)));
+
 };
 
 $(document).ready(function () {
-    calcMainContentMarginTop();
+  calcMainContentMarginTop();
 });
 
 $(window).on('resize',function () {
-    calcMainContentMarginTop();
+  calcMainContentMarginTop();
 });

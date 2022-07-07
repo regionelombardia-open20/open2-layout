@@ -19,6 +19,7 @@ es: amos-cwh recipients-check
   .btn-search-admin,
   .btn-search-recipients-check,
   .m2mwidget-search-mini {
+    padding: 0 15px;
     //TODO include input + search + delete into update views
     .flexbox;
 
@@ -39,7 +40,7 @@ es: amos-cwh recipients-check
   }
 
   .btn+.btn {
-    margin-left: 3px;
+    //margin-left: 3px;
   }
 }
 
@@ -64,6 +65,10 @@ toolbar on views used for add element, order, download, search, change view, hig
     .btn.btn-tools-primary.dropdown-toggle {
       //export button
       padding: 0 10px;
+    }
+    .open > .dropdown-menu{
+      left: auto;
+      right: 0;
     }
   }
 
@@ -90,7 +95,7 @@ toolbar on views used for add element, order, download, search, change view, hig
     width: 100%;
     float: left;
     //.flexbox;
-    //.flexbox-wrap;
+    .flexbox-wrap;
     //align-items: center;
     //justify-content: space-between;
 
@@ -163,6 +168,9 @@ toolbar on views used for add element, order, download, search, change view, hig
         >p {
           margin: 1px;
         }
+      }
+      @media (max-width: 418px) {
+        margin-top: 15px;
       }
     }
 

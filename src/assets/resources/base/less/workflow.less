@@ -52,6 +52,12 @@ workflow buttons on bottom page in create/update view
 .workflow-transition-button-widget {
   margin-top: @margin-large;
   margin-bottom: @margin-default;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+
+
 
   .workflow-button-container .btn { //reset button not into container
     margin-top: @margin-medium;
@@ -72,8 +78,13 @@ workflow buttons on bottom page in create/update view
   .workflow-buttons-container {
     display: inline-flex;
     .flexbox-row;
-    .flexbox-wrap;
+    flex-wrap: nowrap;
     justify-content: flex-end;
+    order: 1;
+    @media (max-width:991px){
+      flex-direction: column;
+    }
+  
     @media (max-width:430px){
       justify-content: center;
 
@@ -88,7 +99,13 @@ workflow buttons on bottom page in create/update view
       padding: 0 @padding-medium;
       max-width: 240px; //for only one btn in create view
       //max-width fix for button togli dalla pubblicazione
+      min-width: 220px;
       border-right: 1px solid @border-color-default;
+      @media (max-width:991px){
+        border-right: none;
+        padding: 0 !important;
+      }
+    
       @media (max-width:430px){
         
         border-right: none;

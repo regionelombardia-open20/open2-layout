@@ -12,7 +12,15 @@
   border-bottom: 1px solid #CCC;
   margin-bottom:12px;
   margin-top: 0;
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width:1199px) {
+    flex-direction: column;
+    align-items:flex-start;
 
+  }
   h1 {
     &.title {
       text-transform: none;
@@ -100,6 +108,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: @margin-default;
 }
 
 a.readmore {
@@ -110,6 +119,12 @@ a.readmore {
 }
 .container-tools {
   padding: 0;
+  @media (max-width:767px) {
+    padding: 0 15px;
+    + div {
+      //padding: 0 15px;
+    }
+  }
 }
 
 .header-widget {
@@ -162,7 +177,7 @@ a.readmore {
           margin-left: 0;
 
           .dropdown-menu.pull-right {
-              left: 0;
+              //left: 0;
           }
       }
 

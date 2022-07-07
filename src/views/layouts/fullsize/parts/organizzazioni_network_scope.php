@@ -57,7 +57,7 @@ if (isset($community)) {
             <div class="scope-title-container">
                 <div class="scope-title">
                     <h1><?= $organization->name ?></h1>
-                    <a href="/site/to-menu-url?url=/it/organizzazioni/profilo/index" class="link-all flexbox align-items-center" title="Visualizza la lista delle organizzazioni">
+                    <a href="/site/to-menu-url?url=/it/organizzazioni/profilo/index" class="link-all align-items-center" title="Visualizza la lista delle organizzazioni">
                         <p><?= ModuleOrganizzazione::t('amosorganizzazioni', 'Tutte le organizzazioni') ?></p>
                         <span class="am am-arrow-right"></span>
                     </a>

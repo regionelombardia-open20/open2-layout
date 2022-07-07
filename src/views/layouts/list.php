@@ -70,7 +70,7 @@ if ($countArrayUrl) {
 
     <?php $this->beginBody() ?>
 
-    
+
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
