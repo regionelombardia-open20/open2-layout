@@ -9,11 +9,13 @@
  * @category   CategoryName
  */
 
+use open20\amos\admin\AmosAdmin;
 use open20\amos\core\helpers\Html;
 use open20\amos\core\icons\AmosIcons;
 use open20\amos\core\utilities\CurrentUser;
 use open20\amos\core\widget\WidgetAbstract;
 use open20\amos\dashboard\AmosDashboard;
+use open20\amos\layout\interfaces\AddHeaderNavItemsInterface;
 use open20\amos\layout\Module;
 use open20\amos\layout\toolbar\Nav;
 use open20\amos\layout\toolbar\NavBar;
@@ -24,6 +26,21 @@ use yii\web\JsExpression;
 /**
  * @var $this \yii\web\View
  */
+
+/** @var AmosAdmin $adminModule */
+$adminModule = AmosAdmin::instance();
+
+/** @var Module $layoutModule */
+$layoutModule = Module::instance();
+
+$addItems = false;
+if (!empty($layoutModule->addHeaderNavItemsClass)) {
+    $addItemsObj = Yii::createObject($layoutModule->addHeaderNavItemsClass);
+    if ($addItemsObj instanceof AddHeaderNavItemsInterface) {
+        $addItems = true;
+    }
+}
+
 ?>
 
 <div class="container-header">
@@ -140,6 +157,9 @@ use yii\web\JsExpression;
 
 
             $items = [];
+            if ($addItems) {
+                $items = $addItemsObj->addItemsToBegin($items);
+            }
 
             /**
              * search button
@@ -168,7 +188,7 @@ use yii\web\JsExpression;
                 $items[]   = $search;
             }
 
-            if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader'] == true)){		
+            if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader'] == true)){
                 if (\Yii::$app->getModule('tickets')) {
                     $ticketsLink    = Html::tag('li',
                             Html::a(
@@ -177,10 +197,10 @@ use yii\web\JsExpression;
                                 ['title' => \backend\modules\tickets\Module::t('tickets', 'Faq')]
                             ), ['class' => 'header-plugin-icon']
                     );
-                    $items[] = $ticketsLink;	
+                    $items[] = $ticketsLink;
                 }
             }
-            
+
             $btnsLogout = '';
             $btnsEsci = '';
             $btnLogoutUrl = ['/admin/security/logout'];
@@ -217,6 +237,15 @@ use yii\web\JsExpression;
 
         $disableMyprofile = (!empty(\Yii::$app->params['disableMenuUser']) && \Yii::$app->params['disableMenuUser'] == true);
 
+            $btnChangeUser = '';
+            if ($adminModule->hasMethod('loggedUserCanChangeProfile') && $adminModule->loggedUserCanChangeProfile()) {
+                $btnChangeUser = [
+                    'label' => Module::t('amoslayout', '#change_user_label'),
+                    'url' => ['/' . AmosAdmin::getModuleName() . '/change-user/my-users-list'],
+                    'linkOptions' => ['title' => Module::t('amoslayout', '#change_user_description')]
+                ];
+            }
+
             $userMenu = [
                 'label' => '<div class="container-round-img-xs">'.$imgAvatar.'</div>'
 //                'label' => AmosIcons::show('account', [
@@ -237,6 +266,7 @@ use yii\web\JsExpression;
                     'linkOptions' => ['title' => Yii::t('amoscore', 'Il mio profilo')]
                     ]),
                     $btnsLogout,
+                    $btnChangeUser,
                     $btnsEsci,
                     ($hasPrivacyLink || $hasCookiesLink) ?
                     '<li class="divider"></li>
@@ -321,6 +351,9 @@ use yii\web\JsExpression;
 
             $items[] = $userMenu;
 
+            if ($addItems) {
+                $items = $addItemsObj->addItemsToEnd($items);
+            }
 
             $menuItems = $items;
 

@@ -69,10 +69,13 @@ if ($countArrayUrl) {
            value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>"/>
 
     <?php $this->beginBody() ?>
+    
+    <div id="headerFixed">
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+    </div>
 
     <?php if (isset(Yii::$app->params['logo-bordo'])): ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>

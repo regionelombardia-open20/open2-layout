@@ -11,6 +11,8 @@
 
 return [
     /* network_scope layout */
+    '#change_user_description' => 'Choose which of your user profiles you want to log in with',
+    '#change_user_label' => 'Change user profile',
     '#network_scope_bottom_label_community' => 'The currently visible contents are related to this community',
     '#network_scope_bottom_label_event' => 'The currently visible contents are related to this event',
     '#network_scope_exit' => 'Exit',
