@@ -315,8 +315,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- CHAT MODULE -->
                                 <?php if (!CurrentUser::isPlatformGuest()) : ?>
+                                    <!-- CHAT MODULE -->
                                     <?php if (\Yii::$app->getModule('chat')) : ?>
                                         <?php
                                         $chatModuleWidget          = new \open20\amos\chat\widgets\icons\WidgetIconChat();
@@ -358,61 +358,84 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             </a>
                                         </div>
                                     <?php endif; ?>
-                                <?php endif; ?>
+                                    
+                                    <!-- TO FRONTEND LINK -->
+                                    <?php if (isset(\Yii::$app->params['toFrontendLink']) && \Yii::$app->params['toFrontendLink']) : ?>
+                                        <div class="nav-item">
+                                            <a class="nav-link" href="<?= \Yii::$app->params['platform']['frontendUrl'] ?>" title="<?=
+                                                                                                                                    Yii::t(
+                                                                                                                                        'amoscore',
+                                                                                                                                        '#frontend'
+                                                                                                                                    )
+                                                                                                                                    ?>" <?=
+                                                                                                                                        (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
+                                                                                                                                            ? 'target="_blank"' : ''
+                                                                                                                                        ?>>
+                                                <svg class="icon">
+                                                    <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_exit_to_app"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                    <!-- TO DASHBOARD LINK -->
+                                    <?php if (isset(\Yii::$app->params['toDashboardLink']) && \Yii::$app->params['toDashboardLink']) :
+                                    ?>
+                                        <div class="nav-item">
+                                            <a class="nav-link" href="/dashboard" title="<?=
+                                                                                            Yii::t(
+                                                                                                'amoscore',
+                                                                                                '#to_dashboard_link_text'
+                                                                                            )
+                                                                                            ?>">
+                                                <svg class="icon">
+                                                    <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_home"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
 
-                                <!-- TO FRONTEND LINK -->
-                                <?php if (isset(\Yii::$app->params['toFrontendLink']) && \Yii::$app->params['toFrontendLink']) : ?>
-                                    <div class="nav-item">
-                                        <a class="nav-link" href="<?= \Yii::$app->params['platform']['frontendUrl'] ?>" title="<?=
-                                                                                                                                Yii::t(
-                                                                                                                                    'amoscore',
-                                                                                                                                    '#frontend'
-                                                                                                                                )
-                                                                                                                                ?>" <?=
-                                                                                                                                (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
-                                                                                                                                    ? 'target="_blank"' : ''
-                                                                                                                                ?>>
-                                            <svg class="icon">
-                                                <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_exit_to_app"></use>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
-                                <!-- TO DASHBOARD LINK -->
-                                <?php if (isset(\Yii::$app->params['toDashboardLink']) && \Yii::$app->params['toDashboardLink']) :
-                                ?>
-                                    <div class="nav-item">
-                                        <a class="nav-link" href="/dashboard" title="<?=
-                                                                                        Yii::t(
-                                                                                            'amoscore',
-                                                                                            '#to_dashboard_link_text'
-                                                                                        )
-                                                                                        ?>">
-                                            <svg class="icon">
-                                                <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_home"></use>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
+                                    <!-- TICKETS MODULE -->
+                                    <?php
+                                    if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader']
+                                            == true) && (\Yii::$app->getModule('tickets'))
+                                    ) :
+                                    ?>
+                                        <div class="nav-item">
+                                            <a class="nav-link" href="/ticket/assistenza/cerca-faq" title="<?=
+                                                                                                            Module::t(
+                                                                                                                'tickets',
+                                                                                                                'Faq'
+                                                                                                            )
+                                                                                                            ?>">
+                                                <svg class="icon">
+                                                    <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_help_outline"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
 
-                                <!-- TICKETS MODULE -->
-                                <?php
-                                if ((isset(\Yii::$app->params['enableTickectNavbarHeader'])) && (\Yii::$app->params['enableTickectNavbarHeader']
-                                        == true) && (\Yii::$app->getModule('tickets'))
-                                ) :
-                                ?>
-                                    <div class="nav-item">
-                                        <a class="nav-link" href="/ticket/assistenza/cerca-faq" title="<?=
-                                                                                                        Module::t(
-                                                                                                            'tickets',
-                                                                                                            'Faq'
-                                                                                                        )
-                                                                                                        ?>">
-                                            <svg class="icon">
-                                                <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_help_outline"></use>
-                                            </svg>
-                                        </a>
-                                    </div>
+                                    <!-- EXPORTJOBS MODULE -->
+                                    <?php if (\Yii::$app->getModule('exportjobs') && !\Yii::$app->user->isGuest && Yii::$app->user->can('EXPORT_READER')) : ?>
+                                        <?php
+                                        $widget      = new \frontend\modules\exportjobs\models\TaskExportJob();
+                                        $myReportModuleBulletCount     = 0;
+                                        $myReportModuleBulletCount     = $widget->getBulletCount();
+                                        $menuMyReportModuleBulletCount = ($myReportModuleBulletCount > 0) ? Html::tag(
+                                            'span',
+                                            $myReportModuleBulletCount,
+                                            ['class' => 'badge badge-pill badge-danger']
+                                        ) : '';
+                                        ?>
+                                        <div class="nav-item">
+                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/exportjobs/my-export/index" data-toggle="tooltip" data-placement="bottom" title="<?=
+                                                                                                                                                                                    \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs', 'Le mie esportazioni')
+                                                                                                                                                                                    ?>">
+                                                <span class="dash dash-bar-chart"></span>
+                                                <?= $menuMyReportModuleBulletCount ?>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                    
                                 <?php endif; ?>
 
                                 <!-- USER -->

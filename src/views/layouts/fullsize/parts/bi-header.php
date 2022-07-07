@@ -270,6 +270,32 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                     </a>
                                 </div>
                             <?php endif; ?>
+                            
+                            <!-- EXPORTJOBS MODULE -->
+                            <?php if (\Yii::$app->getModule('exportjobs') && !\Yii::$app->user->isGuest && Yii::$app->user->can('EXPORT_READER')) : ?>
+                                <?php
+                                $widget      = new \frontend\modules\exportjobs\models\TaskExportJob();
+                                $myReportModuleBulletCount     = 0;
+                                $myReportModuleBulletCount     = $widget->getBulletCount();
+                                $menuMyReportModuleBulletCount = ($myReportModuleBulletCount > 0) ? Html::tag(
+                                    'span',
+                                    $myReportModuleBulletCount,
+                                    ['class' => 'badge badge-pill badge-danger']
+                                ) : '';
+                                ?>
+                                <div class="nav-item">
+                                    <a class="nav-link" href="/exportjobs/my-export/index" data-toggle="tooltip"
+                                       data-placement="bottom" title="<?= \frontend\modules\exportjobs\AmosExportJobs::t(
+                                        'exportjobs',
+                                        'My Export'
+                                    )
+                                    ?>">
+                                        <svg class="icon">
+                                            <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_notifications"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
 
                             <?php
                             if (!empty($menuLanguages)):

@@ -371,6 +371,29 @@ use yii\web\JsExpression;
                 );
                 $menuItems[] = $myActivitiesLink;
             }
+            
+            if (\Yii::$app->getModule('exportjobs') && !\Yii::$app->user->isGuest && Yii::$app->user->can('EXPORT_READER')) {
+                $widget      = new \frontend\modules\exportjobs\models\TaskExportJob();
+                if (
+                    (isset(\Yii::$app->params['disableBulletCounters']) && (\Yii::$app->params['disableBulletCounters'] === true)) &&
+                    (!isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) || (isset(\Yii::$app->params['enableMyActivitiesBulletCounters']) && (\Yii::$app->params['enableMyActivitiesBulletCounters'] === false)))
+                ) {
+                    $bulletCount = 0;
+                } else {
+                    $bulletCount = $widget->getBulletCount();
+                } 
+                $bulletCount = 0;
+                $myActivitiesLink    = Html::tag('li',
+                        Html::a(
+                            AmosIcon::show('view-list-alt')."<span class='badge'>".(($bulletCount > 0 ) ? $bulletCount
+                                : "" )."</span>"
+                            , '/exportjobs/my-export/index',
+                            ['title' => \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs',
+                                'My exports')]
+                        ), ['class' => 'header-plugin-icon']
+                );
+                $menuItems[] = $myActivitiesLink;
+            }
 
 
 
