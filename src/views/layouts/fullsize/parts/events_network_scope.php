@@ -237,7 +237,7 @@ if (isset($model)) {
 
                                     if ($issetCwh) {
                                         $scope = $cwhModule->getCwhScope();
-                                        if (!empty($scope) && isset($scope['community'])) {
+                                        if ((!empty($scope) && isset($scope['community'])) || (empty($scope) && (Yii::$app->controller->id == 'event') && (Yii::$app->controller->action->id == 'update'))) {
                                             $button['text'] = AmosEvents::t('amoslayout', '#back_to_event_scope');
                                             $button['url'] = Yii::$app->urlManager->createUrl(['/events/event/view', 'id' => $model->id, 'resetscope' => '1']);
                                             $button['options']['class'] = 'btn btn-navigation-primary btn-event-success';

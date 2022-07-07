@@ -3,32 +3,10 @@
 /*HEADER DEFAULT VARIABLES*/
 @color-navbar: @custom-color;
 @contrast-navbar: contrast(@color-navbar);
-@navbar-height: 30px;
 
-.navbar-default {
-  background-color: @custom-color;
-  border: none;
-}
 
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-  opacity: 0.8;
-}
 
 .container-header {
-  .navbar-default {
-    background-color: @custom-color;
-  }
-
-  .navbar {
-    margin-bottom: 0;
-    height: @navbar-height;
-    min-height: @navbar-height !important;
-    border-radius: 0;
-    > .container {
-      position: relative;
-    }
-  }
 
   .navbar-collapse {
     padding: 0;
@@ -57,7 +35,7 @@
     }
     .header-plugin-icon {
       padding: 5px;
-      height: @navbar-height;
+      // height: @navbar-height;
       > a {
         .flexbox;
         .flexbox-row;
@@ -169,7 +147,7 @@
 
     .avatar-xs, //TODO remove class avatar-xs
     .container-round-img-xs {
-      .img-size(22px);
+      .img-size(28px);
       float: left;
       margin: 0;
       margin-right: 10px;
@@ -346,7 +324,6 @@
 // LOGO/BRAND HEADER
 //-----------------------------------------------
 .container-logo {
-  //border-bottom: 3px solid @custom-color;
   background-color: #ffffff;
   padding: @padding-min 0;
 
@@ -397,7 +374,6 @@
     font-size: 3em;
     line-height: 1.1;
     float: left !important;
-    //margin: 17px 0 0 19px;
     margin-right: 10px;
     color: @primary-color;
 
@@ -415,14 +391,6 @@
     &.logo-background-right {
       background-image: none;
     }
-  }
-  a.title-text.thirdLogo {
-    color: @text-primary-color;
-    text-decoration: none;
-  }
-  .title-text.thirdLogo {
-    font-weight: bold;
-    margin: 0 !important;
   }
 }
 
@@ -481,5 +449,126 @@
   .container-header .navbar-nav.hidden-lg.hidden-md.hidden-sm.nav .btn-toggle-search .dropdown-menu {
     left: 0 !important;
     right: 0 !important;
+  }
+}
+
+//-----------------------------------------------
+// HEADER NUOVO 
+//-----------------------------------------------
+
+@navbar-top-height: 58px;
+@container-logo-height: 94px;
+@navbar-top-height-shrink: 40px;
+@container-logo-height-shrink: 60px;
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  opacity: 0.8;
+}
+
+.container-header {
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    height: @navbar-top-height;
+    min-height: inherit !important;
+    padding-top: 14px;
+    > .container {
+      position: relative;
+    }
+  }
+	.navbar-nav {
+    .user-menu p{
+      font-weight: bold;
+    }
+		.user-menu, .btn-toggle-search{
+			&.dropdown {
+				& > a {
+          font-size: 16px;
+          letter-spacing: 0;
+          text-transform: none;
+				}
+			}
+		}
+	}
+}
+.navbar-default {
+  background-color: @custom-color;
+  border: none;
+	.navbar-nav {
+		& > li {
+			& > a {
+				&:hover, &:focus {
+					color: #FFF;
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+}
+
+
+
+.container-logo {
+  height: @container-logo-height;
+  display: flex;
+  
+  img {
+    width: inherit !important;
+  }
+
+  .img-responsive {
+    max-height: inherit;
+    padding: 0;
+
+    img {
+      height: 54px;
+    }
+  }
+  .title-text {
+    font-size: 18px;
+    margin-left: 24px;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
+    margin-top: 0;
+    color: #3d4955;
+    font-weight: 600;
+  }
+}
+
+
+// EFFETTO SHRINK
+ .shrink {
+  .navbar {
+    height: @navbar-top-height-shrink;
+    transform: translateY(0px);
+    min-height: inherit !important;
+    padding-top: 5px;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    /* animation magic */
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+  }
+  .container-logo {
+    height: @container-logo-height-shrink;
+    transform: translateY(@navbar-top-height-shrink);
+    position: fixed;
+    width: 100%;
+    z-index: 990;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    /* animation magic */
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+  }
+
+
+
+  .menu-profile a.btn-full {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 }

@@ -60,7 +60,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 echo AmosIcons::show('unfold-more', [
                     'class' => 'btn btn-tools-primary show-hide-element',
                     'data-toggle-element' => 'form-order',
-                ], null, true, 'button');
+                ]);
             }
 
             //INTRODUCTION ENABLED?
@@ -82,7 +82,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                     echo AmosIcons::show('triangle-up', [
                         'class' => 'btn btn-tools-primary rotate-right-90',
                         'id' => 'plugin-introduction-slideshow'
-                    ], null, true, 'button');
+                    ]);
                     $js = "
                             $('#plugin-introduction-slideshow').on('click', function (event) {
                                 $('#amos-slideshow').modal('show');
@@ -236,19 +236,18 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                     echo AmosIcons::show('search', [
                         'class' => 'btn btn-tools-primary show-hide-element active',
                         'data-toggle-element' => 'form-search'
-                    ], null, true, 'button');
+                    ]);
                 } else {
                     echo AmosIcons::show('search', [
                         'class' => 'btn btn-tools-primary show-hide-element',
                         'data-toggle-element' => 'form-search'
-                    ], null, true, 'button');
+                    ]);
                 }
             }
             ?>
             <?= ChangeView::widget([
                 'dropdown' => Yii::$app->controller->getCurrentView(),
                 'views' => Yii::$app->controller->getAvailableViews(),
-                'dropdownTag' => 'button',
             ]); ?>
             <?= ContentSettingsMenuWidget::widget(); ?>
         </div>

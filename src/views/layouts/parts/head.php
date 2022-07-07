@@ -22,7 +22,7 @@ BaseAsset::register($this);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?= Html::csrfMetaTags() ?>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title><?= Html::encode($this->title) ?> - <?= Html::encode(Yii::$app->name) ?></title>
+<title><?= Html::encode(Yii::$app->name) ?> - <?= Html::encode($this->title) ?></title>
 <!--<link rel="stylesheet" type="text/css" href="/css/print_style.css" media="print">-->
 <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/<?= Yii::$app->params['favicon'] ?>" type="image/x-icon" />
 <?php $this->head() ?>

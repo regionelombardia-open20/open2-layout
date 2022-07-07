@@ -25,6 +25,7 @@ class BaseAsset extends AssetBundle
         'js/globals.js',
         'js/device-detect.js',
         'js/tooltip-component.js',
+        'js/header.js',
         'js/footer.js'
     ];
 
