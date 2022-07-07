@@ -53,3 +53,41 @@
     }
   }
 }
+
+/**
+cambio grafica plugin community
+*/
+.dashboard-content {
+  .community-dashboard-container {
+      background-color: transparent;
+  }
+
+  .square-box {
+      .dashboard-menu-item {
+          background-color: @white-color;
+          border: 3px solid @brand-third-color;
+
+          .am,
+          .dash,
+          .ic,
+          .language-item,
+          .pluginName {
+              color: @brand-third-color;
+          }
+
+          &:hover {
+              background-color: @brand-primary-color;
+              border-color: lighten(@brand-primary-color, 10%);
+
+              .am,
+              .dash,
+              .ic,
+              .language-item,
+              .pluginName {
+                  color: @white-color;
+              }
+          }
+      }
+  }
+
+}

@@ -88,7 +88,7 @@ if ($countArrayUrl) {
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeMainCommunityLayout">
+    <section id="bk-page" class="fullsizeMainCommunityLayout" role="main">
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 

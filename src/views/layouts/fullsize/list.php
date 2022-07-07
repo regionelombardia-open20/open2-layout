@@ -95,7 +95,7 @@ if ($countArrayUrl) {
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeListLayout">
+    <section id="bk-page" class="fullsizeListLayout" role="main">
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
@@ -128,6 +128,9 @@ if ($countArrayUrl) {
 
                 <div class="page-header">
                     <?php if ((Yii::$app->isCmsApplication()) && is_array($this->params)) { ?>
+                        <?php if (!is_null($this->title)) : ?>
+                            <h1 class="title sr-only"><?= Html::encode($this->title) ?></h1>
+                        <?php endif; ?>
                         <?=
                         $this->render(
                             "parts" . DIRECTORY_SEPARATOR . "bi-less-plugin-header",

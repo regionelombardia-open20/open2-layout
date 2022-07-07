@@ -285,7 +285,7 @@ class NavBar extends YiiNavBar {
       
       $chatLink = Html::tag('li',
           Html::a(
-            AmosIcon::show('view-list-alt') . "<span class='badge'>" . (($bulletCount > 0 ) ? $bulletCount : "" ) . "</span>"
+            AmosIcons::show('view-list-alt') . "<span class='badge'>" . (($bulletCount > 0 ) ? $bulletCount : "" ) . "</span>"
             , '/exportjobs/my-export/index',
             ['title' => \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs',
                 'My report')]

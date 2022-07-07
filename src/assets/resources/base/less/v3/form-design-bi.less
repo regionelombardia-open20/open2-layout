@@ -53,13 +53,16 @@ div[class*="-form "]:not(.section-form),
 div[class*="-form"]:not(.section-form) {
   width: 100%;
   float: left;
+
   &.row {
     width: auto;
     float: inherit;
+
     .nav-tabs {
       padding: 0 15px;
-    } 
+    }
   }
+
   .section-form {
     margin-bottom: 24px;
   }
@@ -253,10 +256,10 @@ form {
   @media (max-width: 479px) {
     display: -webkit-box;
     display: -ms-flexbox;
-        display: flex;
+    display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        margin: @margin-default -3px;
+    flex-wrap: wrap;
+    margin: @margin-default -3px;
   }
 
   .btn {
@@ -917,9 +920,11 @@ ul.kv-tree>li.kv-parent {
 
 .input-group-addon {
   color: @font-form-color;
+
   &.kv-datetime-picker {
     border: 1px solid;
   }
+
   &.kv-datetime-remove {
     border-top: 1px solid;
     border-bottom: 1px solid;
@@ -972,19 +977,20 @@ ul.kv-tree>li.kv-parent {
       }
 
       *[class*="close"] {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: @danger-color;
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        color: white;
-        border: 2px solid #FFF;
-        margin: 0;
+        // position: absolute;
+        // top: 15px;
+        // right: 15px;
+        // background: @danger-color;
+        // width: 28px;
+        // height: 28px;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // border-radius: 50%;
+        // color: white;
+        // border: 2px solid #FFF;
+        // margin: 0;
+        width: 22px;
       }
     }
   }

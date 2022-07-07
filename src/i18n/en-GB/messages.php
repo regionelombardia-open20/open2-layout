@@ -55,6 +55,7 @@ return [
     "Cerca" => "Search",
     "Seguici su" => "Follow us",
     'Accedi' => 'Log-in',
+    'Accedi alla piattaforma {platformName}' => 'Log-in to the platform {platformName}',
     'Accedi o Registrati' => 'Log-in or Register',
     'Accedi o registrati alla piattaforma {platformName}' => 'Log-in or register to the platform {platformName}',
     'Esci dalla piattaforma {platformName}' => 'Logout from {platformName}',

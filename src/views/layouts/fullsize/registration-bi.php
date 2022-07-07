@@ -132,7 +132,7 @@ if ($countArrayUrl) {
 
         $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
 
-        if ((!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) && (!\Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'])) : 
+        if (!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) : 
             $cmsDefaultMenu .= $cmsPluginMenu;
         endif;
         ?>
@@ -166,7 +166,7 @@ if ($countArrayUrl) {
         ]); ?>
     <?php } ?>
 
-    <section id="bk-page" class="fullsizeRegistrationBiLayout">
+    <section id="bk-page" class="fullsizeRegistrationBiLayout" role="main">
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 

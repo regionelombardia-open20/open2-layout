@@ -5,24 +5,21 @@
  * OPEN 2.0
  *
  *
- * @package    open20\amos\core\views\layouts
+ * @package    open20\amos\core
  * @category   CategoryName
  */
 
 use open20\amos\core\components\AmosView;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use open20\amos\core\widget\WidgetAbstract;
-use open20\amos\layout\assets\BiLessAsset;
 use app\components\CmsHelper;
 
 
-//\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
-use yii\helpers\Html;
+////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 
-
-/* @var $this \yii\web\View */
-/* @var \open20\amos\core\components\PartQuestionarioAbstract $partsQuestionario */
-/* @var $content string */
+/** @var $this \open20\amos\core\components\AmosView */
+/** @var $content string */
 
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
@@ -54,56 +51,24 @@ if ($countArrayUrl) {
         ];
     }
 }
-
-$script = <<< SCRIPT
-$(document).ready(function (){
-
-    setTimeout(function (){
-
-        var errori = $('.error-regionale');
-        if($(errori).length){
-            $(".error-summary-fake").fadeIn();
-        }else{
-            $(".error-summary-fake").fadeOut();
-        }
-
-    }, 500 );
-
-    $('body').on('afterValidate', 'form' , function (){
-
-        setTimeout(function (){
-            var errori = $('.error-regionale');
-                if($(errori).length){
-                    $(".error-summary-fake").fadeIn();
-                }else{
-                    $(".error-summary-fake").fadeOut();
-                }
-        },500);
-
-    });
-
-    $('body').on('change', 'input' , function (){
-
-        setTimeout(function (){
-            var errori = $('.error-regionale');
-                if(!$(errori).length){
-                    $(".error-summary-fake").fadeOut();
-                }
-        },500);
+?>
 
 
-    });
+<?php
 
-});
-SCRIPT;
+#comments-container
 
-$this->registerJs($script, \yii\web\View::POS_END, 'my-options');
+$jsCommentsContainer = <<< JS
 
+var contentCommentSection = $("#comments-container").html();
+$("#comments-container").html('<div class="container">' + contentCommentSection + '</div>');
+
+JS;
+$this->registerJs($jsCommentsContainer);
 ?>
 
 
 <?php $this->beginPage() ?>
-
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 
@@ -114,7 +79,6 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 </head>
 
 <body>
-
     <?php $this->beginBody() ?>
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
@@ -138,58 +102,50 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeWizardLayout" role="main">
-        <div class="container-messages">
-            <div class="container">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
-            </div>
-        </div>
+    <section id="bk-page" class="fullsizeDetailPorFesrLayout">
 
-        <div class="container-help">
-            <div class="container">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
-            </div>
-        </div>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-        <div class="container">
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+
+        <div class="w-100">
+
             <div class="page-content">
-                <?php if (!isset($this->params['hideBreadcrumb']) || ($this->params['hideBreadcrumb'] === false)) : ?>
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
-                <?php endif; ?>
-                <div class="page-header">
-                    <?php if (!isset($this->params['hideWizardTitle']) || ($this->params['hideWizardTitle'] === false)) : ?>
-                        <h1 class="title"><?= Html::encode($this->title) ?></h1>
-                    <?php endif; ?>
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+
+                <div class="<?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container' : '' ?>">
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
                 </div>
-                <div class="progress-menu-container">
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "progress_wizard_menu", [
-                        'model' => $this->params['model'],
-                        'partsQuestionario' => $this->params['partsQuestionario'],
-                        'hidePartsLabel' => (isset($this->params['hidePartsLabel']) ? $this->params['hidePartsLabel'] : false),
-                        'hidePartsUrl' => (isset($this->params['hidePartsUrl']) ? $this->params['hidePartsUrl'] : false)
-                    ]);
+
+                <?php if ((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
+                    && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
+                ) : ?>
+
+                    <?php
+                    $isLayoutInScope = false;
+                    $moduleCwh = \Yii::$app->getModule('cwh');
+                    if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                        $scope = $moduleCwh->getCwhScope();
+                        $isLayoutInScope = (!empty($scope)) ? true : false;
+                    }
                     ?>
-                </div>
-                <div>
-                    <div class="error-summary-fake" style="display: none;">
-                        <?php
-                        \yii\bootstrap\Alert::begin([
-                            'closeButton' => false,
-                            'options' => [
-                                'class' => 'danger alert-danger error-summary',
-                            ],
-                        ]);
-                        \yii\bootstrap\Alert::end();
-                        ?>
+                    <div class="<?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container' : '' ?>">
+                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
                     </div>
-                </div>
-
-                <?= $content ?>
-
+                <?php endif; ?>
             </div>
+
+            <?php if ($this instanceof AmosView) : ?>
+                <?php $this->beginViewContent() ?>
+            <?php endif; ?>
+            <?= $content ?>
+            <?php if ($this instanceof AmosView) : ?>
+                <?php $this->endViewContent() ?>
+            <?php endif; ?>
+
         </div>
+
     </section>
+
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?= $this->render(

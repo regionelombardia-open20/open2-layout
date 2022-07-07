@@ -217,7 +217,7 @@ $moduleCommunity = Yii::$app->getModule('community');
                                         <small>
                                             <?= Module::t('amoscommunity', 'Sei stato invitato nella community come') . ' ' . Module::t('amoslayout', "{$community->getRoleByUser()}") . ':' ?>
                                             <a class="btn btn-xs btn-success"
-                                               href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'accept' => '1', 'redirectAction' => Yii::$app->request->url]) ?>"
+                                               href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'accept' => '1', 'redirectAction' => '/community/join/open-join?id=' . $community->id]) ?>"
                                                title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community') . ' ' . $community->title ?>">
                                                 <?= Module::t('amoscommunity', 'Accetta') ?>
                                             </a>

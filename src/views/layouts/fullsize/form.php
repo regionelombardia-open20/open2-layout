@@ -101,7 +101,7 @@ IEAssets::register($this);
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeFormLayout">
+    <section id="bk-page" class="fullsizeFormLayout" role="main">
 
         <?php
         if (

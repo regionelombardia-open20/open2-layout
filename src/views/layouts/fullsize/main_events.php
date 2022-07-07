@@ -99,7 +99,7 @@ $this->registerJs($jsCommentsContainer);
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeMainEventLayout">
+    <section id="bk-page" class="fullsizeMainEventLayout" role="main">
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 

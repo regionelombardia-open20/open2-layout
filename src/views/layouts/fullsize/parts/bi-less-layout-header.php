@@ -2,6 +2,7 @@
 
 use app\components\CmsHelper;
 use open20\amos\core\helpers\Html;
+use open20\amos\layout\Module;
 use luya\admin\models\Lang;
 use app\components\CmsMenu;
 ?>
@@ -79,6 +80,66 @@ $cmsSecondaryMenu = Html::tag('ul', $cmsSecondaryMenu, ['class' => 'navbar-nav' 
 
 $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
 
+/**
+ * if hideTopHeaderForGuestUser is enable, auto add platform access in menu
+ */
+if (
+    isset(\Yii::$app->params['layoutConfigurations']['hideTopHeaderForGuestUser']) &&
+    \Yii::$app->params['layoutConfigurations']['hideTopHeaderForGuestUser']
+) {
+    
+    $labelSigninOrSignup = Module::t('amoslayout', 'Accedi o Registrati');
+    $titleSigninOrSignup = Module::t('amoslayout', 'Accedi o registrati alla piattaforma {platformName}', ['platformName' => \Yii::$app->name]);
+    $socialAuthModule = Yii::$app->getModule('socialauth');
+    if ($socialAuthModule && ($socialAuthModule->enableRegister == false)) {
+        $labelSigninOrSignup = Module::t('amoslayout', 'Accedi');
+        $titleSigninOrSignup = Module::t('amoslayout', 'Accedi alla piattaforma {platformName}', ['platformName' => \Yii::$app->name]);
+    }
+    $labelLogout = Module::t('amosdesign','Esci');
+    $titleLogout = Module::t('amosdesign','Esci dalla piattaforma {platformName}',['platformName' => \Yii::$app->name]);
+    
+    $iconLogin      = '<span class="mdi mdi-key-variant icon-login ml-auto pl-1"></span>';
+    $iconLogout      = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';
+    
+    if (Yii::$app->user->isGuest) {
+        $actionLoginMenu = Html::a(
+            $labelSigninOrSignup . $iconLogin,
+            [
+                \Yii::$app->params['linkConfigurations']['loginLinkCommon']
+            ],
+            [
+                'title' => $titleSigninOrSignup,
+                'class' => 'nav-link'
+            ]
+        );
+    } else {
+        $actionLoginMenu = Html::a(
+            $labelLogout . $iconLogout,
+            [
+                \Yii::$app->params['linkConfigurations']['logoutLinkCommon']
+            ],
+            [
+                'title' => $titleLogout,
+                'class' => 'nav-link'
+            ]
+        );
+    }
+    
+    $alternativeLoginMenuClass = 'cms-menu-container-hide-top-header-guest';
+    
+    $alternativeLoginMenuItem = Html::tag(
+        'li',
+        $actionLoginMenu,
+        [
+            'class' => 'nav-item'
+        ]
+    );
+    
+    $alternativeLoginMenu = Html::tag('ul', $alternativeLoginMenuItem, ['class' => 'navbar-nav' . ' ' . $alternativeLoginMenuClass]);
+    
+    $cmsDefaultMenu = $cmsDefaultMenu . $alternativeLoginMenu;
+}
+
 ?>
 <?php
 $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -154,6 +215,26 @@ if (isset(\Yii::$app->view->params['hideHamburgerMenuHeader'])) {
         }
     }
 
+    if (isset(\Yii::$app->view->params['alwaysHamburgerMenuRight'])) {
+        $alwaysHamburgerMenuRightCheck = (\Yii::$app->view->params['alwaysHamburgerMenuRight']);
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['alwaysHamburgerMenuRight'])) {
+            $alwaysHamburgerMenuRightCheck = (\Yii::$app->params['layoutConfigurations']['alwaysHamburgerMenuRight']);
+        } else {
+            $alwaysHamburgerMenuRightCheck = false;
+        }
+    }
+
+    if (isset(\Yii::$app->view->params['hideTopHeaderForGuestUser']) && is_bool(\Yii::$app->view->params['hideTopHeaderForGuestUser'])) {
+        $hideTopHeaderForGuestUserCheck = \Yii::$app->view->params['hideTopHeaderForGuestUser'];
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['hideTopHeaderForGuestUser']) && is_bool(\Yii::$app->params['layoutConfigurations']['hideTopHeaderForGuestUser'])) {
+            $hideTopHeaderForGuestUserCheck = \Yii::$app->params['layoutConfigurations']['hideTopHeaderForGuestUser'];
+        } else {
+            $hideTopHeaderForGuestUserCheck = false;
+        }
+    }
+    $hideTopHeaderForGuestUser = (($hideTopHeaderForGuestUserCheck == true) && \Yii::$app->user->isGuest);
 ?>
 <?= $this->render("bi-less-header", [
     'currentAsset' => $currentAsset,
@@ -163,6 +244,7 @@ if (isset(\Yii::$app->view->params['hideHamburgerMenuHeader'])) {
     'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon'],
     'hideHamburgerMenu' => $hideHamburgerMenuCheck,
     'alwaysHamburgerMenu' => \Yii::$app->params['layoutConfigurations']['showAlwaysHamburgerMenuHeader'],
+    'alwaysHamburgerMenuRight' => $alwaysHamburgerMenuRightCheck,
     'hideLangSwitchMenu' => \Yii::$app->params['layoutConfigurations']['hideLangSwitchMenuHeader'],
     'hideGlobalSearch' => $hideGlobalSearchHeaderCheck,
     'hideUserMenu' => $hideUserMenuHeaderCheck,
@@ -172,7 +254,7 @@ if (isset(\Yii::$app->view->params['hideHamburgerMenuHeader'])) {
     'customUserMenuLoginLink' => \Yii::$app->params['linkConfigurations']['loginLinkCommon'],
     'customUserMenuLogoutLink' => \Yii::$app->params['linkConfigurations']['logoutLinkCommon'],
     'customUserProfileLink' => \Yii::$app->params['linkConfigurations']['userProfileLinkCommon'],
-    'customPlatformPluginMenu' => \Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'],
+    'customPlatformMenu' => \Yii::$app->params['menuCmsConfigurations']['customPlatformMenu'],
     'showSocial' => $showSocialHeaderCheck,
     'showSecondaryMenu' => \Yii::$app->params['layoutConfigurations']['showSecondaryMenuHeader'],
     'disableThemeLight' => \Yii::$app->params['layoutConfigurations']['disableThemeLightHeader'],
@@ -180,5 +262,6 @@ if (isset(\Yii::$app->view->params['hideHamburgerMenuHeader'])) {
     'enableHeaderSticky' => \Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader'],
     'pageSearchLink' => \Yii::$app->params['linkConfigurations']['pageSearchLinkCommon'],
     'hideAssistance' => $hideAssistanceCheck,
+    'hideTopHeaderForGuestUser' => $hideTopHeaderForGuestUser,
 ]);
 ?>

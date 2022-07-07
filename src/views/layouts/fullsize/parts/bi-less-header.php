@@ -272,7 +272,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
 
 <div id="headerContent" class="it-header-wrapper <?= ($enableHeaderSticky) ? 'it-header-sticky' : 'navbar-fixed-top' ?>">
 
-    <?php if ((!$hideTopHeaderForGuestUser)) : ?>
+    <?php if (!$hideTopHeaderForGuestUser) : ?>
 
         <div class="it-header-slim-wrapper flexbox align-items-center py-0">
             <div class="<?= ($fluidContainerHeader) ? 'container-fluid' : 'container' ?>">
@@ -426,7 +426,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             ['class' => 'badge badge-pill badge-danger']
                                         ) : '';
                                         ?>
-                                        <div class="nav-item">
+                                        <div class="nav-item d-none d-sm-block">
                                             <a class="nav-link pl-5" href="/site/to-menu-url?url=/exportjobs/my-export/index" data-toggle="tooltip" data-placement="bottom" title="<?=
                                                                                                                                                                                     \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs', 'Le mie esportazioni')
                                                                                                                                                                                     ?>">
@@ -614,8 +614,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             </div>
 
                                             <?= $cmsDefaultMenu ?>
-                                            <?php if ($customPlatformPluginMenu) :
-                                                echo $this->render($customPlatformPluginMenu, [
+                                            <?php if ($customPlatformMenu) :
+                                                echo $this->render($customPlatformMenu, [
                                                     'currentAsset' => $currentAsset,
                                                 ]);
                                             endif;
