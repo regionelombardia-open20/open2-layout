@@ -262,6 +262,17 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                     </div>
                     <div class="modal-body">
                         <?= $cmsDefaultMenu ?>
+                        <?php 
+                            if ($customPlatformMenu) : 
+                            echo $this->render($customPlatformMenu, [
+                                'currentAsset' => $currentAsset,
+                                'iconSubmenu' => $iconSubmenu
+                            ]);
+                        endif;
+                        ?>
+                        <?php if ($showSecondaryMenu) : ?>
+                            <?= $cmsSecondaryMenu ?>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -618,6 +629,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             <?php if ($customPlatformMenu) :
                                                 echo $this->render($customPlatformMenu, [
                                                     'currentAsset' => $currentAsset,
+                                                    'iconSubmenuAmosLayout' => $iconSubmenu,
                                                 ]);
                                             endif;
                                             ?>

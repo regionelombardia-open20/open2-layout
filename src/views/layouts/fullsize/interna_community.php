@@ -150,7 +150,7 @@ if (isset(\Yii::$app->view->params['hideCookieBar'])) {
         }
     }
 ?>
-<?php if ($hideCookieBarCheck) : ?>
+<?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']

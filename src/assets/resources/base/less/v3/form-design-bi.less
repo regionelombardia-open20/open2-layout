@@ -10,7 +10,6 @@
 @title-form-color: @brand-third-color;
 @label-color: @black-color;
 @font-form-color: @black-color;
-@insert-field: darken(@secondary-color, 30%);
 @background-input: @white-color;
 
 
@@ -213,7 +212,7 @@ form {
       line-height: normal;
       margin-bottom: 5px;
       text-transform: uppercase;
-      color: @black-color;
+      color: @font-form-color;
       font-size: 0.8em;
     }
 
@@ -229,6 +228,11 @@ form {
       &:focus {
         border-bottom-color: @border-form-focus-color;
         box-shadow: none;
+      }
+      &[disabled],
+      &[readonly]{
+        background-color: #eeeeee;
+        cursor: not-allowed;
       }
     }
 
@@ -363,7 +367,6 @@ form {
 
       .select2-selection__placeholder {
         .amos-font-form;
-        color:@insert-field;
       }
 
       .select2-search.select2-search--inline {
@@ -373,6 +376,10 @@ form {
           width: 100% !important;
           padding: 6px 12px;
           height: 45px;
+          &::placeholder {
+            color: @font-form-color;
+            opacity: 1;
+          }
         }
       }
 
@@ -459,7 +466,11 @@ form {
 //---------------------------------------------------------------------------------
 .file-caption {
   .file-caption-name {
-    height: 100%
+    height: 100%;
+    &::placeholder {
+      color: @font-form-color;
+      opacity: 1;
+    }
   }
 }
 

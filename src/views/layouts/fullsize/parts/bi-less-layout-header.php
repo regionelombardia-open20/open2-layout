@@ -237,6 +237,7 @@ if (isset(\Yii::$app->view->params['hideHamburgerMenuHeader'])) {
     $hideTopHeaderForGuestUser = (($hideTopHeaderForGuestUserCheck == true) && \Yii::$app->user->isGuest);
 ?>
 <?= $this->render("bi-less-header", [
+    'iconSubmenu' => $iconSubmenu,
     'currentAsset' => $currentAsset,
     'cmsDefaultMenu' => $cmsDefaultMenu,
     'cmsSecondaryMenu' => $cmsSecondaryMenu,

@@ -120,13 +120,13 @@ IEAssets::register($this);
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
 
-        <div id="record_form" class="container">
+        <div id="record_form" class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
 
             <?php if (empty(\Yii::$app->params['dashboardEngine'])) : ?>
                 <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
             <?php endif; ?>
 
-            <div class="page-content">
+            <div class="page-content" >
                 <div class="<?= ($showSidebarForm) ? 'layout-sidebarForm' : 'layout-standardForm' ?>">
                     <?php
                     if ($showSidebarForm) {
@@ -134,7 +134,7 @@ IEAssets::register($this);
                     }
                     ?>
 
-                    <div class="<?= ($showSidebarForm) ? 'main-with-sidebar' : 'w-100' ?>">
+                    <div class="<?= ($showSidebarForm) ? 'main-with-sidebar flexbox flexbox-column' : 'w-100' ?>">
                         <?php if ($showSidebarForm) { ?>
                             <a class="btn-sidebar btn-lg" role="button" title="Visualizza sidebar" data-toggle="collapse" href="#sidebarForm" aria-expanded="false" aria-controls="sidebarForm">
                                 <span class="mdi mdi-24px mdi-apps mdi-flip-h"></span>
@@ -187,7 +187,7 @@ if (isset(\Yii::$app->view->params['hideCookieBar'])) {
         }
     }
 ?>
-<?php if ($hideCookieBarCheck) : ?>
+<?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
