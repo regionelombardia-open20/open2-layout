@@ -87,7 +87,7 @@ IEAssets::register($this);
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
 
             <div class="page-content">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
 
                 <div class="page-header">
                     <?php if (!is_null($this->title)) : ?>

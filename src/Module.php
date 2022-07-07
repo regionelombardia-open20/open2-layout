@@ -41,6 +41,12 @@ class Module extends AmosModule implements ModuleInterface, BootstrapInterface
      * @var string $viewMaintenanceMode
      */
     public $viewMaintenanceMode = '@vendor/open20/amos-layout/src/views/maintenance/maintenance';
+    
+    /**
+     * If this property contains a classname, it will be used to add items to the header nav and must implements the AddHeaderNavItemsInterface.
+     * @var string
+     */
+    public $addHeaderNavItemsClass = '';
 
     /**
      * Choose to display a single logout action in the navbar or multiple ones

@@ -4,11 +4,6 @@ use open20\amos\layout\Module;
 
 $isGuest = \Yii::$app->user->isGuest;
 
-$canCreateController = false;
-if (\Yii::$app->controller instanceof \open20\amos\core\controllers\CrudController) {
-    $canCreateController = \Yii::$app->controller->can('CREATE');
-}
-
 $createNewButtonParams = Yii::$app->view->params['createNewBtnParams'];
 if (!empty($createNewButtonParams)) {
     if (!empty($createNewButtonParams['urlCreateNew'])) {
@@ -18,6 +13,16 @@ if (!empty($createNewButtonParams)) {
     if (!empty($createNewButtonParams['createNewBtnLabel'])) {
         $labelCreate = $createNewButtonParams['createNewBtnLabel'];
     }
+}
+
+
+$canCreateController = false;
+if (\Yii::$app->controller instanceof \open20\amos\core\controllers\CrudController) {
+    $forceCreateNewButtonWidget = false;
+    if (isset(\Yii::$app->view->params['forceCreateNewButtonWidget']) && (\Yii::$app->view->params['forceCreateNewButtonWidget'] === true)) {
+        $forceCreateNewButtonWidget = \Yii::$app->view->params['forceCreateNewButtonWidget'];
+    }
+    $canCreateController = $forceCreateNewButtonWidget || \Yii::$app->controller->can('CREATE');
 }
 
 $canCreate = (isset($canCreate)) ? $canCreate : !$isGuest && $canCreateController;

@@ -30,7 +30,7 @@ interface AddHeaderNavItemsInterface
      * @return array
      */
     public function addItemsToEnd($items);
-
+    
     /**
      * This method add items to the beginning of the bi-header nav.
      * @return string

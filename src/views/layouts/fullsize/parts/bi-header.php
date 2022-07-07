@@ -1,17 +1,28 @@
 <?php
-/* components */
 
+use open20\amos\admin\AmosAdmin;
+use open20\amos\chat\AmosChat;
 use open20\amos\core\helpers\Html;
 use open20\amos\core\utilities\CurrentUser;
-/* modules */
-
 use open20\amos\dashboard\AmosDashboard;
-use open20\amos\chat\AmosChat;
+use open20\amos\layout\interfaces\AddHeaderNavItemsInterface;
+use open20\amos\layout\Module;
 use open20\amos\myactivities\AmosMyActivities;
 
-?>
+/** @var AmosAdmin $adminModule */
+$adminModule = AmosAdmin::instance();
 
-<?php
+/** @var Module $layoutModule */
+$layoutModule = Module::instance();
+
+$addItems = false;
+if (!empty($layoutModule->addHeaderNavItemsClass)) {
+    $addItemsObj = Yii::createObject($layoutModule->addHeaderNavItemsClass);
+    if ($addItemsObj instanceof AddHeaderNavItemsInterface) {
+        $addItems = true;
+    }
+}
+
 /** @var bool|false $disablePlatformLinks - if true all the links to dashboard, settings, etc are disabled */
 $disablePlatformLinks = isset(\Yii::$app->params['disablePlatformLinks']) ? \Yii::$app->params['disablePlatformLinks'] : false;
 
@@ -171,6 +182,9 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                             <?= $this->render("bi-logo-navbar"); ?>
                         </div>
                         <div class="it-header-slim-right-zone ml-auto">
+                            <?php if ($addItems): ?>
+                                <?= $addItemsObj->addBiItemsToBegin(); ?>
+                            <?php endif; ?>
                             <?php if (!$disableSettings && !$disablePlatformLinks && ($ordinamentiDashboard || $gestisciWidget)) : ?>
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
@@ -367,10 +381,22 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                                         );
                                                 }
                                                 ?>
-                                                <?= ($menuMyProfile) ? $menuMyProfile
-                                                    : ''
-                                                ?>
+                                                <?= ($menuMyProfile) ? $menuMyProfile : '' ?>
                                                 <?php
+                                                /* change user */
+                                                if ($adminModule->hasMethod('loggedUserCanChangeProfile') && $adminModule->loggedUserCanChangeProfile()) {
+                                                    echo Html::tag(
+                                                        'li',
+                                                        Html::a(
+                                                            Html::tag('span', Module::t('amoslayout', '#change_user_label')),
+                                                            ['/' . AmosAdmin::getModuleName() . '/change-user/my-users-list'],
+                                                            [
+                                                                'class' => 'list-item',
+                                                                'title' => Module::t('amoslayout', '#change_user_description')
+                                                            ]
+                                                        )
+                                                    );
+                                                }
                                                 if ($btnLogoutUrl) {
                                                     echo Html::tag(
                                                         'li',
@@ -398,6 +424,9 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                         </div>
                                     </div>
                                 </div>
+                            <?php endif; ?>
+                            <?php if ($addItems): ?>
+                                <?= $addItemsObj->addBiItemsToEnd(); ?>
                             <?php endif; ?>
                         </div>
                     </div>
