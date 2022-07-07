@@ -87,9 +87,9 @@ toolbar on views used for add element, order, download, search, change view, hig
        margin-left: 3px;
      }
 
-    .btn-group div.btn-tools-primary { /*change view like button style*/
+    .btn-group .btn-tools-primary { /*change view like button style*/
       padding-bottom: 0;
-      padding-top: 6px;
+      padding-top: 2px;
       height: 32px;
       span {
         &:first-child {
@@ -115,6 +115,10 @@ toolbar on views used for add element, order, download, search, change view, hig
       float: right;
       .btn-tools-primary + .btn-tools-primary{
         margin-left: 3px;
+      }
+      #change-view-download-btn {
+        float: none !important;
+        display: inline-block;
       }
     }
 
