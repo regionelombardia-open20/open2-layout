@@ -1,10 +1,10 @@
 <?php
-use open20\design\Module;
+use open20\amos\layout\Module;
 
-$modelLabel = (isset($modelLabel)) ? $modelLabel : Module::t('amosdesign','elementi');
+$modelLabel = (isset($modelLabel)) ? $modelLabel : Module::t('amoslayout','elementi');
 ?>
 
 
-<p><?=Module::t('amosdesign','Visualizzati') . ' ' ?>{count}<?=' ' . Module::t('amosdesign','{modelLabel} di',['modelLabel' => $modelLabel]) . ' ' ?>{totalCount}<?=' ' .Module::t('amosdesign','totali')?></p>
-<p><?=Module::t('amosdesign','Pagina') . ' ' ?>{page}<?=' ' . Module::t('amosdesign','di') . ' ' ?>{pageCount}</p>
+<p><?=Module::t('amoslayout','Visualizzati') . ' ' ?>{count}<?=' ' . Module::t('amoslayout','{modelLabel} di',['modelLabel' => $modelLabel]) . ' ' ?>{totalCount}<?=' ' .Module::t('amoslayout','totali')?></p>
+<p><?=Module::t('amoslayout','Pagina') . ' ' ?>{page}<?=' ' . Module::t('amoslayout','di') . ' ' ?>{pageCount}</p>
 
