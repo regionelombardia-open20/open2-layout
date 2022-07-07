@@ -86,6 +86,12 @@ if (isset(\Yii::$app->view->params['showSocialFooter'])) {
     }
 }
 
+if (isset(\Yii::$app->params['layoutConfigurations']['customCopyleftFooter'])) {
+    $customCopyleftFooter = (\Yii::$app->params['layoutConfigurations']['customCopyleftFooter']);
+} else {
+    $customCopyleftFooter = 'Powered by Open 2.0';
+}
+
 ?>
 <?php
 if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) {
@@ -94,7 +100,9 @@ if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter'])))
         $customPlatformFooter,
         [
             'currentAsset' => $currentAsset,
-            'cmsFooterMenu' => $cmsFooterMenu
+            'cmsFooterMenu' => $cmsFooterMenu,
+            'showSocial' => $showSocialFooterCheck,
+            'customCopyleftFooter' => $customCopyleftFooter,
         ]
     );
 } else {
@@ -102,6 +110,7 @@ if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter'])))
         'currentAsset' => $currentAsset,
         'cmsFooterMenu' => $cmsFooterMenu,
         'showSocial' => $showSocialFooterCheck,
+        'customCopyleftFooter' => $customCopyleftFooter,
     ]);
 }
 ?>

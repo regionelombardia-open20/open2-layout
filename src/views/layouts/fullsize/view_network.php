@@ -65,8 +65,10 @@ if ($countArrayUrl) {
 <html lang="<?= Yii::$app->language ?>">
 
 <head>
+    <?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        'title' => (($isLuyaApplication && Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
     ]); ?>
 </head>
 
@@ -78,7 +80,7 @@ if ($countArrayUrl) {
     <?php $this->beginBody() ?>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
 
-    <?php if (Yii::$app->isCmsApplication()) { ?>
+    <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
 
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -132,7 +134,7 @@ if ($countArrayUrl) {
         </div>
     </section>
 
-    <?php if (Yii::$app->isCmsApplication()) { ?>
+    <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?= $this->render(
             "parts" . DIRECTORY_SEPARATOR . "bi-less-layout-footer",
             [

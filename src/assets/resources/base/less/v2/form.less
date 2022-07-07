@@ -9,6 +9,7 @@
 @title-form-color: @brand-third-color;
 @label-color: @black-color;
 @font-form-color: @black-color;
+@insert-field: darken(@secondary-color, 30%);
 @background-input: #f6f6f6;
 
 
@@ -34,7 +35,8 @@
   letter-spacing: 0.7px !important;
   font-family: inherit !important;
   line-height: 20px !important;
-  color: @font-form-color;
+  color:@insert-field;
+  // color: @font-form-color;
   min-height: 45px;
 }
 
@@ -123,6 +125,7 @@ form {
   }
   textarea {
     .input-style(@border-form-color) !important;
+    color:@insert-field;
   }
 
   .tab-content {
@@ -181,6 +184,7 @@ form {
       .help-block {
         margin-top: 0;
         margin-bottom: 0;
+        color:@insert-field;
       }
     }
 

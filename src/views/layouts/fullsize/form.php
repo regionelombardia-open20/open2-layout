@@ -56,6 +56,7 @@ $showSidebarForm = (isset($this->params['showSidebarForm'])) ? $this->params['sh
 FormAsset::register($this);
 IEAssets::register($this);
 ?>
+<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
 
 <?php $this->beginPage() ?>
 
@@ -79,8 +80,8 @@ IEAssets::register($this);
     <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
-    <?php if (Yii::$app->isCmsApplication()) { ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
+    <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
         ?>
@@ -168,7 +169,7 @@ IEAssets::register($this);
 
     </section>
 
-    <?php if (Yii::$app->isCmsApplication()) { ?>
+    <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?= $this->render(
             "parts" . DIRECTORY_SEPARATOR . "bi-less-layout-footer",
             [

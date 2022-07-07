@@ -9,6 +9,7 @@
 @title-form-color: @primary-color;
 @label-color: @black-color;
 @font-form-color: @secondary-color;
+@insert-field: darken(@secondary-color, 30%);
 
 /*FORM UTILITIES*/
 
@@ -31,7 +32,7 @@
   letter-spacing: 0.7px !important;
   font-family: inherit !important;
   line-height: 20px !important;
-  color: @font-form-color;
+  color: @insert-field;
 }
 
 /*FORM CLASSES AND OVERRIDE*/
@@ -189,6 +190,7 @@ form {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 1px solid @success-form-color;
+  color: @insert-field;
 }
 
 .has-success .help-block,
@@ -201,7 +203,7 @@ form {
 .has-success.checkbox label,
 .has-success.radio-inline label,
 .has-success.checkbox-inline label {
-  color: @success-form-color;
+  color: @insert-field;
 }
 
 .alert-warning, //TODO check
@@ -215,6 +217,7 @@ form {
 .redactor-box {
   border: 1px solid @border-form-color;
   border-bottom-color: darken(@border-form-color, 25%);
+  color: @insert-field;
   .redactor-toolbar {
     border-bottom: 1px solid darken(@border-form-color, 25%);
   }
@@ -223,10 +226,12 @@ form {
     font-family: inherit !important; /*override redactor*/
     padding: 20px 10px;
     border: none;
+    color: @insert-field;
     //background-color: @background-form-color;
     &.redactor-placeholder p {
       font-size: 0.9em; /*override redactor*/
       font-family: inherit !important; /*override redactor*/
+      color: @insert-field;
     }
   }
 }
@@ -239,29 +244,36 @@ form {
   width: 100% !important;
   .selection .select2-selection {
     border-radius: 0;
+    color: @insert-field;
     //background-color: @background-form-color;
     border: 1px solid @border-form-color;
     border-bottom-color: darken(@border-form-color, 25%);
     .select2-selection__rendered {
+      color: @insert-field;
       .amos-font-form;
       .select2-selection__placeholder {
+        color: @insert-field;
         .amos-font-form;
+        
       }
       .select2-search.select2-search--inline {
         .select2-search__field {
           width: auto !important;
           padding: 6px 12px;
+          color: @insert-field;
         }
       }
       .select2-selection__clear {
         bottom: 4px;
-        color: @secondary-color;
+        color: @insert-field;
       }
       .select2-selection__choice {
         white-space: normal;
+        color: @insert-field;
         .select2-selection__choice__remove {
           position: relative;
           bottom: 2px;
+          color: @insert-field;
         }
       }
     }
@@ -270,6 +282,7 @@ form {
       b { /* bottom triangle */
         border-width: 5px 6px 0 6px;
         left: 0;
+        color: @insert-field;
       }
     }
     &:focus {
@@ -279,10 +292,12 @@ form {
     }
 
     &.select2-selection--multiple {
+      color: @insert-field;
       &::after { //force add 'select2-selection__arrow b' (triangle) in select2 multiple
         content: ' ';
         position: absolute;
         border-color: #888 transparent transparent transparent;
+        color: @insert-field;
         border-style: solid;
         border-width: 5px 6px 0 6px;
         right: 13px;
@@ -293,12 +308,14 @@ form {
       .select2-selection__clear {
         bottom: 13px;
         right: 25px;
+        color: @insert-field;
       }
     }
 
   }
   .select2-dropdown {
     border-color: @success-form-color;
+    color: @insert-field;
     //.select2-search{
     //}
     .select2-results {
@@ -319,6 +336,7 @@ form {
   -moz-box-shadow: none !important;
   box-shadow: none !important;
   border: 1px solid @success-form-color !important;
+  color: @insert-field;
 }
 
 //---------------------------------------------------------------------------------
@@ -447,6 +465,7 @@ form {
   border-right: 1px solid @error-form-color;
   border-left: 1px solid @error-form-color;
   border-top: 1px solid @error-form-color;
+  color: @insert-field;
 }
 
 .has-error .help-block,
@@ -654,6 +673,7 @@ select {
     padding-top: 6px;
     box-shadow: none;
     background: transparent;
+    color: @insert-field;
 
     &:focus {
       -webkit-box-shadow: none;
@@ -672,10 +692,12 @@ select {
     top: 0px;
     margin: 0;
     border: 0;
+    color: @insert-field;
   }
 }
 
 .select2-dropdown {
+  color: @insert-field;
   .addNew {
     background: #daf2e2;
     -webkit-border-radius: 4px;
@@ -736,7 +758,7 @@ ul.kv-tree > li.kv-parent {
 //-----------------------------------------------
 .form-text {
   font-style: italic;
-  color: @font-form-color;
+  color: @insert-field;
   line-height: 1.2;
   border-left: 2px solid @border-form-color;
   padding: 0 5px;

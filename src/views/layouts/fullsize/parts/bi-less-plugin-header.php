@@ -104,7 +104,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
         <div class="m-r-10">
             <div class="h2 text-uppercase "><?= $titleSection ?></div>
         </div>
-        <?php if (!empty($urlLinkAll)) : ?>
+        <?php if (!empty(\Yii::$app->params['befe']) && !empty($urlLinkAll)) : ?>
             <a href="<?= $urlLinkAll ?>" class="link-all-<?= $modelLabel ?> text-uppercase align-items-center small" title="<?= $titleLinkAll ?>">
                 <span><?= $labelLinkAll ?></span>
                 <span class="icon mdi mdi-arrow-right-circle-outline"></span>
@@ -146,7 +146,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
 
                         ]) ?>
                         <?php if (!$hideManage) { ?>
-                            <?php if ($canManage && !empty($manageLinks)) { ?>
+                            <?php if (\Yii::$app->params['befe'] && $canManage && !empty($manageLinks)) { ?>
                                 <div class="dropdown">
                                     <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="am am-settings"></span>
@@ -196,7 +196,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                             'canSecondAction' => $canSecondAction
                         ]) ?>
                         <?php if (!$hideManage) { ?>
-                            <?php if ($canManage && !empty($manageLinks)) { ?>
+                            <?php if (\Yii::$app->params['befe'] && $canManage && !empty($manageLinks)) { ?>
                                 <div class="dropdown">
                                     <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="am am-settings"></span>

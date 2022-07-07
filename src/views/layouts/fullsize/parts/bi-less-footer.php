@@ -42,9 +42,10 @@ use yii\helpers\Html;
         </div>
       </div>
       <div role="contentinfo" aria-label="Copyleft" class="py-1 py-md-4">
+      <hr class="border-white">
         <div class="row">
           <div class="col-lg-12">
-            <p class="white-color" dir="ltr"><small>Powered by Open 2.0</small></p>
+            <p class="white-color" dir="ltr"><small> <?= $customCopyleftFooter ?> </small></p>
           </div>
         </div>
       </div>
