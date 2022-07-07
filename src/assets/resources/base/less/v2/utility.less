@@ -12,7 +12,8 @@ nb: use only vars in variables.less because this file is imported by other plugi
   color: #fff;
   padding: 3px 5px;
   width: fit-content;
-  display: table; /* fit-content on firefox */
+  display: table;
+  /* fit-content on firefox */
   text-transform: uppercase;
   background-color: @background-color-label;
 }
@@ -49,7 +50,7 @@ FLEXBOX
 /**
 BOX SHADOW
  */
-.boxshadow(@h-offset: 0px,@v-offset: 0px,@blur: 0px,@spread: 0px,@color: @box-shadow-default) {
+.boxshadow(@h-offset: 0px, @v-offset: 0px, @blur: 0px, @spread: 0px, @color: @box-shadow-default) {
   -webkit-box-shadow: @h-offset @v-offset @blur @spread @color;
   -moz-box-shadow: @h-offset @v-offset @blur @spread @color;
   box-shadow: @h-offset @v-offset @blur @spread @color;
@@ -58,7 +59,7 @@ BOX SHADOW
 /**
 TRANSITION
  */
-.transition(@property:all,@duration:0s,@timing-function:ease,@delay:0s) {
+.transition(@property: all, @duration: 0s, @timing-function: ease, @delay: 0s) {
   -webkit-transition: @property @duration @timing-function @delay;
   -moz-transition: @property @duration @timing-function @delay;
   -o-transition: @property @duration @timing-function @delay;
@@ -69,7 +70,7 @@ TRANSITION
 /**
 LINEAR GRADIENT
  */
-.linear-gradient(@direction: to bottom,@color1: @primary-color,@color1perc: 50%,@color2: @white-color, @color2perc: 50%){
+.linear-gradient(@direction: to bottom, @color1: @primary-color, @color1perc: 50%, @color2: @white-color, @color2perc: 50%) {
   background: @color1;
   background: -moz-linear-gradient(@direction, @color1 @color1perc, @color2 @color2perc);
   background: -webkit-linear-gradient(@direction, @color1 @color1perc, @color2 @color2perc);
@@ -106,7 +107,7 @@ TODO CHECK POSITION
     content: " ";
     clear: both;
   }
-  
+
   nav & {
     padding-left: calc(~'@{global-padding-mbl} - 2*@{square-box-margin}');
     padding-right: calc(~'@{global-padding-mbl} - 2*@{square-box-margin}');
@@ -121,11 +122,11 @@ TODO CHECK POSITION
       padding-right: calc(~'@{global-padding-tab} - 2*@{square-box-margin}');
     }
   }
-  
+
   @media screen and (min-width: @desktop) {
     padding-left: @global-padding-dsk;
     padding-right: @global-padding-dsk;
-    
+
     nav & {
       padding-left: calc(~'@{global-padding-dsk} - 2*@{square-box-margin}');
       padding-right: calc(~'@{global-padding-dsk} - 2*@{square-box-margin}');
@@ -181,6 +182,7 @@ TODO CHECK POSITION
 .boxesStyle {
   font-size: 1.2rem;
   line-height: 1.4rem;
+
   .pluginName,
   .language-item {
     display: block;
@@ -190,13 +192,14 @@ TODO CHECK POSITION
   .color-primary {
     background-color: transparent !important; //TODO REMOVE OLD CLASSES
   }
-  
+
   .ic,
   .am,
   .dash {
     color: @white-color;
     margin-bottom: 7px;
     display: inline-block;
+
     &:before {
       font-size: 3rem;
     }
@@ -211,28 +214,20 @@ TODO CHECK POSITION
   }
 
   @media screen and (max-width: @tablet) {
-    .ic,
-    .am,
-    .dash {
-      &:before {
-        font-size: 5rem;
-      }
-    }
 
-        .icon-open-modal:before {
+    .icon-open-modal:before {
       font-size: 2.2rem;
     }
 
     .pluginName,
-  .language-item {
-      //font-size: 1.1rem;
-      //line-height: 1.3rem;
+    .language-item {
       font-size: 1.5rem;
       line-height: 1.6rem;
     }
   }
-  
+
   @media screen and (min-width: @desktop-large) {
+
     .ic,
     .am,
     .dash {
@@ -257,7 +252,7 @@ TODO CHECK POSITION
   .box-widget {
     padding: 0;
   }
-  
+
   .box-widget-header .box-widget-wrapper {
     overflow: hidden;
   }
@@ -279,6 +274,7 @@ TODO CHECK POSITION
         .pluginName,
         .language-item {
           margin-left: 2%;
+          width: 100%;
         }
       }
 
@@ -300,11 +296,13 @@ TODO CHECK POSITION
 
       .box-widget-wrapper {
         position: relative;
+
         &:before {
           content: "";
           display: block;
           padding-top: 100%;
         }
+
         .box-widget-title {
           position: absolute;
           top: 0;
@@ -338,16 +336,21 @@ TODO CHECK POSITION
     .box-widget-header {
       padding-left: @global-padding-dsk;
       width: calc(~'@{global-padding-dsk} + (80% / @{square-box-factor-dsk} - @{square-box-margin})');
+
       .read-all {
         font-size: 1.3rem;
         line-height: 1.8rem;
       }
     }
   }
-  
+
   @media screen and (min-width: @desktop-large) {
     .box-widget-header {
       width: calc(~'@{global-padding-dsk} + (80% / @{square-box-factor-dsk-large} - @{square-box-margin})');
     }
   }
+}
+
+.no-margin{
+  margin: 0;
 }

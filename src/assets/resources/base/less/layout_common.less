@@ -290,11 +290,17 @@ in view (amos-news, amos-documenti, amos-discussioni)
     padding: 2px @padding-min;
     max-height: 32px;
     margin-left: 3px;
+    display: flex;
+    align-items: flex-end;
 
     .am-flag, .am-share {
       font-size: 2em;
     }
-    .counter, .caret {
+    .counter{
+      position: relative;
+      bottom: auto;
+    }
+    .caret {
       position: relative;
       bottom: 4px;
     }
@@ -658,7 +664,7 @@ div[class*="-form"] {
     }
   }
   > .row > .col-md-12 { /* form full body */
-    padding: 0;
+    //padding: 0;
   }
 }
 
@@ -714,7 +720,8 @@ div[class*="-view"] {
       a {
         margin: 0px 12px;
         position: relative;
-        bottom: 2px;
+        bottom:auto;
+        
       }
     }
   }

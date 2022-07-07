@@ -6,12 +6,20 @@ BREADCRUMB
   text-transform: uppercase;
   margin-left: auto;
   margin-right: 15px;
-
-  a {
-    color: contrast(@background-breadcrumb);
-  }
+  margin-bottom: 0
 }
 
 .breadcrumb {
-  .breadcrumb()
+  .breadcrumb();
+  & > li {
+    .separator {
+      padding: 0 5px;
+    }
+    
+		& + li {
+			&:before {
+				content: inherit;
+			}
+		}
+	}
 }

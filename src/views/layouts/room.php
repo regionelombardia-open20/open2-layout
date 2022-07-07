@@ -52,20 +52,22 @@ if ($countArrayUrl) {
 
 
 <?php $this->beginPage() ?>
-    <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>">
-    <head>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+
+<head>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
+</head>
+
+<body>
 
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
-    <?php if (isset(Yii::$app->params['logo-bordo'])): ?>
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
@@ -81,22 +83,23 @@ if ($countArrayUrl) {
                 <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
 
                 <div class="page-header">
-                    <?php if (!is_null($this->title)): ?>
+                    <?php if (!is_null($this->title)) : ?>
                         <h1 class="title"><?= Html::encode($this->title) ?></h1>
                         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
                     <?php endif; ?>
                 </div>
 
-                <?php if ($this instanceof AmosView): ?>
+                <?php if ($this instanceof AmosView) : ?>
                     <?php $this->beginViewContent() ?>
                 <?php endif; ?>
                 <?= $content ?>
-                <?php if ($this instanceof AmosView): ?>
+                <?php if ($this instanceof AmosView) : ?>
                     <?php $this->endViewContent() ?>
                 <?php endif; ?>
-<!--        </div> <!-- close div in amos-community view/join/index.php -->
-            <?php //TODO cercare una soluzione per le aree di lavoro/room ?>
-        </div>
+                <!--        </div> <!-- close div in amos-community view/join/index.php -->
+                <?php //TODO cercare una soluzione per le aree di lavoro/room 
+                ?>
+            </div>
     </section>
 
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
@@ -107,6 +110,7 @@ if ($countArrayUrl) {
 
     <?php $this->endBody() ?>
 
-    </body>
-    </html>
+</body>
+
+</html>
 <?php $this->endPage() ?>

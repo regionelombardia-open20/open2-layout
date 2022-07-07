@@ -32,6 +32,7 @@ it show infos about post creator and flag report*/
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
+
     a {
       color: @black-color;
       text-decoration: none;
@@ -41,13 +42,16 @@ it show infos about post creator and flag report*/
     @media (max-width: 1199px) and (min-width: 993px) {
       max-width: 50%;
     }
+
     @media (max-width: 992px) and (min-width: 769px) {
       max-width: 58%;
     }
+
     @media (max-width: 768px) {
       max-width: 49%;
     }
   }
+
   .publication-date {
     margin-top: 15px;
   }
@@ -58,7 +62,7 @@ Settings Menu -> Manage widgets
 show all plugin in card view*/
 .plugin-list {
   table {
-    td.icona > p {
+    td.icona>p {
       padding: @padding-min;
       color: @white-color;
       font-size: 2em;
@@ -66,24 +70,30 @@ show all plugin in card view*/
       text-align: center;
     }
   }
+
   .card-widget {
     text-align: center;
     min-height: 225px;
+
     .item-widget {
       .icon-dashboard-name {
         //border: 1px solid @border-color-default;
       }
+
       .badge {
         right: 15px;
       }
     }
-    > p {
+
+    >p {
       line-height: 1.2;
     }
+
     .chechbox-widget {
       margin-left: 10px;
       position: absolute;
       z-index: 999;
+
       input {
         width: 15px;
         height: 15px;
@@ -103,23 +113,28 @@ TOOL USERS
   a {
     color: @text-primary-color;
     text-decoration: none;
+
     &:hover {
       opacity: @text-link-hover-opacity;
     }
   }
-  + p {
+
+  +p {
     clear: both;
   }
 
   @media (min-width: 1200px) {
     max-width: 38%;
   }
+
   @media (max-width: 1199px) and (min-width: 993px) {
     max-width: 50%;
   }
+
   @media (max-width: 992px) and (min-width: 769px) {
     max-width: 42%;
   }
+
   @media (max-width: 768px) {
     max-width: 51%;
   }
@@ -134,7 +149,7 @@ TOOL USERS
   float: right;
   //margin-top: @margin-default;
 
-  .icon-view + & {
+  .icon-view+& {
     margin: @margin-min 0;
     position: absolute;
     right: 0;
@@ -144,7 +159,7 @@ TOOL USERS
       color: contrast(@primary-color);
     }
   }
-  
+
   &.col-xs-2 {
     position: absolute;
     right: 0;
@@ -189,10 +204,10 @@ TOOL USERS
     }
   }
 
-  > span {
+  >span {
     margin-left: @margin-medium;
 
-    > label {
+    >label {
       margin: 2px 0;
 
       &:last-child {
@@ -211,24 +226,27 @@ AMOS-TOOLTIP
 show info into (i) icon
  */
 .amos-tooltip {
-  font-size: 1.65em;
-  color: @font-color-icon-tooltip;
+  // font-size: 1.65em;
+  // color: @font-color-icon-tooltip;
 }
 
-.amos-tooltip + .tooltip.fade.top.in .tooltip-inner { /* override bootstrap */
-  max-width: 250px;
-  width: 250px;
-  background-color: @background-color-tooltip;
-  color: @font-color-tooltip;
-  border-radius: 0px;
+.amos-tooltip+.tooltip.fade.top.in .tooltip-inner {
+  /* override bootstrap */
+  // max-width: 250px;
+  // width: 250px;
+  // background-color: @background-color-tooltip;
+  // color: @font-color-tooltip;
+  // border-radius: 0px;
 }
 
-.amos-tooltip + .tooltip.in { /* override bootstrap */
-  opacity: 1;
+.amos-tooltip+.tooltip.in {
+  /* override bootstrap */
+  // opacity: 1;
 }
 
-.amos-tooltip + .tooltip.fade.top.in .tooltip-arrow { /* override bootstrap */
-  border-top-color: @background-color-tooltip;
+.amos-tooltip+.tooltip.fade.top.in .tooltip-arrow {
+  /* override bootstrap */
+  // border-top-color: @background-color-tooltip;
 }
 
 /**
@@ -246,10 +264,12 @@ show colored flag icon on view header
 (amos-news, amos-discussioni, amos-documenti)
  */
 .reportflag-widget {
-  a { /* override */
+  a {
+    /* override */
     font-size: 1em;
     color: @secondary-color;
   }
+
   &.unread-report a {
     color: @danger-color;
   }
@@ -261,14 +281,37 @@ used in view into widget-body-content container
  */
 .socialshared-dropdown {
   .dropdown-menu {
-    min-width: 100%; /* bootstrap override */
+    min-width: 100%;
+
+    /* bootstrap override */
     .share-wrap-button {
       text-align: center;
+
       .social-network .am {
-        font-size: 42px; /* 3em change in px for fix all view */
+        font-size: 42px;
+        /* 3em change in px for fix all view */
+        color: @black-color;
+        padding: 0 @padding-min;
+      }
+
+      .social-network .dash {
+        font-size: 35px;
+        /* 3em change in px for fix all view */
         color: @black-color;
         padding: 0 @padding-min;
 
+      }
+    }
+    
+    .container-social-share{
+      @media (max-width:575px){
+          flex-direction:column;
+          align-items: center;
+      }
+      a{
+          .share-wrap-button{
+              text-decoration: none;
+          }
       }
     }
   }
@@ -279,41 +322,54 @@ LIST TAG WIDGET
 show list of tags
  */
 .tags-list-all {
-  .table.table-striped { /* override */
+  .table.table-striped {
+    /* override */
     margin: 0;
-    > thead > tr > th {
+
+    >thead>tr>th {
       border: none;
     }
-    > tbody > tr > td {
+
+    >tbody>tr>td {
       padding: 0;
       border: none;
     }
   }
+
   .tags-list-single {
     .flexer;
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* fix IE11 */
+
+    @media screen and (-ms-high-contrast: active),
+    screen and (-ms-high-contrast: none) {
+      /* fix IE11 */
       display: block;
-      > div:first-child{
+
+      >div:first-child {
         float: left;
       }
     }
+
     width: 100%;
     margin-bottom: @margin-min;
     background-color: @white-color;
     padding: @padding-min;
+
     span {
       font-size: 1.3em;
       margin-right: @margin-medium;
     }
+
     .tag-label {
       margin: 0;
       font-weight: bold;
       text-transform: uppercase;
     }
+
     small {
       font-style: italic;
     }
   }
+
   .list-tags-view-all {
     text-align: center;
     text-transform: uppercase;
@@ -323,22 +379,28 @@ show list of tags
   }
 }
 
-.modal-dialog .modal-content .modal-body .grid-view { /* modal tags list */
+.modal-dialog .modal-content .modal-body .grid-view {
+
+  /* modal tags list */
   .table.table-striped {
     margin-top: 0;
+
     .tags-list-single {
       .flexer;
       width: 100%;
       margin-bottom: @margin-min;
+
       span {
         font-size: 1.3em;
         margin-right: @margin-medium;
       }
+
       .tag-label {
         margin: 0;
         font-weight: bold;
         text-transform: uppercase;
       }
+
       small {
         font-style: italic;
       }
@@ -346,22 +408,28 @@ show list of tags
   }
 }
 
-.toolbar-search { /* search for tags */
+.toolbar-search {
+
+  /* search for tags */
   .table.table-striped {
     margin-top: 0;
+
     .tags-list-single {
       .flexer;
       width: 100%;
       margin-bottom: @margin-min;
+
       span {
         font-size: 1.3em;
         margin-right: @margin-medium;
       }
+
       .tag-label {
         margin: 0;
         font-weight: bold;
         text-transform: uppercase;
       }
+
       small {
         font-style: italic;
       }
@@ -376,20 +444,25 @@ show list of tags
 .shared {
   float: left;
   font-size: 14px;
+
   table {
     margin: @margin-medium 0;
+
     td {
       margin: 0;
       border: 1px solid @border-color-default;
       padding: @padding-min @padding-medium;
 
-      a, a:visited, a:focus {
+      a,
+      a:visited,
+      a:focus {
         text-decoration: none;
         color: @text-primary-color;
         display: block;
         width: 100%;
         background-color: @white-color;
       }
+
       span {
         padding-right: @padding-min;
       }
@@ -420,7 +493,9 @@ show list of tags
 
 @media (max-width: 600px) {
   .post-footer {
-    .shared, .people {
+
+    .shared,
+    .people {
       width: 100%;
     }
   }
@@ -428,6 +503,7 @@ show list of tags
   .shared {
     margin-top: @margin-default;
     font-size: 16px;
+
     table {
       margin: @margin-default auto;
     }
@@ -444,6 +520,11 @@ show button connect in amos-admin icon view,
 amos-admin net tab grid
  */
 .btn.btn-connect-to-user {
+  .flexbox;
+  .flexbox-row;
+  align-items: center;
+  justify-content: flex-start;
+
   .am {
     margin-left: @margin-min;
   }
@@ -455,6 +536,7 @@ show button join in amos-community icon view
  */
 #widgetGraphicMyCommunities .btn.btn-join-community {
   font-size: 0;
+
   .am {
     font-size: 1.5rem;
     position: relative;
@@ -462,6 +544,7 @@ show button join in amos-community icon view
     top: 1px;
   }
 }
+
 .btn.btn-join-community {
   .am {
     font-size: 1em;
@@ -481,6 +564,7 @@ show attachments, comments, tags counter
     .flexbox;
     .flexbox-column;
     margin-right: @margin-medium;
+
     .item {
       .flexbox;
       background-color: @light-background-primary-color;
@@ -490,27 +574,35 @@ show attachments, comments, tags counter
       color: @secondary-color;
       text-decoration: none;
       padding: 2px @padding-min;
-      .am, .dash {
+
+      .am,
+      .dash {
         margin-right: @margin-min;
       }
 
       &:last-child {
         margin-bottom: @margin-default;
       }
-      a { /* if link are enabled */
+
+      a {
+        /* if link are enabled */
         background-color: @light-background-primary-color;
         color: @secondary-color;
         text-decoration: none;
         padding: 2px @padding-min;
-        .am, .dash {
+
+        .am,
+        .dash {
           margin-right: @margin-min;
         }
       }
     }
   }
+
   &.toolbar-horizontal {
     .flexbox;
     .flexbox-row;
+
     .item {
       .flexbox;
       background-color: @light-background-primary-color;
@@ -520,18 +612,25 @@ show attachments, comments, tags counter
       color: @secondary-color;
       text-decoration: none;
       padding: 2px @padding-min;
-      .am, .dash {
+
+      .am,
+      .dash {
         margin-right: @margin-min;
       }
+
       &:last-child {
         margin-bottom: @margin-default;
       }
-      a { /* if link are enabled */
+
+      a {
+        /* if link are enabled */
         background-color: @light-background-primary-color;
         color: @secondary-color;
         text-decoration: none;
         padding: 2px @padding-min;
-        .am, .dash {
+
+        .am,
+        .dash {
           margin-right: @margin-min;
         }
       }
@@ -551,8 +650,10 @@ show attachments, comments, tags counter
   .answer {
     margin-top: 0;
     margin-bottom: @margin-default;
-    > .media > .media-body {
-      height: 80px; /* set for open manage-menu height space */
+
+    >.media>.media-body {
+      height: 80px;
+      /* set for open manage-menu height space */
     }
   }
 
@@ -605,6 +706,7 @@ show attachments, comments, tags counter
   position: absolute;
   top: -30px;
   right: -35px;
+
   @media (max-width: 380px) {
     right: -45px;
   }

@@ -20,6 +20,7 @@ class IconAsset extends AssetBundle
         'icon-am/style.css',            //genereted by icon-moon
         'icon-flag/css/flag-icon.css',  //http://flag-icon-css.lip.is
         'icon-ic/style.css',  //genereted by icon-moon
+        'materialdesignicons/css/materialdesignicons.min.css',
     ];
     
     public $js = [

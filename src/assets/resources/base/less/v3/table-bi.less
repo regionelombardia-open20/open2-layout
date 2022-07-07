@@ -1,0 +1,44 @@
+table.table {
+  >tbody {
+    >tr {
+      &:nth-of-type(2n+1) {
+        background-color: #FFF;
+      }
+      &:hover {
+        background-color: #e5f1fa;
+      }
+  
+      // td {
+      //   &:first-child {
+      //     font-weight: bold;
+      //   }
+      // }
+    }
+    .bk-elementActions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .btn {
+        min-width: 28px;
+        min-height: 28px;
+        max-height: 28px;
+        padding-top: 0;
+        padding-bottom: 0;
+        span {
+          font-size: 1rem !important;
+        }
+        &:last-child {
+          margin-left: 4px;
+        }
+      }
+      .btn-danger-inverse {
+        padding: 0;
+      }
+      .btn + .btn {
+        margin-left: 4px;
+      }
+    }
+  }
+
+
+}

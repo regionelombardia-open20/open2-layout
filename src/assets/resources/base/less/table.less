@@ -80,6 +80,9 @@ table.table {
             padding-left: 40%;
             min-height: 40px;
             white-space: normal;
+            @media (max-width:767px){
+              padding-left: 0;
+            }
             &:before { /* get table header attribute and insert before */
               content: attr(title);
               font-weight: bold;

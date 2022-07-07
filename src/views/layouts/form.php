@@ -59,57 +59,60 @@ IEAssets::register($this);
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
+
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
 </head>
+
 <body>
 
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : /*&& \Yii::$app->params['logo-bordo'] == TRUE)*/ ?>
+        <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
+    <?php endif; ?>
 
-<?php if (isset(Yii::$app->params['logo-bordo'])): /*&& \Yii::$app->params['logo-bordo'] == TRUE)*/ ?>
-    <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
-<?php endif; ?>
+    <section id="bk-page">
 
-<section id="bk-page">
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+        <div id="record_form" class="container">
 
-    <div id="record_form" class="container">
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+            <div class="page-content">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
 
-        <div class="page-content">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
+                <div class="page-header">
+                    <?php if (!is_null($this->title)) : ?>
+                        <h1 class="title"><?= Html::encode($this->title) ?></h1>
+                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                    <?php endif; ?>
+                </div>
 
-            <div class="page-header">
-                <?php if (!is_null($this->title)): ?>
-                    <h1 class="title"><?= Html::encode($this->title) ?></h1>
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
-                <?php endif; ?>
+                <?= $content ?>
+
             </div>
-
-            <?= $content ?>
-
         </div>
-    </div>
 
 
-</section>
+    </section>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 
 </body>
+
 </html>
 <?php $this->endPage() ?>

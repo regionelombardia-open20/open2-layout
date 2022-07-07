@@ -17,6 +17,7 @@ use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -56,24 +57,25 @@ if ($countArrayUrl) {
 
 <?php $this->beginPage() ?>
 
-    <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>">
-    <head>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+
+<head>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
+</head>
+
+<body>
 
     <!-- add for fix error message Parametri mancanti -->
-    <input type="hidden" id="saveDashboardUrl"
-           value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>"/>
+    <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
 
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
-    <?php if (isset(Yii::$app->params['logo-bordo'])): ?>
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
@@ -92,13 +94,13 @@ if ($countArrayUrl) {
 
             </div>
 
-                <?php if ($this instanceof \open20\amos\core\components\AmosView): ?>
-                    <?php $this->beginViewContent() ?>
-                <?php endif; ?>
-                <?= $content ?>
-                <?php if ($this instanceof AmosView): ?>
-                    <?php $this->endViewContent() ?>
-                <?php endif; ?>
+            <?php if ($this instanceof \open20\amos\core\components\AmosView) : ?>
+                <?php $this->beginViewContent() ?>
+            <?php endif; ?>
+            <?= $content ?>
+            <?php if ($this instanceof AmosView) : ?>
+                <?php $this->endViewContent() ?>
+            <?php endif; ?>
 
         </div>
 
@@ -112,6 +114,7 @@ if ($countArrayUrl) {
 
     <?php $this->endBody() ?>
 
-    </body>
-    </html>
+</body>
+
+</html>
 <?php $this->endPage() ?>

@@ -88,6 +88,17 @@ toolbar on views used for add element, order, download, search, change view, hig
      }
 
     .btn-group div.btn-tools-primary { /*change view like button style*/
+      .btn-color(contrast(@primary-color); @primary-color);
+      .btn-hover-change-color(@primary-color;contrast(@primary-color));
+      border: 1px solid @primary-color;
+      border-radius: 4px;
+      .btn-hover-change-color(@primary-color, contrast(@primary-color));
+      &:hover{
+        background-color: darken(@primary-color, 10%) !important;
+        border-color: darken(@primary-color, 10%);
+        color: contrast(@primary-color);
+        border-radius: 4px;
+      }
       padding-bottom: 0;
       padding-top: 6px;
       height: 32px;

@@ -24,10 +24,17 @@ in view (amos-news, amos-documenti, amos-discussioni)
     padding: 2px @padding-min;
     max-height: 32px;
     margin-left: 3px;
+    display: flex;
+    align-items:  flex-end;
     .am-flag, .am-share {
       font-size: 2em;
     }
-    .counter, .caret {
+    .counter{
+      position: relative;
+      bottom: auto;
+    }
+    
+    .caret {
       position: relative;
       bottom: 6px;
     }

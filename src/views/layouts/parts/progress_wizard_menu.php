@@ -25,7 +25,7 @@ $stepsCount = count($partsArray);
 
 ?>
 
-<div class="progress-container progress-container-lg col-xs-12 nop">
+<div class="progress-container progress-container-lg m-b-35">
     <ul class="progress-indicator">
         <?php foreach ($partsArray as $part): ?>
             <?php
@@ -100,7 +100,7 @@ $lastPartsIndex = $stepsCount - 1;
     $nextElement = $partsArray[$partsKeys[$nextKeyIndex]];
     ?>
     <?php if ($partsQuestionario->active['status'] == $partsArray[$partsKey]['status']): ?>
-        <div class="progress-container progress-container-sm  col-xs-12">
+        <div class="progress-container progress-container-sm">
             <?php if ($prevKeyIndex != $lastPartsIndex): ?>
                 <a href="<?= $prevElement['url'] ?>" title="<?= $prevElement['label'] ?>">
                     <?= AmosIcons::show('chevron-left', ['class' => 'pull-left am-2']); ?>

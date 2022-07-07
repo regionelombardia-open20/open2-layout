@@ -169,6 +169,8 @@ TOOL USERS
   }
 }
 
+
+
 /**
  POST-INFOS WIDGET
  show infos on bottom post view
@@ -211,24 +213,24 @@ AMOS-TOOLTIP
 show info into (i) icon
  */
 .amos-tooltip {
-  font-size: 1.65em;
-  color: @font-color-icon-tooltip;
+  // font-size: 1.65em;
+  // color: @font-color-icon-tooltip;
 }
 
 .amos-tooltip + .tooltip.fade.top.in .tooltip-inner { /* override bootstrap */
-  max-width: 250px;
-  width: 250px;
-  background-color: @background-color-tooltip;
-  color: @font-color-tooltip;
-  border-radius: 0px;
+  // max-width: 250px;
+  // width: 250px;
+  // background-color: @background-color-tooltip;
+  // color: @font-color-tooltip;
+  // border-radius: 0px;
 }
 
 .amos-tooltip + .tooltip.in { /* override bootstrap */
-  opacity: 1;
+  // opacity: 1;
 }
 
 .amos-tooltip + .tooltip.fade.top.in .tooltip-arrow { /* override bootstrap */
-  border-top-color: @background-color-tooltip;
+  // border-top-color: @background-color-tooltip;
 }
 
 /**
@@ -266,6 +268,12 @@ used in view into widget-body-content container
       text-align: center;
       .social-network .am {
         font-size: 42px; /* 3em change in px for fix all view */
+        color: @black-color;
+        padding: 0 @padding-min;
+
+      }
+      .social-network .dash {
+        font-size: 35px; /* 3em change in px for fix all view */
         color: @black-color;
         padding: 0 @padding-min;
 

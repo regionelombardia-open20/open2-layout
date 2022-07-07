@@ -66,69 +66,74 @@ $disablePlatformLinks = isset(Yii::$app->params['disablePlatformLinks']) ? Yii::
                 </div>
             <?php endif; ?>
 
+            <?php if ($logoConf['positionTop']==false): ?>
+            
+                <div class="login-logo-and-text">
+                    <!-- image logo -->
+                    <?php if (isset($logoConf['logoImg'])): ?>
+                        <?php
+                        if (!$disablePlatformLinks) {
+                            $logoImg = Html::img($logoConf['logoImg'], [
+                                'class' => 'img-responsive logo-amos',
+                                'alt' => $logoAlt,
+                                
 
-            <div class="login-logo-and-text">
-                <!-- image logo -->
-                <?php if (isset($logoConf['logoImg'])): ?>
-                    <?php
-                    if (!$disablePlatformLinks) {
-                        $logoImg = Html::img($logoConf['logoImg'], [
-                            'class' => 'img-responsive logo-amos',
-                            'alt' => $logoAlt
-                        ]);
-                        if (isset($logoConf['logoPosition'])) {
-                            if (isset($logoOptions['class'])) {
-                                $logoOptions['class'] .= ' ' . $logoConf['logoPosition'];
-                            } else {
-                                $logoOptions['class'] = $logoConf['logoPosition'];
+                            ]);
+                            if (isset($logoConf['logoPosition'])) {
+                                if (isset($logoOptions['class'])) {
+                                    $logoOptions['class'] .= ' ' . $logoConf['logoPosition'];
+                                } else {
+                                    $logoOptions['class'] = $logoConf['logoPosition'];
+                                }
                             }
+                            $logo = Html::a($logoImg, $logoUrl, $logoOptions);
+                        } else {
+                            $logo = Html::img($logoConf['logoImg'], [
+                                'class' => 'img-responsive logo-amos' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : ''),
+                                'alt' => $logoAlt
+                            ]);
                         }
-                        $logo = Html::a($logoImg, $logoUrl, $logoOptions);
-                    } else {
-                        $logo = Html::img($logoConf['logoImg'], [
-                            'class' => 'img-responsive logo-amos' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : ''),
-                            'alt' => $logoAlt
-                        ]);
-                    }
-                    ?>
-                    <?= $logo; ?>
-                <?php endif; ?>
-                <!-- signature logo -->
-                <?php if (isset($logoConf['logoSignature'])): ?>
-                    <?php
-                    if (!$disablePlatformLinks) {
-                        $logoSignature = Html::img($logoConf['logoSignature'], [
-                            'class' => 'img-responsive logo-signature',
-                            'alt' => $logoAlt
-                        ]);
-                        if (isset($logoConf['logoPosition'])) {
-                            if (isset($logoOptions['class'])) {
-                                $logoOptions['class'] .= ' ' . $logoConf['logoPosition'];
-                            } else {
-                                $logoOptions['class'] = $logoConf['logoPosition'];
+                        ?>
+                        <?= $logo; ?>
+                    <?php endif; ?>
+                    <!-- signature logo -->
+                    <?php if (isset($logoConf['logoSignature'])): ?>
+                        <?php
+                        if (!$disablePlatformLinks) {
+                            $logoSignature = Html::img($logoConf['logoSignature'], [
+                                'class' => 'img-responsive logo-signature',
+                                'alt' => $logoAlt
+                            ]);
+                            if (isset($logoConf['logoPosition'])) {
+                                if (isset($logoOptions['class'])) {
+                                    $logoOptions['class'] .= ' ' . $logoConf['logoPosition'];
+                                } else {
+                                    $logoOptions['class'] = $logoConf['logoPosition'];
+                                }
                             }
+                            $signature = Html::a($logoSignature, $logoUrl, $logoOptions);
+                        } else {
+                            $signature = Html::img($logoConf['logoSignature'], [
+                                'class' => 'img-responsive logo-signature' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : ''),
+                                'alt' => $logoAlt
+                            ]);
                         }
-                        $signature = Html::a($logoSignature, $logoUrl, $logoOptions);
-                    } else {
-                        $signature = Html::img($logoConf['logoSignature'], [
-                            'class' => 'img-responsive logo-signature' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : ''),
-                            'alt' => $logoAlt
-                        ]);
-                    }
-                    ?>
-                    <?= $signature ?>
-                <?php endif; ?>
-            </div>
-
-            <!-- text logo -->
-            <?php if (isset($logoConf['logoText'])): ?>
-                <?php
-                $logoTextClass = 'title-text' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : '');
-                ?>
-                <div class="login-logo-text text-center">
-                    <p class="<?= $logoTextClass ?>"><?= $logoConf['logoText'] ?></p>
+                        ?>
+                        <?= $signature ?>
+                    <?php endif; ?>
                 </div>
+
+                <!-- text logo -->
+                <?php if (isset($logoConf['logoText'])): ?>
+                    <?php
+                    $logoTextClass = 'title-text' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : '');
+                    ?>
+                    <div class="login-logo-text text-center">
+                        <p class="<?= $logoTextClass ?>"><?= $logoConf['logoText'] ?></p>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
+            
 
         <?php endforeach; ?>
 

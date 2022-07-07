@@ -26,22 +26,105 @@ use yii\web\View;
 
 /** @var \yii\web\View $this */
 
-$createNewWidgetConfig = [];
+$createNewWidgetConfig = ['btnClasses' => 'btn btn-primary'];
 if (isset($this->params['createNewBtnParams']) && !is_null($this->params['createNewBtnParams']) && is_array($this->params['createNewBtnParams'])) {
     $createNewWidgetConfig = $this->params['createNewBtnParams'];
 }
 
 ?>
-<div class="container-change-view ">
-    <div class="btn-tools-container">
-        <?php if (isset($this->params['forceCreateNewButtonWidget']) || Yii::$app->controller->can('CREATE')): ?>
-            <?= CreateNewButtonWidget::widget($createNewWidgetConfig); ?>
-        <?php endif; ?>
+<div class="container-change-view">
+    <div class="btn-tools-container flexbox">
+        <!-- < ?php if (isset($this->params['forceCreateNewButtonWidget']) || Yii::$app->controller->can('CREATE')): ?>
+            < ?= CreateNewButtonWidget::widget($createNewWidgetConfig); ?>
+        < ?php endif; ?> -->
 
         <?php if (isset($this->params['additionalButtons'])): ?>
             <?= \open20\amos\core\forms\ChangeViewButtonWidget::widget($this->params['additionalButtons']); ?>
         <?php endif; ?>
         <div class="tools-right">
+            <?php
+
+            //SEARCH ENABLED?
+            $paramsSearch = false;
+            $searchActive = false;
+            if (
+                isset(\Yii::$app->controller->module)
+                &&
+                isset(\Yii::$app->controller->module->params)
+                &&
+                isset(\Yii::$app->controller->module->params['searchParams'])
+                &&
+                isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
+                &&
+                (
+                    (is_array(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
+                        &&
+                        isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable'])
+                        &&
+                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable'])
+                    ||
+                    (is_bool(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
+                        &&
+                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]))
+            ) {
+                //check if the controller is istance of CrucController to retrieve the setted searchModel
+                if (\Yii::$app->controller instanceof CrudController) {
+                    //retrieve the form name of current modelSearch
+                    $modelSearch = \Yii::$app->controller->getModelSearch();
+                    $classSearch = $modelSearch->formName();
+                } else {
+                    //use the previous mode to calculate the modelSearch name
+                    $classSearch = Inflector::id2camel(\Yii::$app->controller->id, '-') . 'Search';
+                }
+
+                $paramsSearch = \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id];
+                if (
+                    isset(Yii::$app->request->queryParams[$classSearch])
+                    &&
+                    isset(Yii::$app->request->queryParams['enableSearch'])
+                    &&
+                    Yii::$app->request->queryParams['enableSearch']
+                ) {
+                    $searchActive = TRUE;
+                }
+            }
+            if ($paramsSearch) {
+                if ($searchActive) {
+                    echo Html::tag(
+                        'div',
+                        AmosIcons::show(
+                            'search',
+                            [
+                                'class' => 'btn btn-secondary show-hide-element active',
+                                'data-toggle-element' => 'form-search',
+                                'title' => 'Cerca'
+                            ]
+                        ),
+                        [
+                            'class' => 'btn-group'
+                        ]
+                    );
+                } else {
+                    if (!isset($this->params['disable-search']) || (isset($this->params['disable-search']) && $this->params['disable-search'] == false)) {
+                        echo Html::tag(
+                            'div',
+                            AmosIcons::show(
+                                'search',
+                                [
+                                    'class' => 'btn btn-secondary show-hide-element',
+                                    'data-toggle-element' => 'form-search',
+                                    'title' => 'Cerca'
+                                ]
+                            ),
+                            [
+                                'class' => 'btn-group'
+                            ]
+                        );
+                    }
+                }
+            }
+
+            ?>
             <?php
             //ORDER ENABLED?
             if (
@@ -57,43 +140,49 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 &&
                 \Yii::$app->controller->module->params['orderParams'][\Yii::$app->controller->id]['enable']
             ) {
-                echo AmosIcons::show('unfold-more', [
-                    'class' => 'btn btn-tools-primary show-hide-element',
-                    'data-toggle-element' => 'form-order',
-                ]);
+                echo Html::tag(
+                    'div',
+                    AmosIcons::show(
+                        'unfold-more',
+                        [
+                            'class' => 'btn btn-secondary show-hide-element',
+                            'data-toggle-element' => 'form-order',
+                            'title' => 'Cambia ordinamento'
+                        ]
+                    ),
+                    [
+                        'class' => 'btn-group'
+                    ]
+                );
             }
 
-            //INTRODUCTION ENABLED?
+            ?>
+
+            <?php
+            $changeViewType = true;
             if (
-                isset(Yii::$app->controller->module) &&
-                isset(Yii::$app->controller->module->params) &&
-                isset(Yii::$app->controller->module->params['introductionParams']) &&
-                isset(Yii::$app->controller->module->params['introductionParams'][Yii::$app->controller->id]) &&
-                isset(Yii::$app->controller->module->params['introductionParams'][Yii::$app->controller->id]['enable']) &&
-                Yii::$app->controller->module->params['introductionParams'][Yii::$app->controller->id]['enable'] &&
-                Yii::$app->getModule('slideshow') &&
-                isset(Yii::$app->params['slideshow']) &&
-                Yii::$app->params['slideshow'] === true
+                isset(\Yii::$app->controller->module)
+                &&
+                isset(\Yii::$app->controller->module->params)
+                &&
+                isset(\Yii::$app->controller->module->params['hideChangeViewType'])
+                &&
+                \Yii::$app->controller->module->params['hideChangeViewType']
             ) {
-                $slideshow = new Slideshow;
-                $route = "/" . Yii::$app->request->getPathInfo();
-                $idSlideshow = $slideshow->hasSlideshow($route);
-                if ($idSlideshow) {
-                    echo AmosIcons::show('triangle-up', [
-                        'class' => 'btn btn-tools-primary rotate-right-90',
-                        'id' => 'plugin-introduction-slideshow'
-                    ]);
-                    $js = "
-                            $('#plugin-introduction-slideshow').on('click', function (event) {
-                                $('#amos-slideshow').modal('show');
-                            });
-                        ";
-                    $this->registerJs($js);
-                }
+                $changeViewType = false;
             }
+            if ($changeViewType) {
+                echo ChangeView::widget([
+                    'dropdown' => Yii::$app->controller->getCurrentView(),
+                    'views' => Yii::$app->controller->getAvailableViews(),
+                ]);
+            }
+            ?>
+
+            <?php
             //DOWNLOAD ENABLED?
             if (isset(Yii::$app->request->queryParams['download'])) {
-                echo Html::tag('div', '', ['id' => 'change-view-download-btn', 'class' => 'pull-left m-r-3 hidden']);
+                echo Html::tag('div', '', ['id' => 'change-view-download-btn', 'class' => 'btn-group hidden']);
                 Event::on(View::className(), View::EVENT_END_BODY, function ($event) {
                     $controller = \Yii::$app->controller;
                     if ($controller instanceof CrudController) {
@@ -153,8 +242,9 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                     $actionColumnsIndex
                                 ],
                                 'dropdownOptions' => [
-                                    'class' => 'btn btn-tools-primary',
-                                    'icon' => AmosIcons::show('download')
+                                    'class' => 'btn btn-secondary',
+                                    'icon' => AmosIcons::show('download'),
+                                    'title' => 'Scarica'
                                 ]
                             ];
 
@@ -176,79 +266,12 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
 
 
                 $js = "
-                    $('#change-view-dropdown-download').appendTo('#change-view-download-btn').removeClass('hidden');
-                    $('#change-view-download-btn').removeClass('hidden');
-                    ";
+        $('#change-view-dropdown-download').appendTo('#change-view-download-btn').removeClass('hidden');
+        $('#change-view-download-btn').removeClass('hidden');
+        ";
                 $this->registerJs($js, View::POS_READY);
             }
-
-            //SEARCH ENABLED?
-            $paramsSearch = false;
-            $searchActive = false;
-            if (
-                isset(\Yii::$app->controller->module)
-                &&
-                isset(\Yii::$app->controller->module->params)
-                &&
-                isset(\Yii::$app->controller->module->params['searchParams'])
-                &&
-                isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
-                &&
-                (
-                    (
-                        is_array(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
-                        &&
-                        isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable'])
-                        &&
-                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable']
-                    )
-                    ||
-                    (
-                        is_bool(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id])
-                        &&
-                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]
-                    )
-                )
-            ) {
-                //check if the controller is istance of CrucController to retrieve the setted searchModel
-                if (\Yii::$app->controller instanceof CrudController) {
-                    //retrieve the form name of current modelSearch
-                    $modelSearch = \Yii::$app->controller->getModelSearch();
-                    $classSearch = $modelSearch->formName();
-                } else {
-                    //use the previous mode to calculate the modelSearch name
-                    $classSearch = Inflector::id2camel(\Yii::$app->controller->id, '-') . 'Search';
-                }
-
-                $paramsSearch = \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id];
-                if (
-                    isset(Yii::$app->request->queryParams[$classSearch])
-                    &&
-                    isset(Yii::$app->request->queryParams['enableSearch'])
-                    &&
-                    Yii::$app->request->queryParams['enableSearch']
-                ) {
-                    $searchActive = TRUE;
-                }
-            }
-            if ($paramsSearch) {
-                if ($searchActive) {
-                    echo AmosIcons::show('search', [
-                        'class' => 'btn btn-tools-primary show-hide-element active',
-                        'data-toggle-element' => 'form-search'
-                    ]);
-                } else {
-                    echo AmosIcons::show('search', [
-                        'class' => 'btn btn-tools-primary show-hide-element',
-                        'data-toggle-element' => 'form-search'
-                    ]);
-                }
-            }
             ?>
-            <?= ChangeView::widget([
-                'dropdown' => Yii::$app->controller->getCurrentView(),
-                'views' => Yii::$app->controller->getAvailableViews(),
-            ]); ?>
             <?= ContentSettingsMenuWidget::widget(); ?>
         </div>
     </div>

@@ -27,6 +27,19 @@
     }
   }
 
+  .cropper-btns{
+    .btn-secondary{
+      .btn.btn-outline-primary;
+    }
+    .btn-navigation-primary{
+      .btn.btn-primary;
+    }
+  }
+  
+  .btn-group.tools{
+    margin: 15px;
+  }
+
 }
 
 //override bootstrap modal button
@@ -36,12 +49,17 @@
 
 .bootstrap-dialog-footer-buttons .btn-default {
   margin-bottom: 0;
-  .btn.btn-secondary;
+  height: 36px;
+  .btn.btn-outline-primary;
 }
 
 .bootstrap-dialog-footer-buttons .btn.btn-warning {
   margin-bottom: 0;
   .btn.btn-primary;
+  border-radius: 4px;
+  &:hover{
+    border-radius: 4px;
+  }
 }
 
 .modal-backdrop.in { //override opacity on page

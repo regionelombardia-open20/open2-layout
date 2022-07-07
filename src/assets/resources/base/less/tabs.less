@@ -78,4 +78,14 @@
   float: left;
   padding: @padding-default 0;
   background: #fff;
+  #details{
+    >.col-xs-12.text-right{
+      @media (max-width:430px){
+        padding-right: @padding-default;
+        padding-left: @padding-default;
+        text-align: left;
+        margin-bottom: @margin-default;
+      }
+    }
+  }
 }

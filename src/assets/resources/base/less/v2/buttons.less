@@ -85,6 +85,7 @@
 
   &:hover, &:active, &:active:focus, &:active:hover { //bootstrap override
     outline: none;
+    opacity: 0.8;
   }
 
   @media (max-width: 1199px) {
@@ -102,6 +103,35 @@
     .btn-color(contrast(@btn-color-admin); @btn-color-admin);
     .btn-hover-change-color(@btn-color-admin;contrast(@btn-color-admin));
     .btn-hover-shadow;
+    &:hover{
+      border-radius: 4px;
+    }
+    &.am-search{
+      padding: 7px 9px;
+      font-size: 1.3em;
+      vertical-align: middle;
+
+    }
+  }
+
+  &.btn-file{
+    height: 46px;
+    &:hover{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &.btn-outline-primary{
+    .btn-color(@primary-color; contrast(@primary-color));
+    
+    .btn-hover-change-color(contrast(@primary-color), @primary-color);
+    .btn-border(@primary-color);
+    .btn-hover-shadow;
+    border-radius: 4px;
+    &:hover{
+      border-radius: 4px;
+    }
   }
 
   &.btn-tools-primary { /* search, download, order, change view */
@@ -133,6 +163,7 @@
     padding: 6px 0; //bootstrap override
     .btn-color(contrast(@btn-color-tools);@btn-color-tools);
     .btn-min-size(36px; 36px);
+    max-height:36px;
     .btn-border(@btn-color-tools);
     .btn-hover-change-color(@btn-color-tools;contrast(@btn-color-tools););
     .btn-hover-shadow;
@@ -166,6 +197,7 @@
   &.btn-danger-inverse {
     .btn-color(contrast(@danger-color); @danger-color);
     .btn-min-size(36px; 36px);
+    max-height:36px;
     .btn-border(@danger-color);
     .btn-hover-change-color(@danger-color;contrast(@danger-color));
 
@@ -183,6 +215,7 @@
     .btn-color(@btn-color-admin;contrast(@btn-color-admin););
     .btn-border(@btn-color-admin);
     .btn-hover-change-color(contrast(@btn-color-admin);@btn-color-admin;);
+    border-radius: 4px;
   }
 
 
@@ -217,6 +250,7 @@
 //--------------------------------------------------------------------------------------------------------------
 .btn-tools-primary { //TODO remove code after add btn class before btn-tools-primary
   border: 1px solid transparent;
+  max-height:36px;
   .btn;
 }
 

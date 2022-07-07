@@ -16,6 +16,7 @@ use open20\amos\dashboard\models\AmosWidgets;
 ////\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 /* @var $this \yii\web\View */
 /* @var $content string */
+
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -55,24 +56,26 @@ if ($countArrayUrl) {
 
 <?php $this->beginPage() ?>
 
-    <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>">
-    <head>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+
+<head>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
+</head>
+
+<body>
 
     <!-- add for fix error message Parametri mancanti -->
-    <input type="hidden" id="saveDashboardUrl"
-           value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>"/>
+    <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
 
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-    <?php if (isset(Yii::$app->params['logo-bordo'])): ?>
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
@@ -87,16 +90,16 @@ if ($countArrayUrl) {
 
             <div class="page-content">
 
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
 
                 <div class="page-header">
-                    <?php if (!is_null($this->title)): ?>
+                    <?php if (!is_null($this->title)) : ?>
                         <h1 class="title"><?= Html::encode($this->title) ?></h1>
                         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
                     <?php endif; ?>
                 </div>
 
-                <?php if (array_key_exists('currentDashboard', $this->params)): ?>
+                <?php if (array_key_exists('currentDashboard', $this->params)) : ?>
                     <div class="col-xs-12 nop">
                         <?php
                         $items = [];
@@ -139,6 +142,7 @@ if ($countArrayUrl) {
 
     <?php $this->endBody() ?>
 
-    </body>
-    </html>
+</body>
+
+</html>
 <?php $this->endPage() ?>

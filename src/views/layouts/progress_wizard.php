@@ -100,82 +100,85 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
+
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
 </head>
+
 <body>
 
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
+        <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
+    <?php endif; ?>
 
-<?php if (isset(Yii::$app->params['logo-bordo'])): ?>
-    <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
-<?php endif; ?>
-
-<section id="bk-page">
-    <div class="container-messages">
-        <div class="container">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+    <section id="bk-page" class="fullsizeWizardLayout">
+        <div class="container-messages">
+            <div class="container">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="container-help">
-        <div class="container">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+        <div class="container-help">
+            <div class="container">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="page-content">
-            <?php if (!isset($this->params['hideBreadcrumb']) || ($this->params['hideBreadcrumb'] === false)): ?>
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
-            <?php endif; ?>
-            <div class="page-header">
-                <?php if (!isset($this->params['hideWizardTitle']) || ($this->params['hideWizardTitle'] === false)): ?>
-                    <h1 class="title"><?= Html::encode($this->title) ?></h1>
+        <div class="container">
+            <div class="page-content">
+                <?php if (!isset($this->params['hideBreadcrumb']) || ($this->params['hideBreadcrumb'] === false)) : ?>
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
                 <?php endif; ?>
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
-            </div>
-            <div class="col-sm-12 progress-menu-container">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "progress_wizard_menu", [
-                    'model' => $this->params['model'],
-                    'partsQuestionario' => $this->params['partsQuestionario'],
-                    'hidePartsLabel' => (isset($this->params['hidePartsLabel']) ? $this->params['hidePartsLabel'] : false),
-                    'hidePartsUrl' => (isset($this->params['hidePartsUrl']) ? $this->params['hidePartsUrl'] : false)
-                ]);
-                ?>
-            </div>
-            <div class="col-sm-12">
-                <div class="error-summary-fake" style="display: none;">
-                    <?php
-                    \yii\bootstrap\Alert::begin([
-                        'closeButton' => false,
-                        'options' => [
-                            'class' => 'danger alert-danger error-summary',
-                        ],
+                <div class="page-header">
+                    <?php if (!isset($this->params['hideWizardTitle']) || ($this->params['hideWizardTitle'] === false)) : ?>
+                        <h1 class="title"><?= Html::encode($this->title) ?></h1>
+                    <?php endif; ?>
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                </div>
+                <div class="col-sm-12 progress-menu-container">
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "progress_wizard_menu", [
+                        'model' => $this->params['model'],
+                        'partsQuestionario' => $this->params['partsQuestionario'],
+                        'hidePartsLabel' => (isset($this->params['hidePartsLabel']) ? $this->params['hidePartsLabel'] : false),
+                        'hidePartsUrl' => (isset($this->params['hidePartsUrl']) ? $this->params['hidePartsUrl'] : false)
                     ]);
-                    \yii\bootstrap\Alert::end();
                     ?>
                 </div>
+                <div class="col-sm-12">
+                    <div class="error-summary-fake" style="display: none;">
+                        <?php
+                        \yii\bootstrap\Alert::begin([
+                            'closeButton' => false,
+                            'options' => [
+                                'class' => 'danger alert-danger error-summary',
+                            ],
+                        ]);
+                        \yii\bootstrap\Alert::end();
+                        ?>
+                    </div>
+                </div>
+
+                <?= $content ?>
+
             </div>
-            
-            <?= $content ?>
-
         </div>
-    </div>
-</section>
+    </section>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
 
-<?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 
 </body>
+
 </html>
 <?php $this->endPage() ?>

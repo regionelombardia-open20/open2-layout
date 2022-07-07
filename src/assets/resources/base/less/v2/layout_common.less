@@ -56,9 +56,10 @@ LAYOUTS
   .title {
     color: @text-primary-color;
     margin: 0;
-    font-weight: 200;
+    font-weight: bold;
     font-size: 2.36em;
     line-height: 1.1;
+    text-transform: uppercase;
   }
 
   .title+.text-help-layout {
@@ -179,6 +180,7 @@ NETWORK SCOPE
     background: @brand-primary-color;
     font-size: 1.4em;
     width: 100%;
+    display: block;
     text-align: center;
 
     >span {
@@ -577,7 +579,7 @@ in view (amos-news, amos-documenti, amos-discussioni)
   .flexbox-row;
   justify-content: flex-end;
   margin: @margin-default 0;
-
+  align-items: center;
   >div[class*="-dropdown"]+div[class*="-dropdown"],
   >div[class*="-dropdown"]+.modal+div[class*="-dropdown"],
   >div[class*="-dropdown"]+.modal+.modal+div[class*="-dropdown"] {
@@ -589,13 +591,17 @@ in view (amos-news, amos-documenti, amos-discussioni)
     padding: 2px @padding-min;
     max-height: 32px;
     margin-left: 3px;
-
+    display: flex;
+    align-items: center;
     .am-flag,
     .am-share {
       font-size: 2em;
     }
 
-    .counter,
+    .counter {
+      position: relative;
+      bottom: auto;
+    }
     .caret {
       position: relative;
       bottom: 4px;
@@ -1030,7 +1036,7 @@ div[class*="-form"] {
 
   >.row>.col-md-12 {
     /* form full body */
-    padding: 0;
+    //padding: 0;
   }
 }
 
@@ -1099,7 +1105,7 @@ div[class*="-view"] {
       a {
         margin: 0px 12px;
         position: relative;
-        bottom: 2px;
+        bottom:auto;
       }
     }
   }

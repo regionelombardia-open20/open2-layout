@@ -19,11 +19,12 @@ use open20\amos\core\icons\AmosIcons;
 
 ?>
 <?php if ($atLeastOnePermission): ?>
-    <div class="manage-network-scope <?= $mainDivClasses ?>">
+    <div class="manage <?= $mainDivClasses ?>">
         <div class="dropdown">
-            <a class="manage-menu" data-toggle="dropdown" href="" aria-expanded="true"
+            <a class="manage-menu btn btn-outline-tertiary" data-toggle="dropdown" href="" aria-expanded="true"
                title="<?= Yii::t('amoscore', 'Menu contestuale') ?>">
-                <?= AmosIcons::show('settings', [], AmosIcons::IC) ?>
+               <?= AmosIcons::show('settings', ['class' => 'pull-left']) ?>
+                <span class="caret"></span>
                 <span class="sr-only"><?= Yii::t('amoscore', 'Menu contestuale') ?></span>
             </a>
             <ul class="dropdown-menu pull-right">

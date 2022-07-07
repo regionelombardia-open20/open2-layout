@@ -227,7 +227,7 @@ class NavBar extends YiiNavBar {
                   Html::a(
                       AmosIcons::show("help-outline")
                       , '/ticket/assistenza/cerca-faq',
-                      ['title' => \backend\modules\tickets\Module::t('tickets', 'Faq')]
+                      ['title' => \Yii::t('tickets', 'Faq')]
                   ), ['class' => 'header-plugin-icon']
           );
           $menuItems[] = $ticketsLink;	

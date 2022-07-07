@@ -57,52 +57,55 @@ if ($countArrayUrl) {
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-    <head>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
-    </head>
-    <body>
 
-        <?php $this->beginBody() ?>
+<head>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head"); ?>
+</head>
 
+<body>
+
+    <?php $this->beginBody() ?>
+
+    
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
-
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
+    <?php if (isset(Yii::$app->params['logo-bordo'])) : /*&& \Yii::$app->params['logo-bordo'] == TRUE)*/ ?>
+        <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
+    <?php endif; ?>
 
-        <?php if (isset(Yii::$app->params['logo-bordo'])): /*&& \Yii::$app->params['logo-bordo'] == TRUE)*/ ?>
-            <div class="container-bordo-logo"><img src="<?=Yii::$app->params['logo-bordo']?>" alt=""></div>
-        <?php endif; ?>
-
-        <section id="bk-page">
-            <div class="container-messages dashboard"> <!-- TODO fix -->
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
-                <div class="container">
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumb"); ?>
-                </div>
+    <section id="bk-page">
+        <div class="container-messages dashboard">
+            <!-- TODO fix -->
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+            <div class="container">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
             </div>
-            <!--<div class="container-help">
+        </div>
+        <!--<div class="container-help">
                     <div class="container">
                     < ?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
                 </div>
             </div>-->
 
-            <div class="dashboard-content">
-                <div class="container">
-                    <h1 class="sr-only">Dashboard</h1>
-                    <?= $content ?>
-                </div>
-            </div>      
+        <div class="dashboard-content">
+            <div class="container">
+                <h1 class="sr-only">Dashboard</h1>
+                <?= $content ?>
+            </div>
+        </div>
 
-        </section>
+    </section>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); ?>
 
-        <?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 
-    </body>
+</body>
+
 </html>
 <?php $this->endPage() ?>
