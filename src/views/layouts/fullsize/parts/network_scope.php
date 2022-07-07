@@ -78,7 +78,7 @@ if (isset($community)) {
             $viewScope = 'organizzazioni_network_scope';
 
             /** @var Record|OrganizationsModelInterface $organizationModel */
-            $organizationModel = $organizzazioniModule->createModel($organizzazioniModule->getOrganizationModelClass());
+            $organizationModel = Yii::createObject($organizzazioniModule->getOrganizationModelClass());
 
             /** @var Record|OrganizationsModelInterface $organization */
             $organization = $organizationModel::findOne(['community_id' => $community->id]);
