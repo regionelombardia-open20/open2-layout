@@ -37,4 +37,12 @@ return [
     'Accedi o Registrati' => 'Log-in or Register',
     'Accedi o registrati alla piattaforma {platformName}' => 'Log-in or register to the platform {platformName}',
     'Esci dalla piattaforma {platformName}' => 'Logout from {platformName}',
+    'espandi descrizione' => 'expand description',
+    'Leggi la descrizione completa' => 'Read the full description',
+    "riduci descrizione" => "collapse description",
+    "Riduci testo" => "Shrink text",
+    "Community riservata ai partecipanti"=>"Community reserved for participants",
+    "Community ristretta ai partecipanti"=>"Community restricted to participants",
+    "Community aperta" => "Open community",
+    "Community chiusa" => "Close community",
 ];
