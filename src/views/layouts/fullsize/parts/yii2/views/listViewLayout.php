@@ -15,10 +15,10 @@ $currentViewClass = ((Yii::$app->controller instanceof CrudController &&
 ?>
 
 
-<div class='summary-design d-flex justify-content-between <?= $customSummaryClass ?>'>
+<div class='summary-design d-flex justify-content-between w-100 <?= $customSummaryClass ?>'>
     {summary}
 </div>
-<div class=' list-view-design it-list-wrapper <?= $currentViewClass ?> <?= $customListClass ?>'>
+<div class='list-view-design it-list-wrapper <?= $currentViewClass ?> <?= $customListClass ?>'>
     {items}
 </div>
 <nav class='pagination-wrapper justify-content-center pagination-design <?= $customPaginationClass ?>'>

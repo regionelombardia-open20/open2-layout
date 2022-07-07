@@ -126,7 +126,19 @@ a.readmore {
     }
   }
 }
-
+.post-header {
+  .card-prevalent-partnership, .creator {
+    margin:0 0 0 5px;
+  }
+  .card-prevalent-partnership {
+    
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+  }
+}
 .header-widget {
   display: flex;
   align-items: flex-start;
@@ -137,11 +149,9 @@ a.readmore {
 
   .post-header {
 
-      // display: flex;
-      // align-items: center;
       .creator {
           margin-right: auto;
-
+          max-width: 100%;
           @media (max-width:575px) {
               max-width: 100%;
               width: 100%;

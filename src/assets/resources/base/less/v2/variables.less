@@ -9,9 +9,8 @@ override into main.less on bottom */
 
 /* default color variables for brand customize */
 @brand-primary-color: #297a38;
-@brand-secondary-color: #878787;
-@brand-third-color: desaturate(lighten(@brand-primary-color, 20%), 20%);
-
+@brand-secondary-color: #5E7887;
+@brand-third-color: #003354;
 
 /*platform text based color*/
 @text-main-color:#000000;
@@ -21,8 +20,8 @@ override into main.less on bottom */
 
 /* default color platform basic interface*/
 @primary-color: @brand-primary-color;
-@secondary-color: #5E7887;
-@tertiary-color: #003354;
+@secondary-color: @brand-secondary-color;
+@tertiary-color: @brand-third-color;
 
 /* default backend background color and image */
 @main-background-color: #ffffff;
@@ -31,11 +30,11 @@ override into main.less on bottom */
 @footer-color: rgba(255, 255, 255, 1);
 
 /* default background content parts color */
-@light-background-color: lighten(@secondary-color, 40%);
-@light-background-primary-color: lighten(spin(@primary-color, -0.3750), 60);
+@light-background-color: #e6e9f2;
+@light-background-primary-color: @light-background-color;
 
 /* default border color */
-@border-color-default: lighten(@secondary-color, 30%);
+@border-color-default: lighten(@brand-secondary-color, 30%);
 
 /* default box-shadow */
 @box-shadow-default: rgba(0,0,0,0.5);
@@ -89,7 +88,7 @@ override into main.less on bottom */
 @admin-color-icons: lighten(desaturate(spin(@secondary-color, 0.0000), 0.4184), 20.1961);//#bbbbbb; //color-grey
 @dark-admin-color-icons: @secondary-color;//#888787; //color-darkGrey
 
-@widget-background-color-default: #ececec;
+@widget-background-color-default: #fcfcff;
 @widget-background-color-odd: lighten(@brand-primary-color, 10%);
 @widget-background-color-even: darken(@brand-primary-color, 10%);
 

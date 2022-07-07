@@ -19,11 +19,11 @@ use yii\helpers\Html;
     $socialConfigurations = Yii::$app->params['socialConfigurations'];
     ?>
     <div class="it-socials  flexbox">
-        <span class="text-primary follow-text">Seguici su</span>
+        <span class="text-primary follow-text"><?= \open20\amos\layout\Module::t('amoslayout','Seguici su')?></span>
         <ul class="social-list list-unstyled flexbox">
             <?php foreach ($socialConfigurations as $k => $socialConf) : ?>
                 <li>
-                    <a href="<?= $socialConf ?>" aria-label="<?= 'Seguici su' . ' ' . $k ?>" target="_blank" title="<?= 'Seguici su' . ' ' . $k ?>">
+                    <a href="<?= $socialConf ?>" aria-label="<?= \open20\amos\layout\Module::t('amoslayout','Seguici su') . ' ' . $k ?>" target="_blank" title="<?=  \open20\amos\layout\Module::t('amoslayout','Seguici su'). ' ' . $k ?>">
 
                         <span class="mdi mdi-<?= $k ?> icon"> </span>
                     </a>

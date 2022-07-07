@@ -79,11 +79,12 @@ use yii\helpers\Html;
                 <?php
 
                 $logoImg = Html::img($logoConf['logoImg'], ['class' => 'img-responsive', 'alt' => $logoAlt]);
+                $logoImgClass = 'it-brand-text' . ' ' . (isset($logoConf['logoClass']) ? ' ' . $logoConf['logoClass'] : 'd-block');
 
                 if (isset($logoConf['logoUrl'])) {
-                    $logo = Html::a(Html::tag('div', $logoImg, ['class' => 'it-brand-text']), $logoUrl, $logoOptions);
+                    $logo = Html::a(Html::tag('div', $logoImg, ['class' => $logoImgClass]), $logoUrl, $logoOptions);
                 } else {
-                    $logo = Html::tag('div', $logoImg, ['class' => 'it-brand-text d-block']);
+                    $logo = Html::tag('div', $logoImg, ['class' => $logoImgClass]);
                 }
                 ?>
                 <?= $logo; ?>

@@ -33,6 +33,7 @@ body {
   min-height: 100vh;
 
   #bk-page {
+
     //margin-top: 50px !important;
     >.container {
       //padding-bottom: 60px; commented because container-message it's too distance
@@ -98,10 +99,12 @@ LAYOUTS
 }
 
 @gap-item-view: @padding-default;
+
 .icon-view,
 .grid-view,
 .list-view {
   div[role="listbox"]:not(.grid) {
+    //not(.grid) exclude masonry structure
     display: flex;
     flex-wrap: wrap;
     margin-left: -@gap-item-view;
@@ -110,7 +113,6 @@ LAYOUTS
     >div {
       width: 100%;
       padding: 0 @gap-item-view;
-
     }
   }
 }
@@ -626,6 +628,7 @@ in view (amos-news, amos-documenti, amos-discussioni)
   justify-content: flex-end;
   margin: @margin-default 0;
   align-items: center;
+
   >div[class*="-dropdown"]+div[class*="-dropdown"],
   >div[class*="-dropdown"]+.modal+div[class*="-dropdown"],
   >div[class*="-dropdown"]+.modal+.modal+div[class*="-dropdown"] {
@@ -639,6 +642,7 @@ in view (amos-news, amos-documenti, amos-discussioni)
     margin-left: 3px;
     display: flex;
     align-items: center;
+
     .am-flag,
     .am-share {
       font-size: 2em;
@@ -648,6 +652,7 @@ in view (amos-news, amos-documenti, amos-discussioni)
       position: relative;
       bottom: auto;
     }
+
     .caret {
       position: relative;
       bottom: 4px;
@@ -834,6 +839,7 @@ TAGS SECTION
   .dash-tag {
     margin-right: @margin-min;
   }
+
   >div {
     padding: 0 15px;
   }
@@ -1137,16 +1143,19 @@ div[class*="-view"] {
   .header-widget {
     position: relative;
     margin: @margin-medium 0;
-    .post-header{
+
+    .post-header {
       display: flex;
       flex-direction: row;
       align-items: center;
       margin-bottom: 25px;
     }
+
     @media (max-width: 767px) {
       align-items: flex-end;
       margin-bottom: 25px;
-      .post-header{
+
+      .post-header {
         margin-bottom: 0;
       }
     }
@@ -1170,7 +1179,7 @@ div[class*="-view"] {
       a {
         margin: 0px 12px;
         position: relative;
-        bottom:auto;
+        bottom: auto;
       }
     }
   }
@@ -1228,7 +1237,8 @@ div[class*="-view"] {
       min-height: 350px;
       margin-top: 20px;
     }
-    img{
+
+    img {
       max-width: 100%;
       height: auto;
     }

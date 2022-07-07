@@ -24,9 +24,9 @@ if (\Yii::$app->controller instanceof \open20\amos\core\controllers\CrudControll
     }
     $canCreateController = $forceCreateNewButtonWidget || \Yii::$app->controller->can('CREATE');
 }
-
-$canCreate = (isset($canCreate)) ? $canCreate : !$isGuest && $canCreateController;
+$canCreate = (isset(\Yii::$app->view->params['canCreate'])) ? \Yii::$app->view->params['canCreate'] : !$isGuest && $canCreateController;
 $canManage = (isset($canManage)) ? $canManage : !$isGuest;
+
 
 $hideCreate = (isset($hideCreate)) ? $hideCreate : false;
 $hideManage = (isset($hideManage)) ? $hideManage : false;
@@ -105,9 +105,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
             <div class="h2 text-uppercase "><?= $titleSection ?></div>
         </div>
         <?php if (!empty($urlLinkAll)) : ?>
-            <a href="<?= $urlLinkAll ?>"
-               class="link-all-<?= $modelLabel ?> text-uppercase align-items-center small"
-               title="<?= $titleLinkAll ?>">
+            <a href="<?= $urlLinkAll ?>" class="link-all-<?= $modelLabel ?> text-uppercase align-items-center small" title="<?= $titleLinkAll ?>">
                 <span><?= $labelLinkAll ?></span>
                 <span class="icon mdi mdi-arrow-right-circle-outline"></span>
             </a>
@@ -128,8 +126,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                                     'title' => $titleCreate
                                 ]); ?>
                             <?php } else { ?>
-                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events"
-                                        data-toggle="tooltip" title="<?= $titleScopePreventCreate ?>">
+                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events" data-toggle="tooltip" title="<?= $titleScopePreventCreate ?>">
                                     <span class="am am-plus-circle-o"></span>
                                     <span><?= $labelCreate ?></span>
                                 </button>
@@ -151,8 +148,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                         <?php if (!$hideManage) { ?>
                             <?php if ($canManage && !empty($manageLinks)) { ?>
                                 <div class="dropdown">
-                                    <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle"
-                                            type="button" data-toggle="dropdown">
+                                    <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="am am-settings"></span>
                                         <span><?= $labelManage ?></span>
                                         <span class="caret"></span>
@@ -161,8 +157,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <?php foreach ($manageLinks as $singleManage) : ?>
                                             <li>
-                                                <a href="<?= $singleManage['url'] ?>"
-                                                   title="<?= $singleManage['title'] ?>"><?= $singleManage['label'] ?></a>
+                                                <a href="<?= $singleManage['url'] ?>" title="<?= $singleManage['title'] ?>"><?= $singleManage['label'] ?></a>
                                             </li>
                                         <?php endforeach ?>
                                     </ul>
@@ -181,11 +176,10 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                                 if (isset($dataConfirmCreate) && !empty($dataConfirmCreate)) {
                                     $parameters['data-confirm'] = $dataConfirmCreate;
                                 }
-                                ?>
+                            ?>
                                 <?= \yii\helpers\Html::a(" <span class=\"am am-plus-circle-o\"></span><span>$labelCreate</span>", $urlCreate, $parameters); ?>
                             <?php } else { ?>
-                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events"
-                                        data-toggle="tooltip" title="<?= ($isGuest ? $titlePreventCreate : $titleCanNotCreate) ?>">
+                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events" data-toggle="tooltip" title="<?= ($isGuest ? $titlePreventCreate : $titleCanNotCreate) ?>">
                                     <span class="am am-plus-circle-o"></span>
                                     <span><?= $labelCreate ?></span>
                                 </button>
@@ -204,8 +198,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                         <?php if (!$hideManage) { ?>
                             <?php if ($canManage && !empty($manageLinks)) { ?>
                                 <div class="dropdown">
-                                    <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle"
-                                            type="button" data-toggle="dropdown">
+                                    <button class="cta link-manage-<?= $modelLabel ?> flexbox align-items-center btn btn-outline-tertiary dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="am am-settings"></span>
                                         <span><?= $labelManage ?></span>
                                         <span class="caret"></span>
@@ -214,8 +207,7 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <?php foreach ($manageLinks as $singleManage) : ?>
                                             <li>
-                                                <a href="<?= $singleManage['url'] ?>"
-                                                   title="<?= $singleManage['title'] ?>"><?= $singleManage['label'] ?></a>
+                                                <a href="<?= $singleManage['url'] ?>" title="<?= $singleManage['title'] ?>"><?= $singleManage['label'] ?></a>
                                             </li>
                                         <?php endforeach ?>
                                     </ul>
@@ -227,22 +219,16 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
             <?php } else { ?>
                 <div class="flexbox manage-cta-container">
                     <?php if (!$hideCreate) : ?>
-                        <a href="<?= \Yii::$app->params['linkConfigurations']['loginLinkCommon'] ?>"
-                           class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled  disabled-with-pointer-events"
-                           data-toggle="tooltip" title="<?= $titlePreventCreate ?>">
+                        <a href="<?= \Yii::$app->params['linkConfigurations']['loginLinkCommon'] ?>" class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled  disabled-with-pointer-events" data-toggle="tooltip" title="<?= $titlePreventCreate ?>">
                             <span class="am am-plus-circle-o"></span>
                             <span><?= $labelCreate ?></span>
                         </a>
                     <?php endif ?>
                     <?php if (!$hideSecondAction) : ?>
-                        <div class="flexbox manage-cta-container">
-                            <a href="<?= \Yii::$app->params['linkConfigurations']['loginLinkCommon'] ?>"
-                               class="cta link-my-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary-outline disabled  disabled-with-pointer-events"
-                               data-toggle="tooltip" title="<?= $titlePreventSecondAction ?>">
-                                <span class="am am-<?= $iconSecondAction ?>"></span>
-                                <span><?= $labelSecondAction ?></span>
-                            </a>
-                        </div>
+                        <a href="<?= \Yii::$app->params['linkConfigurations']['loginLinkCommon'] ?>" class="cta link-my-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary-outline disabled  disabled-with-pointer-events" data-toggle="tooltip" title="<?= $titlePreventSecondAction ?>">
+                            <span class="am am-<?= $iconSecondAction ?>"></span>
+                            <span><?= $labelSecondAction ?></span>
+                        </a>
                     <?php endif ?>
                 </div>
             <?php } ?>
@@ -250,5 +236,5 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
     </div>
 </div>
 <?php if (isset($subTitleSection)) : ?>
-    <div class="subtitle-<?= $modelLabel ?> <?= $subTitleAdditionalClass?>"><?= $subTitleSection ?></div>
+    <div class="subtitle-<?= $modelLabel ?> <?= $subTitleAdditionalClass ?>"><?= $subTitleSection ?></div>
 <?php endif ?>

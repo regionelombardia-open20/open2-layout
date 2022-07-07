@@ -1,7 +1,10 @@
 @gap-item-view: @padding-default;
+
+// COMMON LIST AND ICON RULES
 .icon-view,
 .list-view {
-  div[role="listbox"] {
+  div[role="listbox"]:not(.grid) {
+    //not(.grid) exclude masonry structure
     display: flex;
     flex-wrap: wrap;
     margin-left: -@gap-item-view;
@@ -10,28 +13,38 @@
     >div {
       width: 100%;
       padding: 0 @gap-item-view;
-
+      margin-bottom: @margin-default;
     }
   }
 }
 
+.icon-view {
+  div[role="listbox"]:not(.grid) {
+
+    //not(.grid) exclude masonry structure
+    >div {
+      @media (min-width:576px) {
+        width: 50%;
+      }
+
+      @media (min-width:768px) {
+        width: 33.3333333333%;
+      }
+    }
+
+  }
+}
+
+
+
 .event-index {
   .icon-view {
-    >.row {
-      margin: 0;
+    div[role="listbox"] {
 
-      div[role="listbox"] {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: -15px;
-        margin-right: -15px;
-
-        >div {
-          @media (min-width:992px) {
-            width: 50%;
-            padding: @padding-large 15px;
-          }
-
+      >div {
+        @media (min-width:992px) {
+          width: 50%;
+          padding: @padding-large 15px;
         }
       }
     }
@@ -42,20 +55,6 @@
   .icon-view {
     div[role="listbox"] {
       >div {
-        margin-bottom: @margin-default;
-
-        @media (min-width:576px) {
-          width: 50%;
-        }
-
-        @media (min-width:768px) {
-          width: 33.3333333333%;
-        }
-
-        @media (min-width:992px) {
-          width: 25%;
-        }
-
         @media (min-width:992px) {
           width: 16.66666667%;
         }
@@ -68,16 +67,6 @@
   .icon-view {
     div[role="listbox"] {
       >div {
-        margin-bottom: @margin-default;
-
-        @media (min-width:576px) {
-          width: 50%;
-        }
-
-        @media (min-width:768px) {
-          width: 33.3333333333%;
-        }
-
         @media (min-width:992px) {
           width: 25%;
         }
@@ -91,43 +80,6 @@
     div[role="listbox"] {
       >div {
         border-bottom: 1px solid #b1b1b3;
-
-        @media (min-width:576px) {
-          width: 50%;
-        }
-
-        @media (min-width:768px) {
-          width: 33.3333333333%;
-        }
-
-        // @media (min-width:992px) {
-        //   width: 25%;
-        // }
-      }
-    }
-  }
-}
-
-.card-user {
-  .list-items {
-    div[role="listbox"] {
-      display: flex;
-      flex-wrap: wrap;
-
-      >div {
-        padding: 20px 15px;
-
-        @media (min-width:576px) {
-          width: 50%;
-        }
-
-        @media (min-width:768px) {
-          width: 33.3333333333%;
-        }
-
-        @media (min-width:992px) {
-          width: 25%;
-        }
       }
     }
   }
@@ -154,7 +106,7 @@
 }
 
 .news-index {
-  .list-view {
+  .icon-view, .list-view {
     div[role="listbox"] {
 
 
@@ -170,6 +122,47 @@
         }
       }
 
+    }
+  }
+}
+
+/* GRAFICA PER DATABANK */
+.attach-gallery-form,
+.gallery-masonry {
+  .list-view {
+    div[role="listbox"]:not(.grid) {
+      display: block;
+      margin: 0;
+      >div {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
+/* GRAFICA PREVIEW IMMAGINE SINGOLA DATABANK */
+.row.detail-image-masonry {
+  display: flex;
+  flex-wrap: wrap;
+  .mr-2 {
+    margin-right: 8px;
+  }
+  .image-detail{
+    margin-top:24px
+  }
+  @media (min-width: 576px){
+    .order-sm-1 {
+      order: 1;
+    }
+    .order-sm-0 {
+      order: 0;
+    }
+    .order-sm-2 {
+      order: 2;
+    }
+    .text-sm-right {
+      text-align: right !important;
     }
   }
 }
@@ -217,7 +210,8 @@
   .btn {
     padding: 6px 8px;
   }
-  span + .caret {
+
+  span+.caret {
     margin-left: 3px;
   }
 }

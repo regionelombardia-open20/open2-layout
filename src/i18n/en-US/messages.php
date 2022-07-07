@@ -33,4 +33,8 @@ return [
     'AUTHOR' => 'Author',
     'EDITOR' => 'Editor',
     'Non hai il permesso per creare contenuti' => 'You don\'t have permission to create content',
+    'Accedi' => 'Log-in',
+    'Accedi o Registrati' => 'Log-in or Register',
+    'Accedi o registrati alla piattaforma {platformName}' => 'Log-in or register to the platform {platformName}',
+    'Esci dalla piattaforma {platformName}' => 'Logout from {platformName}',
 ];

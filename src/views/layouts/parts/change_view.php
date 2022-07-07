@@ -23,6 +23,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\helpers\Inflector;
 use yii\web\View;
+use open20\amos\layout\Module;
 
 /** @var \yii\web\View $this */
 
@@ -97,7 +98,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                             [
                                 'class' => 'btn btn-secondary show-hide-element active',
                                 'data-toggle-element' => 'form-search',
-                                'title' => 'Cerca'
+                                'title' => Module::t('amoslayout','Cerca')
                             ]
                         ),
                         [
@@ -113,7 +114,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                 [
                                     'class' => 'btn btn-secondary show-hide-element',
                                     'data-toggle-element' => 'form-search',
-                                    'title' => 'Cerca'
+                                    'title' => Module::t('amoslayout','Cerca')
                                 ]
                             ),
                             [
@@ -170,7 +171,9 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 \Yii::$app->controller->module->params['hideChangeViewType']
             ) {
                 $changeViewType = false;
+
             }
+
             if ($changeViewType) {
                 echo ChangeView::widget([
                     'dropdown' => Yii::$app->controller->getCurrentView(),

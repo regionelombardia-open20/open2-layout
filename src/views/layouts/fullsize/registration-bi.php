@@ -68,7 +68,7 @@ if ($countArrayUrl) {
 <body>
     <?php $this->beginBody() ?>
 
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu    = '<span class="am am-chevron-right am-4"> </span>';
 
@@ -155,7 +155,7 @@ if ($countArrayUrl) {
             'customUserMenu' => \Yii::$app->params['layoutConfigurations']['customUserMenuHeader'],
             'customUserNotLogged' => \Yii::$app->params['layoutConfigurations']['customUserNotLoggedHeader'],
             'customUserMenuLoginLink' => \Yii::$app->params['linkConfigurations']['loginLinkCommon'],
-            'userProfileLinkCommon' => \Yii::$app->params['linkConfigurations']['userProfileLinkCommon'],
+            'customUserProfileLink' => \Yii::$app->params['linkConfigurations']['userProfileLinkCommon'],
             'customUserMenuLogoutLink' => \Yii::$app->params['linkConfigurations']['logoutLinkCommon'],
             'showSocial' => \Yii::$app->params['layoutConfigurations']['showSocialHeader'],
             'showSecondaryMenu' => \Yii::$app->params['layoutConfigurations']['showSecondaryMenuHeader'],
@@ -189,7 +189,7 @@ if ($countArrayUrl) {
     </section>
 
 
-    <?php if (Yii::$app->get('menu', false)) { ?>
+    <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
         $cmsFooterMenu  = app\components\CmsHelper::BiHamburgerMenuRender(

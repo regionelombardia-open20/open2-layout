@@ -48,4 +48,8 @@ return [
     '#error_go_dash' => 'Torna alla dashboard',
     '#error_goback_ask_auth' => 'chiedi autorizzazione',
     '#error_contact_helpdesk' => 'contatta assistenza',
+    'Accedi' => 'Accedi',
+    'Accedi o Registrati' => 'Accedi o Registrati',
+    'Accedi o registrati alla piattaforma {platformName}' => 'Accedi o registrati alla piattaforma {platformName}',
+    'Esci dalla piattaforma {platformName}' => 'Esci dalla piattaforma {platformName}',
 ];
