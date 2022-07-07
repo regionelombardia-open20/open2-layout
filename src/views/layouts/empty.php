@@ -23,6 +23,8 @@
 <body>
 
 <?php $this->beginBody() ?>
+<?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+
 <section id="bk-page">
 
     <div class="container">

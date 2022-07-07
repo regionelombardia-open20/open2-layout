@@ -8,7 +8,7 @@ $currentAction = $this->context->action->id;
 $currentController = Yii::$app->controller->id;
 ?>
 
-<nav class="sidebarForm white-color neutral-2-bg-a6 collapse" id="sidebarForm">
+<nav role="navigation" aria-label="Form sidebar" class="sidebarForm white-color neutral-2-bg-a6 collapse" id="sidebarForm">
 
   <div class="sidebar-sticky sidebar-content py-4">
     <ul class="nav flex-md-column justify-content-center">

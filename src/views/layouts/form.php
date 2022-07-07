@@ -68,13 +68,15 @@ IEAssets::register($this);
 
     <?php $this->beginBody() ?>
 
-    
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
     <?php if (isset(Yii::$app->params['logo-bordo'])) : /*&& \Yii::$app->params['logo-bordo'] == TRUE)*/ ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
+
+
 
     <section id="bk-page">
 

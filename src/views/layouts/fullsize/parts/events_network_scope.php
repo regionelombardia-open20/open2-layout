@@ -9,28 +9,25 @@
  * @category   CategoryName
  */
 
+use open20\amos\community\models\CommunityType;
 use open20\amos\community\models\CommunityUserMm;
+use open20\amos\community\utilities\CommunityUtil;
 use open20\amos\core\forms\ContextMenuWidget;
-use open20\amos\core\forms\CreatedUpdatedWidget;
-use open20\amos\core\forms\MapWidget;
 use open20\amos\core\helpers\Html;
 use open20\amos\core\icons\AmosIcons;
 use open20\amos\core\module\BaseAmosModule;
+use open20\amos\core\user\User;
+use open20\amos\core\utilities\StringUtils;
 use open20\amos\events\AmosEvents;
+use open20\amos\events\assets\EventsAsset;
 use open20\amos\events\models\Event;
 use open20\amos\events\models\EventInvitation;
 use open20\amos\events\models\EventMembershipType;
-use open20\amos\events\utility\EventsUtility;
 use open20\amos\events\models\EventType;
+use open20\amos\events\utility\EventsUtility;
 use open20\amos\layout\assets\BaseAsset;
 use open20\amos\layout\Module;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
-use open20\amos\events\assets\EventsAsset;
-use open20\amos\core\utilities\StringUtils;
-use open20\amos\community\models\CommunityType;
-use open20\amos\core\user\User;
-use open20\amos\community\utilities\CommunityUtil;
 
 
 /**
@@ -68,7 +65,13 @@ if ($eventsModule->enableAutoInviteUsers) {
     ])->one();
 }
 
-$fixedEventType = (!is_null($model->eventType));
+$eventType = $model->eventType;
+$eventTypePresent = !is_null($eventType);
+if ($eventTypePresent) {
+    $eventTypeInformative = ($eventType->event_type == EventType::TYPE_INFORMATIVE);
+} else {
+    $eventTypeInformative = false;
+}
 $communityPresent = (!is_null($model->community) && is_null($model->community->deleted_at));
 
 $showGoToCommunityButton = (!$eventsModule->hasProperty('enableCommunitySections') ||
@@ -92,7 +95,7 @@ if (isset($model)) {
                                 <?= $model->title ?>
 
                                 <small class="control-community">
-                                    <!-- < ?php if (!$fixedEventType) : ?> -->
+                                    <!-- < ?php if (!$eventTypePresent) : ?> -->
                                     <?php
                                     switch ($model->eventType->event_type):
                                         case EventType::TYPE_LIMITED_SEATS:
@@ -336,61 +339,65 @@ if (isset($model)) {
                         }
                         ?>
 
-                        <?php if ($userInList) : ?>
-                            <?php if (\Yii::$app->controller->module->id == 'community') :
-                                $loggedUserId = Yii::$app->getUser()->getId();
-                                if (!empty($loggedUserId)) {
-                                    $userProfile = User::findOne($loggedUserId)->getProfile();
-                                    $userCommunity = CommunityUtil::getMemberCommunityLogged($model->community->id);
-                                }
-                                if (!empty($userProfile) && $userProfile->validato_almeno_una_volta && !is_null($userCommunity)) {
-                                    if (in_array($userCommunity->status, [CommunityUserMm::STATUS_WAITING_OK_COMMUNITY_MANAGER, CommunityUserMm::STATUS_WAITING_OK_USER])) {
-                                        $isWaitingToSigned = true;
-                                    } else {
-                                        $isSigned = true;
+                        <?php if ($eventsModule->enableCommunitySections && !$eventTypeInformative && $model->show_community): ?>
+                            <?php if ($userInList) : ?>
+                                <?php if (\Yii::$app->controller->module->id == 'community') :
+                                    $loggedUserId = Yii::$app->getUser()->getId();
+                                    if (!empty($loggedUserId)) {
+                                        $userProfile = User::findOne($loggedUserId)->getProfile();
+                                        $userCommunity = CommunityUtil::getMemberCommunityLogged($model->community->id);
                                     }
-                                } else {
-                                    $isSigned = false;
-                                } ?>
-                                <?php $isCreatorCommunity = ($model->community->created_by == \Yii::$app->user->id) && !\Yii::$app->user->can("ADMIN"); ?>
-                                <?php if ($isSigned) : ?>
+                                    if (!empty($userProfile) && $userProfile->validato_almeno_una_volta && !is_null($userCommunity)) {
+                                        if (in_array($userCommunity->status, [CommunityUserMm::STATUS_WAITING_OK_COMMUNITY_MANAGER, CommunityUserMm::STATUS_WAITING_OK_USER])) {
+                                            $isWaitingToSigned = true;
+                                        } else {
+                                            $isSigned = true;
+                                        }
+                                    } else {
+                                        $isSigned = false;
+                                    } ?>
+                                    <?php $isCreatorCommunity = ($model->community->created_by == \Yii::$app->user->id) && !\Yii::$app->user->can("ADMIN"); ?>
+                                    <?php if ($isSigned) : ?>
                                     <?php if (!$isCreatorCommunity) :
                                         $label = $label . ' ' . Module::t('amoscommunity', 'e alla community come') . ' ' . Module::t('amoslayout', "{$model->community->getRoleByUser()}");
-                                    endif;  ?>
+                                    endif; ?>
+                                <?php endif; ?>
                                 <?php endif; ?>
                             <?php endif; ?>
+
+                            <small>
+                                <?php if (!$userInList) : ?>
+                                    <?= ($showLimitDate) ? '<em>' . Module::t('amosevents', 'Iscrizioni aperte fino al') . '</em>' . ' ' . Yii::$app->getFormatter()->asDate($model->registration_date_end) : '' ?>
+                                    <?= Html::a($button['text'], $button['url'], $button['options']) ?>
+                                <?php else : ?>
+                                    <?php if (!empty($label)) : ?>
+                                        <?= $label . ' | ' ?>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+            
+                                <?php if ($userInList && $unsubscribeLink) : ?>
+                                    <a class="text-danger ml-4"
+                                       href="<?= Url::to(['/events/event/elimina-m2m', 'id' => $model->id, 'targetId' => \Yii::$app->user->id, 'redirectAction' => $model->getFullViewUrl()]) ?>"
+                                       title="<?= Module::t('amoslayout', 'Disiscriviti dall\'evento') . ' ' . $model->title ?>">
+                                        <?= Module::t('amoslayout', 'disiscriviti') ?>
+                                    </a>
+                                <?php endif; ?>
+
+                            </small>
+        
+                            <?php
+                            if ($userInList && (\Yii::$app->controller->module->id != 'community')) {
+                                echo Html::a(
+                                    AmosEvents::t('amosevents', 'Go to the community') . AmosIcons::show('arrow-right'),
+                                    Yii::$app->urlManager->createUrl($createUrlParams),
+                                    [
+                                        'title' => AmosEvents::t('amosevents', 'Visita la community dell\'evento {eventName}', ['eventName' => $model->title]),
+                                        'class' => 'link-all text-uppercase'
+                                    ]
+                                );
+                            }
+                            ?>
                         <?php endif; ?>
-
-                        <small>
-                            <?php if (!$userInList) : ?>
-                                <?= ($showLimitDate) ? '<em>' . Module::t('amosevents', 'Iscrizioni aperte fino al') . '</em>' . ' ' . Yii::$app->getFormatter()->asDate($model->registration_date_end) : '' ?>
-                                <?= Html::a($button['text'], $button['url'], $button['options']) ?>
-                            <?php else : ?>
-                                <?php if (!empty($label)) : ?>
-                                    <?= $label . ' | ' ?>
-                                <?php endif; ?>
-                            <?php endif; ?>
-
-                            <?php if ($userInList && $unsubscribeLink) : ?>
-                                <a class="text-danger ml-4" href="<?= Url::to(['/events/event/elimina-m2m', 'id' => $model->id, 'targetId' => \Yii::$app->user->id, 'redirectAction' => $model->getFullViewUrl()]) ?>" title="<?= Module::t('amoslayout', 'Disiscriviti dall\'evento') . ' ' . $model->title ?>">
-                                    <?= Module::t('amoslayout', 'disiscriviti') ?>
-                                </a>
-                            <?php endif; ?>
-
-                        </small>
-
-                        <?php
-                        if ($userInList && (\Yii::$app->controller->module->id != 'community')) {
-                            echo Html::a(
-                                AmosEvents::t('amosevents', 'Go to the community') . AmosIcons::show('arrow-right'),
-                                Yii::$app->urlManager->createUrl($createUrlParams),
-                                [
-                                    'title' => AmosEvents::t('amosevents', 'Visita la community dell\'evento {eventName}', ['eventName' => $model->title]),
-                                    'class' => 'link-all text-uppercase'
-                                ]
-                            );
-                        }
-                        ?>
 
                     </div>
                 </div>

@@ -109,6 +109,7 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 
     <?php $this->beginBody() ?>
 
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
     
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
@@ -116,6 +117,8 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
+
+
 
     <section id="bk-page" class="fullsizeWizardLayout">
         <div class="container-messages">

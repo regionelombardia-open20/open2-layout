@@ -34,6 +34,7 @@ $js = $this->registerJs('
     </head>
     <body>
     <?php $this->beginBody() ?>
+    
 
     <!-- BEGIN: header  -->
     <div class="header-wrapper">

@@ -7,7 +7,7 @@ use open20\amos\layout\Module;
 $currentAction = $this->context->action->id;
 $currentController =Yii::$app->controller->id;
 ?>
-<nav class="sidebar white-color neutral-2-bg-a6 collapse" id="sidebarLeftMenu">
+<nav aria-label="sidebar" class="sidebar white-color neutral-2-bg-a6 collapse" id="sidebarLeftMenu">
     <div class="sidebar-sticky sidebar-elite py-4">
         <ul class="nav flex-md-column justify-content-center">
             <?php

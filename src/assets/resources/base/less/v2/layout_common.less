@@ -1144,13 +1144,14 @@ div[class*="-view"] {
     position: relative;
     margin: @margin-medium 0;
 
-    .post-header {
+     .post-header {
       display: flex;
-      flex-direction: row;
+//      flex-direction: row;
       align-items: center;
-      margin-bottom: 25px;
+      flex-wrap: wrap;
+//      margin-bottom: 25px;
     }
-
+ 
     @media (max-width: 767px) {
       align-items: flex-end;
       margin-bottom: 25px;

@@ -39,7 +39,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
             < ?= CreateNewButtonWidget::widget($createNewWidgetConfig); ?>
         < ?php endif; ?> -->
 
-        <?php if (isset($this->params['additionalButtons'])): ?>
+        <?php if (isset($this->params['additionalButtons'])) : ?>
             <?= \open20\amos\core\forms\ChangeViewButtonWidget::widget($this->params['additionalButtons']); ?>
         <?php endif; ?>
         <div class="tools-right">
@@ -88,21 +88,42 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 ) {
                     $searchActive = TRUE;
                 }
+
+                // bullet filter search
+                $countFilterActive = 0;
+                $filterActiveClass = 'btn-secondary';
+                foreach (Yii::$app->request->queryParams[$classSearch] as $attribute => $val) {
+                    if (!empty($val)) {
+                        $countFilterActive++;
+                    }
+                }
+                $htmlCountFilter = '';
+                $tooltipText = Module::t('amoslayout', 'Opzioni di ricerca');
+                if ($countFilterActive > 0) {
+                    $htmlCountFilter  ="<span class='m-l-10'>$countFilterActive</span>";
+                    $filterActiveClass = 'btn-secondary-outline active-filter';
+                    $tooltipText = Module::t('amoslayout', 'Filtri di ricerca applicati: {x}',[
+                            'x' => $countFilterActive
+                    ]);
+                }
             }
             if ($paramsSearch) {
                 if ($searchActive) {
                     echo Html::tag(
                         'div',
                         AmosIcons::show(
-                            'search',
+                            'tune',
                             [
-                                'class' => 'btn btn-secondary show-hide-element active',
-                                'data-toggle-element' => 'form-search',
-                                'title' => Module::t('amoslayout','Cerca')
+                                // 'class' => '',
+
                             ]
-                        ),
+                        ) . $htmlCountFilter,
                         [
-                            'class' => 'btn-group'
+                            'class' => 'btn-group btn show-hide-element active ' . $filterActiveClass,
+                            'data-toggle-element' => 'form-search',
+                            'title' => $tooltipText,
+                            //'data-toggle' => 'tooltip'
+                            'tabindex' => 0
                         ]
                     );
                 } else {
@@ -110,15 +131,19 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                         echo Html::tag(
                             'div',
                             AmosIcons::show(
-                                'search',
+                                'tune',
                                 [
-                                    'class' => 'btn btn-secondary show-hide-element',
-                                    'data-toggle-element' => 'form-search',
-                                    'title' => Module::t('amoslayout','Cerca')
+                                    // 'class' => 'btn btn-secondary show-hide-element ' . $filterActiveClass,
+                                    // 'data-toggle-element' => 'form-search',
+                                    // 'title' => Module::t('amoslayout', 'Cerca')
                                 ]
-                            ),
+                            ) . $htmlCountFilter,
                             [
-                                'class' => 'btn-group'
+                                'class' => 'btn-group btn show-hide-element ' . $filterActiveClass,
+                                'data-toggle-element' => 'form-search',
+                                'title' => $tooltipText,
+                                //'data-toggle' => 'tooltip'
+                                'tabindex' => 0
                             ]
                         );
                     }
@@ -148,11 +173,14 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                         [
                             'class' => 'btn btn-secondary show-hide-element',
                             'data-toggle-element' => 'form-order',
-                            'title' => 'Cambia ordinamento'
+                            'title' => Module::t('amoslayout', 'Cambia ordinamento'),
+                            //'data-toggle' => 'tooltip'
+
                         ]
                     ),
                     [
-                        'class' => 'btn-group'
+                        'class' => 'btn-group',
+                        'tabindex' => 0
                     ]
                 );
             }
@@ -171,7 +199,6 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 \Yii::$app->controller->module->params['hideChangeViewType']
             ) {
                 $changeViewType = false;
-
             }
 
             if ($changeViewType) {
@@ -247,8 +274,11 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                 'dropdownOptions' => [
                                     'class' => 'btn btn-secondary',
                                     'icon' => AmosIcons::show('download'),
-                                    'title' => 'Scarica'
-                                ]
+                                    'title' => Module::t('amoslayout', 'Scarica'),
+                                    //'data-toggle' => 'tooltip'
+                                    'tabindex' => 0
+
+                                ],
                             ];
 
                             if (

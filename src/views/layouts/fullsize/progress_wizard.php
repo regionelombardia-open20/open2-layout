@@ -116,6 +116,7 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 <body>
 
     <?php $this->beginBody() ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php

@@ -67,6 +67,8 @@ if ($countArrayUrl) {
 <body>
     <?php $this->beginBody() ?>
 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);

@@ -21,6 +21,6 @@ $currentViewClass = ((Yii::$app->controller instanceof CrudController &&
         {items}
     </ul>
 </div>
-<nav class='pagination-wrapper justify-content-center pagination-design <?= $customPaginationClass ?>'>
+<nav role="navigation" aria-label="Pagination" class='pagination-wrapper justify-content-center pagination-design <?= $customPaginationClass ?>'>
     {pager}
 </nav>

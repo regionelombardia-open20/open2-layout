@@ -67,5 +67,6 @@ return [
     "Community ristretta ai partecipanti"=>"Community restricted to participants",
     "Community aperta" => "Open community",
     "Community chiusa" => "Close community",
+    "Filtri di ricerca applicati: {x}" => "Search filters applied: {x}",
 
 ];

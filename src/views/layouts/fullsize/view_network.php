@@ -76,6 +76,7 @@ if ($countArrayUrl) {
     <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
 
     <?php $this->beginBody() ?>
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
 

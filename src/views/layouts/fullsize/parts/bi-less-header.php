@@ -350,9 +350,10 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         ) : '';
                                         ?>
                                         <div class="nav-item">
-                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" title="<?=
+                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities','My activities')?>"  title="<?=
                                                                                                                                                                                             AmosMyActivities::t('amosmyactivities', 'My activities')
                                                                                                                                                                                             ?>">
+                                                                                                                                                                                            
                                                 <span class="dash dash-bell"></span>
                                                 <?= $menuMyActivitiesModuleBulletCount ?>
                                             </a>
@@ -477,7 +478,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         </div>
                                     <?php else : ?>
                                         <div class="dropdown menu-profile">
-                                            <a href="#" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a href="#" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?= Yii::t('amoscore', 'Apri menu utente')?>">
                                                 <span class="rounded-icon">
                                                     <img class="icon icon-primary rounded-circle" src="<?=
                                                                                                         (!empty($userImage) ? $userImage : \Yii::$app->params['platform']['frontendUrl'] . '/img/defaultProfiloM.png')
@@ -594,7 +595,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                             <div class="col-12">
 
                                 <!--start nav-->
-                                <nav class="navbar navbar-expand-lg has-megamenu">
+                                <nav role="navigation" aria-label="Megamenu" class="navbar navbar-expand-lg has-megamenu">
                                     <button class="custom-navbar-toggler" type="button" aria-controls="hamburgerMenu" aria-expanded="false" aria-label="Toggle navigation" data-toggle="collapse" data-target="#hamburgerMenu">
                                         <span class="am am-menu"> </span>
                                     </button>

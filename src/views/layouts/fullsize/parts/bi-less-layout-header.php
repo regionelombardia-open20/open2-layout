@@ -95,8 +95,8 @@ if (
         $labelSigninOrSignup = Module::t('amoslayout', 'Accedi');
         $titleSigninOrSignup = Module::t('amoslayout', 'Accedi alla piattaforma {platformName}', ['platformName' => \Yii::$app->name]);
     }
-    $labelLogout = Module::t('amosdesign','Esci');
-    $titleLogout = Module::t('amosdesign','Esci dalla piattaforma {platformName}',['platformName' => \Yii::$app->name]);
+    $labelLogout = Module::t('amoslayout','Esci');
+    $titleLogout = Module::t('amoslayout','Esci dalla piattaforma {platformName}',['platformName' => \Yii::$app->name]);
     
     $iconLogin      = '<span class="mdi mdi-key-variant icon-login ml-auto pl-1"></span>';
     $iconLogout      = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';

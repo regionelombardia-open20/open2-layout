@@ -44,9 +44,12 @@ div[class*="-create "],
 div[class*="-create"],
 div[class*="-update "],
 div[class*="-update"] {
-  padding: 0;
-  width: inherit;
-  float: inherit;
+  &:not(.form-group) {
+    padding: 0;
+    width: inherit;
+    float: inherit;
+  }
+
 }
 
 div[class*="-form "]:not(.section-form),

@@ -18,9 +18,12 @@ $currentAsset = BootstrapItaliaCustomAsset::register($this);
 <body>
     <?php $this->beginBody() ?>
 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-header", [
         'currentAsset' => $currentAsset
     ]); ?>
+
+
 
 
     <div id="mainContent" class="container-fluid bootstrap-italia-layout-with-sidebar <?= \Yii::$app->view->params['customClassMainContent'] ?>">

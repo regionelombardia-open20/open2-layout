@@ -79,6 +79,7 @@ IEAssets::register($this);
     <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
     <?php $this->beginBody() ?>
 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -100,6 +101,8 @@ IEAssets::register($this);
     <?php if (isset(Yii::$app->params['logo-bordo'])) : /* && \Yii::$app->params['logo-bordo'] == TRUE) */ ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
+
+
 
     <section id="bk-page" class="fullsizeFormLayout" role="main">
 

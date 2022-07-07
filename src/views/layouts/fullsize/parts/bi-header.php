@@ -253,7 +253,8 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                                 ?>
                                 <div class="nav-item">
                                     <a class="nav-link" href="/myactivities/my-activities/index" data-toggle="tooltip"
-                                       data-placement="bottom" title="<?= AmosMyActivities::t(
+                                       data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities','My activities')?>" 
+                                       title="<?= AmosMyActivities::t(
                                         'amosmyactivities',
                                         'My activities'
                                     )
@@ -466,7 +467,7 @@ if (!$disableMyprofile && CurrentUser::getUserIdentity()) {
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <nav class="navbar pr-0">
+                            <nav role="navigation" aria-label="Sidebar" class="navbar pr-0">
                                 <a class="icon-menu" data-toggle="collapse" href="#sidebarLeftMenu" role="button"
                                    aria-expanded="true" aria-controls="sidebarLeftMenu">
                                     <svg class="icon">

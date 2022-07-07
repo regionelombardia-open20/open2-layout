@@ -76,6 +76,7 @@ if ($countArrayUrl) {
 
     <?php $this->beginBody() ?>
 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -94,9 +95,12 @@ if ($countArrayUrl) {
         </div>
     <?php } ?>
 
+
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
+
+
 
     <section id="bk-page" class="community-page" role="main">
 
