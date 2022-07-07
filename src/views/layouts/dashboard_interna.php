@@ -67,7 +67,7 @@ if ($countArrayUrl) {
     <?php $this->beginBody() ?>
 
     
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "skiplink"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
@@ -82,7 +82,7 @@ if ($countArrayUrl) {
             <!-- TODO fix -->
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
             <div class="container">
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "breadcrumbs"); ?>
             </div>
         </div>
         <!--<div class="container-help">

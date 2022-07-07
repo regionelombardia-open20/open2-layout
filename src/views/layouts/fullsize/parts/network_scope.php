@@ -76,6 +76,9 @@ if (isset($community)) {
             echo $this->render($viewScope, $viewParams);
         } else if (!is_null($organizzazioniModule) && ($community->context == $organizzazioniModule->getOrganizationModelClass())) {
             $viewScope = 'organizzazioni_network_scope';
+            if(!empty($community->parent_id)){
+                $viewScope = 'organizzazioni_subcommunity_network_scope';
+            }
 
             /** @var Record|OrganizationsModelInterface $organizationModel */
             $organizationModel = Yii::createObject($organizzazioniModule->getOrganizationModelClass());

@@ -61,7 +61,7 @@ if ($countArrayUrl) {
 
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
     
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
 

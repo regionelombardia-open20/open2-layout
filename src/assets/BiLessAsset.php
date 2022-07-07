@@ -39,10 +39,16 @@ class BiLessAsset extends AssetBundle
      */
     public function init()
     {
+
         $this->sourcePath = __DIR__ . '/resources/base';
         if( !(isset(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader'])) || (isset(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader']) && !(\Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader']))){
             $this->js[] = 'js/header-height.js';
         }
+
+        // $moduleD = \Yii::$app->getModule('design');
+        // if(!empty($moduleD)){
+        //     $this->depends [] = 'open20\design\assets\ShimmerDesignAsset';
+        // }
         parent::init();
-    }
+    } 
 }

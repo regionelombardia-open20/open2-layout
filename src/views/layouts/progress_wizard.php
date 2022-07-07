@@ -109,8 +109,6 @@ $this->registerJs($script, \yii\web\View::POS_END, 'my-options');
 
     <?php $this->beginBody() ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
-    
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
 
