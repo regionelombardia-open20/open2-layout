@@ -88,6 +88,7 @@ if (isset($community)) {
 
             $viewParams['organizzazioniModule'] = $organizzazioniModule;
             $viewParams['organization'] = (!is_null($organization) ? $organization : null);
+            $viewParams['isLayoutInScope'] = $isLayoutInScope;
 
             echo $this->render($viewScope, $viewParams);
         } else {

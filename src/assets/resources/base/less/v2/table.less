@@ -73,56 +73,68 @@ table.table {
 // GENERAL RESPONSIVE RULES
 // custom layout for mobile table - class table_switch
 //-----------------------------------------------
-@media (max-width: 768px) {
-  .table_switch {
+// @media (max-width: 767px) {
+//   .table_switch {
 
-    table,
-    tbody,
-    th,
-    td,
-    tr {
-      display: block;
-      float: left;
-      width: 100%;
-    }
+//     table,
+//     tbody,
+//     th,
+//     td,
+//     tr {
+//       display: block;
+//       float: left;
+//       width: 100%;
+//     }
 
-    table.table {
-      >thead {
-        display: none;
-      }
+//     table.table {
+//       >thead {
+//         display: none;
+//       }
 
-      >tbody {
-        >tr {
-          >td {
-            border: none;
-            border-bottom: 1px solid @table-border-color;
-            position: relative;
-            padding-left: 40%;
-            min-height: 40px;
-            white-space: normal;
+//       >tbody {
+//         >tr {
+//           >td {
+//             border: none;
+//             border-bottom: 1px solid @table-border-color;
+//             position: relative;
+//             padding-left: 40%;
+//             min-height: 40px;
+//             white-space: normal;
+//             display: flex !important;
+//             padding-left: 6px !important;
+//             align-items: flex-start;
 
-            &:before {
-              /* get table header attribute and insert before */
-              content: attr(title);
-              font-weight: bold;
-              position: absolute;
-              top: 6px;
-              left: 6px;
-              width: 45%;
-              padding-right: 10px;
-            }
+//             >span,
+//             p,
+//             * {
+//               width: 45% !important;
+//               margin: 0 !important;
+//             }
+//             &:before {
+//               /* get table header attribute and insert before */
+//               content: attr(title);
+//               font-weight: bold;
+//               position: absolute;
+//               top: 6px;
+//               left: 6px;
+//               width: 45%;
+//               padding-right: 10px;
+//               position: relative !important;
+//               top: 0 !important;
+//               left: 0 !important;
+//             }
 
-            @media (max-width: 500px) {
-              &:not(:last-child) {
-                //padding-left: 50%;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+//             @media (max-width: 500px) {
+//               &:not(:last-child) {
+//                 //padding-left: 50%;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 //-----------------------------------------------
 // WIDGET GRID VIEW
@@ -134,25 +146,25 @@ table.table {
       >tr {
         >td {
           &:last-child .container-action {
-            @media (max-width:768px){
+            @media (max-width:768px) {
               font-size: 1.2em;
               display: inline-flex;
               white-space: nowrap;
               float: right;
             }
-            
+
             .btn+.btn,
             .btn+.modal+.btn {
-              @media (max-width:768px){
+              @media (max-width:768px) {
                 margin-left: 3px;
               }
-              
+
             }
           }
 
           .container-img img,
           .gridview-image {
-            @media (max-width:768px){
+            @media (max-width:768px) {
               max-width: 70px;
             }
           }
@@ -166,12 +178,13 @@ table.table {
       overflow-x: auto;
 
       >table {
-        @media (max-width:768px){
+        @media (max-width:768px) {
           table-layout: auto;
           margin-bottom: 0;
         }
+
         thead>tr>th {
-          @media (max-width:768px){
+          @media (max-width:768px) {
             border: 1px solid @table-border-color;
             border-top: none;
             border-bottom-color: @primary-color;
@@ -182,19 +195,21 @@ table.table {
 
         tbody {
           >tr {
-            @media (max-width:768px){
+            @media (max-width:768px) {
               background-color: @white-color;
               border-left: 1px solid @primary-color;
             }
+
             >td {
-              @media (max-width:768px){
+              @media (max-width:768px) {
                 white-space: normal;
                 word-wrap: break-word;
                 border: 1px solid @table-border-color;
                 padding: 5px;
               }
+
               &:first-child {
-                @media (max-width:768px){
+                @media (max-width:768px) {
                   border-left: none;
                 }
               }

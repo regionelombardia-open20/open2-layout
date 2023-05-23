@@ -1,6 +1,8 @@
 <?php
 
+use open20\amos\community\models\CommunityUserMm;
 use open20\amos\layout\Module;
+use open20\amos\community\utilities\CommunityUtil;
 
 $isGuest = \Yii::$app->user->isGuest;
 
@@ -26,7 +28,6 @@ if (\Yii::$app->controller instanceof \open20\amos\core\controllers\CrudControll
 }
 $canCreate = (isset(\Yii::$app->view->params['canCreate'])) ? \Yii::$app->view->params['canCreate'] : !$isGuest && $canCreateController;
 $canManage = (isset($canManage)) ? $canManage : !$isGuest;
-
 
 $hideCreate = (isset($hideCreate)) ? $hideCreate : false;
 $hideManage = (isset($hideManage)) ? $hideManage : false;
@@ -120,13 +121,22 @@ if (method_exists(\Yii::$app->controller, 'getManageLinks')) {
                 <?php if ($isSetScope) { ?>
                     <div class="flexbox manage-cta-container">
                         <?php if (!$hideCreate) { ?>
-                            <?php if ($canCreate && !empty($urlCreate)) { ?>
+                            <?php
+                            $canCommunityRole  = true;
+                            if(method_exists('open20\amos\community\utilities\CommunityUtil','getRole')){
+                                $communityRole = CommunityUtil::getRole($community->id);
+                                $canCommunityRole =($communityRole != CommunityUserMm::ROLE_READER || Yii::$app->user->can("ADMIN"));
+                            }
+                            if ($canCreate && !empty($urlCreate) && $canCommunityRole) { ?>
                                 <?= \yii\helpers\Html::a(" <span class=\"am am-plus-circle-o\"></span><span>$labelCreate</span>", $urlCreate, [
                                     'class' => "cta link-create-$modelLabel flexbox align-items-center btn btn-xs btn-primary",
                                     'title' => $titleCreate
                                 ]); ?>
-                            <?php } else { ?>
-                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events" data-toggle="tooltip" title="<?= $titleScopePreventCreate ?>">
+                            <?php } else {
+                                $titleScopePreventCreate = ($communityRole != CommunityUserMm::ROLE_READER) ? $titleScopePreventCreate : Module::t('amoslayout', '#reader_user_cannot_create'); ?>
+                                <button class="cta link-create-<?= $modelLabel ?> flexbox align-items-center btn btn-xs btn-primary disabled disabled-with-pointer-events"
+                                    data-toggle="tooltip"
+                                    title="<?= $titleScopePreventCreate ?>">
                                     <span class="am am-plus-circle-o"></span>
                                     <span><?= $labelCreate ?></span>
                                 </button>

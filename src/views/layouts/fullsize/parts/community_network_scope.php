@@ -8,7 +8,6 @@
  * @package    open20\amos\layout\views\layouts\parts
  * @category   CategoryName
  */
-
 use open20\amos\community\models\Community;
 use open20\amos\community\models\CommunityType;
 use open20\amos\core\forms\ContextMenuWidget;
@@ -33,9 +32,7 @@ $("#moreTextJs .changeContentJs > .actionChangeContentJs").click(function(){
 JS;
 $this->registerJs($jsReadMore);
 
-
 $moduleCommunity = Yii::$app->getModule('community');
-
 ?>
 <?php if (isset($community)) : ?>
 
@@ -58,41 +55,41 @@ $moduleCommunity = Yii::$app->getModule('community');
                                     <?php
                                     switch ($community->community_type_id):
                                         case CommunityType::COMMUNITY_TYPE_CLOSED:
-                                            $classType = 'closed';
-                                            $textCommunityType = Module::t('amoslayout', 'Community ristretta ai partecipanti');
-                                            $iconCommunityType = AmosIcons::show('eye-off');
+                                            $classType            = 'closed';
+                                            $textCommunityType    = Module::t('amoslayout',
+                                                    'Community ristretta ai partecipanti');
+                                            $iconCommunityType    = AmosIcons::show('eye-off');
                                             $tooltipCommunityType = Module::t(
-                                                'amoslayout',
-                                                'Community visibile ai soli partecipanti'
+                                                    'amoslayout', 'Community visibile ai soli partecipanti'
                                             );
                                             break;
                                         case CommunityType::COMMUNITY_TYPE_OPEN:
-                                            $classType = 'open';
-                                            $textCommunityType = Module::t('amoslayout', 'Community aperta');
-                                            $iconCommunityType = AmosIcons::show('lock-open');
+                                            $classType            = 'open';
+                                            $textCommunityType    = Module::t('amoslayout', 'Community aperta');
+                                            $iconCommunityType    = AmosIcons::show('lock-open');
                                             $tooltipCommunityType = Module::t(
-                                                'amoslayout',
-                                                'Contenuti disponibili a tutti gli utenti della piattaforma'
+                                                    'amoslayout',
+                                                    'Contenuti disponibili a tutti gli utenti della piattaforma'
                                             );
                                             break;
                                         case CommunityType::COMMUNITY_TYPE_PRIVATE:
-                                            $classType = 'private';
-                                            $textCommunityType = Module::t('amoslayout', 'Community riservata ai partecipanti');
-                                            $iconCommunityType = AmosIcons::show('lock-outline');
+                                            $classType            = 'private';
+                                            $textCommunityType    = Module::t('amoslayout',
+                                                    'Community riservata ai partecipanti');
+                                            $iconCommunityType    = AmosIcons::show('lock-outline');
                                             $tooltipCommunityType = Module::t(
-                                                'amoslayout',
-                                                'Contenuti disponibili ai soli partecipanti alla community'
+                                                    'amoslayout',
+                                                    'Contenuti disponibili ai soli partecipanti alla community'
                                             );
                                             break;
                                         default:
-                                            $classType = '';
+                                            $classType            = '';
                                     endswitch;
                                     ?>
                                     <span class="community-status <?= $classType ?>">
                                         <?=
                                         Html::a(
-                                            $iconCommunityType,
-                                            'javascript::void(0)',
+                                            $iconCommunityType, 'javascript::void(0)',
                                             [
                                                 'title' => $tooltipCommunityType,
                                                 'data-toggle' => 'tooltip'
@@ -110,8 +107,8 @@ $moduleCommunity = Yii::$app->getModule('community');
                             <?php
                             echo ContextMenuWidget::widget([
                                 'model' => $community,
-                                'actionModify' => "/community/community/update?id=" . $community->id,
-                                'actionDelete' => "/community/community/delete?id=" . $community->id,
+                                'actionModify' => "/community/community/update?id=".$community->id,
+                                'actionDelete' => "/community/community/delete?id=".$community->id,
                                 'layout' => '@vendor/open20/amos-layout/src/views/widgets/context_menu_widget_network_scope.php'
                             ])
                             ?>
@@ -123,8 +120,8 @@ $moduleCommunity = Yii::$app->getModule('community');
                         <span class="ic ic-community m-r-5"></span>
                         <?= Module::t('amoscommunity', 'sottocommunity di:') ?>
                         <a href="/community/join/open-join?id=<?= $community->parent_id ?>" class="m-l-5"
-                           title="<?= Module::t('amoscommunity', 'Vai alla community principale') . ':' . ' ' . $community->parent->name ?>">
-                            <?= $community->parent->name ?>
+                           title="<?= Module::t('amoscommunity', 'Vai alla community principale').':'.' '.$community->parent->name ?>">
+                               <?= $community->parent->name ?>
                         </a>
                     </p>
                 <?php endif; ?>
@@ -138,19 +135,22 @@ $moduleCommunity = Yii::$app->getModule('community');
                     <div class="cta-community">
 
                         <?php
-                        $isOpenCommunity = false;
-                        $isClosedCommunity = false;
+                        $isOpenCommunity    = false;
+                        $isClosedCommunity  = false;
                         $isPrivateCommunity = false;
-                        $isWaitingToSigned = false;
+                        $isWaitingToSigned  = false;
+                        $isInvited          = false;
 
                         $loggedUserId = Yii::$app->getUser()->getId();
                         if (!empty($loggedUserId)) {
-                            $userProfile = User::findOne($loggedUserId)->getProfile();
+                            $userProfile   = User::findOne($loggedUserId)->getProfile();
                             $userCommunity = CommunityUtil::getMemberCommunityLogged($community->id);
                         }
                         if (!empty($userProfile) && !is_null($userCommunity)) {
-                            if (in_array($userCommunity->status, [CommunityUserMm::STATUS_WAITING_OK_COMMUNITY_MANAGER, CommunityUserMm::STATUS_WAITING_OK_USER])) {
+                            if (in_array($userCommunity->status, [CommunityUserMm::STATUS_WAITING_OK_COMMUNITY_MANAGER])) {
                                 $isWaitingToSigned = true;
+                            } else if (in_array($userCommunity->status, [CommunityUserMm::STATUS_WAITING_OK_USER])) {
+                                $isInvited = true;
                             } else {
                                 $isSigned = true;
                             }
@@ -165,20 +165,31 @@ $moduleCommunity = Yii::$app->getModule('community');
                         } else if ($community->community_type_id == CommunityType::COMMUNITY_TYPE_PRIVATE) {
                             $isPrivateCommunity = true;
                         } else {
+                            
                         }
                         ?>
 
-                        <?php $isCreatorCommunity = ($community->created_by == \Yii::$app->user->id) && !\Yii::$app->user->can("ADMIN"); ?>
+                        <?php
+                        $isCreatorCommunity = ($community->created_by == \Yii::$app->user->id) && !\Yii::$app->user->can("ADMIN");
+                        ?>
                         <?php // ---------  IS ACTIVE PARTICIPANT  --------
                         ?>
                         <?php if ($isSigned) : ?>
                             <?php if (!$isCreatorCommunity) { ?>
                                 <small>
-                                    <?= Module::t('amoscommunity', 'Sei iscritto alla community come') . ' ' . Module::t('amoslayout', "{$community->getRoleByUser()}") . ' | ' ?>
+                                    <?=
+                                    Module::t('amoscommunity', 'Sei iscritto alla community come').' '.Module::t('amoslayout',
+                                        "{$community->getRoleByUser()}").' | '
+                                    ?>
                                     <a class="text-danger ml-4"
-                                       href="<?= Url::to(['/community/community/elimina-m2m', 'id' => $community->id, 'targetId' => \Yii::$app->user->id, 'redirectAction' => \Yii::$app->request->url]) ?>"
-                                       title="<?= Module::t('amoscommunity', 'Disiscriviti dalla community') . $community->title ?>">
-                                        <?= Module::t('amoscommunity', 'disiscriviti') ?>
+                                       href="<?=
+                                       Url::to(['/community/community/elimina-m2m', 'id' => $community->id, 'targetId' => \Yii::$app->user->id,
+                                           'redirectAction' => \Yii::$app->request->url])
+                                       ?>"
+                                       title="<?= Module::t('amoscommunity', 'Disiscriviti dalla community').$community->title ?>">
+                                           <?=
+                                           Module::t('amoscommunity', 'disiscriviti')
+                                           ?>
                                     </a>
                                 </small>
                             <?php } ?>
@@ -187,44 +198,160 @@ $moduleCommunity = Yii::$app->getModule('community');
                         <?php else : ?>
                             <?php if ($userProfile && $userProfile->validato_almeno_una_volta) { ?>
                                 <?php if ($isOpenCommunity) : ?>
-                                    <a class="btn btn-primary btn-xs my-3 align-self-start"
-                                       href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'redirectAction' => Yii::$app->request->url]) ?>"
-                                       title="<?= Module::t('amoscommunity', 'Iscriviti alla community') ?> <?= $community->title ?>">
-                                        <?= Module::t('amoscommunity', 'Iscriviti alla community') ?>
-                                    </a>
-                                <?php elseif ($isPrivateCommunity) : ?>
-                                    <?php if ($isWaitingToSigned) : ?>
-                                        <div class="button-container w-100 d-flex justify-content-center border-top">
-                                            <p class="d-flex align-items-end text-muted mt-4">
-                                                <?= Module::t('amoscommunity', 'Richiesta iscrizione inviata') ?>
-                                                <a href="javascript::void(0)" class="bi-form-field-tooltip-info m-l-5"
-                                                   data-toggle="tooltip" data-html="true"
-                                                   data-original-title="<?= Module::t('amoscommunity', 'Sei in attesa che un community manager convalidi la richiesta per poter accedere alla community') ?>">
-                                                    <span class="am am-info-outline"></span>
-                                                    <span class="sr-only"><?= Module::t('amoscommunity', 'Sei in attesa che un community manager convalidi la richiesta per poter accedere alla community') ?></span>
-                                                </a>
-                                            </p>
-                                        </div>
+                                    <?php if ($isWaitingToSigned || $isInvited) : ?>
+                                        <small>
+                                            <?=
+                                            Module::t('amoscommunity', 'Sei stato invitato nella community come').' '.Module::t('amoslayout',
+                                                "{$community->getRoleByUser()}").':'
+                                            ?>
+                                            <a class="btn btn-xs btn-success"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '1',
+                                                   'redirectAction' => '/community/join/open-join?id='.$community->id])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Accetta')
+                                                   ?>
+                                            </a>
+                                            <a class="btn btn-xs btn-danger"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '0',
+                                                   'redirectAction' => Yii::$app->request->url])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Rifiuta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Rifiuta')
+                                                   ?>
+                                            </a>
+                                        </small>
                                     <?php else : ?>
                                         <a class="btn btn-primary btn-xs my-3 align-self-start"
                                            href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'redirectAction' => Yii::$app->request->url]) ?>"
                                            title="<?= Module::t('amoscommunity', 'Iscriviti alla community') ?> <?= $community->title ?>">
-                                            <?= Module::t('amoscommunity', 'Iscriviti alla community') ?>
+                                               <?=
+                                               Module::t('amoscommunity', 'Iscriviti alla community')
+                                               ?>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php elseif ($isPrivateCommunity) : ?>
+                                    <?php if ($isWaitingToSigned) : ?>
+                                        <div class="button-container w-100 d-flex justify-content-center border-top">
+                                            <p class="d-flex align-items-end text-muted mt-4">
+                                                <?=
+                                                Module::t('amoscommunity', 'Richiesta iscrizione inviata')
+                                                ?>
+                                                <a href="javascript::void(0)" class="bi-form-field-tooltip-info m-l-5"
+                                                   data-toggle="tooltip" data-html="true"
+                                                   data-original-title="<?=
+                                                   Module::t('amoscommunity',
+                                                       'Sei in attesa che un community manager convalidi la richiesta per poter accedere alla community')
+                                                   ?>">
+                                                    <span class="am am-info-outline"></span>
+                                                    <span class="sr-only"><?=
+                                                        Module::t('amoscommunity',
+                                                            'Sei in attesa che un community manager convalidi la richiesta per poter accedere alla community')
+                                                        ?></span>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    <?php elseif ($isInvited) : ?>
+                                        <small>
+                                            <?=
+                                            Module::t('amoscommunity', 'Sei stato invitato nella community come').' '.Module::t('amoslayout',
+                                                "{$community->getRoleByUser()}").':'
+                                            ?>
+                                            <a class="btn btn-xs btn-success"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '1',
+                                                   'redirectAction' => '/community/join/open-join?id='.$community->id])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Accetta')
+                                                   ?>
+                                            </a>
+                                            <a class="btn btn-xs btn-danger"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '0',
+                                                   'redirectAction' => Yii::$app->request->url])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Rifiuta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Rifiuta')
+                                                   ?>
+                                            </a>
+                                        </small>
+                                    <?php else : ?>
+                                        <a class="btn btn-primary btn-xs my-3 align-self-start"
+                                           href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'redirectAction' => Yii::$app->request->url]) ?>"
+                                           title="<?= Module::t('amoscommunity', 'Iscriviti alla community') ?> <?= $community->title ?>">
+                                               <?=
+                                               Module::t('amoscommunity', 'Iscriviti alla community')
+                                               ?>
                                         </a>
                                     <?php endif; ?>
                                 <?php else : ?>
                                     <?php if ($isWaitingToSigned) : ?>
                                         <small>
-                                            <?= Module::t('amoscommunity', 'Sei stato invitato nella community come') . ' ' . Module::t('amoslayout', "{$community->getRoleByUser()}") . ':' ?>
+                                            <?=
+                                            Module::t('amoscommunity', 'Sei stato invitato nella community come').' '.Module::t('amoslayout',
+                                                "{$community->getRoleByUser()}").':'
+                                            ?>
                                             <a class="btn btn-xs btn-success"
-                                               href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'accept' => '1', 'redirectAction' => '/community/join/open-join?id=' . $community->id]) ?>"
-                                               title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community') . ' ' . $community->title ?>">
-                                                <?= Module::t('amoscommunity', 'Accetta') ?>
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '1',
+                                                   'redirectAction' => '/community/join/open-join?id='.$community->id])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Accetta')
+                                                   ?>
                                             </a>
                                             <a class="btn btn-xs btn-danger"
-                                               href="<?= Url::to(['/community/community/join-community', 'communityId' => $community->id, 'accept' => '0', 'redirectAction' => Yii::$app->request->url]) ?>"
-                                               title="<?= Module::t('amoscommunity', 'Rifiuta invito di iscrizione alla community') . ' ' . $community->title ?>">
-                                                <?= Module::t('amoscommunity', 'Rifiuta') ?>
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '0',
+                                                   'redirectAction' => Yii::$app->request->url])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Rifiuta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Rifiuta')
+                                                   ?>
+                                            </a>
+                                        </small>
+                                    <?php elseif ($isInvited) : ?>
+                                        <small>
+                                            <?=
+                                            Module::t('amoscommunity', 'Sei stato invitato nella community come').' '.Module::t('amoslayout',
+                                                "{$community->getRoleByUser()}").':'
+                                            ?>
+                                            <a class="btn btn-xs btn-success"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '1',
+                                                   'redirectAction' => '/community/join/open-join?id='.$community->id])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Accetta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Accetta')
+                                                   ?>
+                                            </a>
+                                            <a class="btn btn-xs btn-danger"
+                                               href="<?=
+                                               Url::to(['/community/community/join-community', 'communityId' => $community->id,
+                                                   'accept' => '0',
+                                                   'redirectAction' => Yii::$app->request->url])
+                                               ?>"
+                                               title="<?= Module::t('amoscommunity', 'Rifiuta invito di iscrizione alla community').' '.$community->title ?>">
+                                                   <?=
+                                                   Module::t('amoscommunity', 'Rifiuta')
+                                                   ?>
                                             </a>
                                         </small>
                                     <?php else : ?>
@@ -235,8 +362,13 @@ $moduleCommunity = Yii::$app->getModule('community');
                                 <a class="btn btn-primary btn-xs my-3 align-self-start"
                                    disabled ="true"
                                    href="<?= 'javascript:void(0)' ?>"
-                                   title="<?= Module::t('amoscommunity', "Devi essere validato per poter effettuare l'iscrizione alla community") ?> <?= $community->title ?>">
-                                    <?= Module::t('amoscommunity', 'Iscriviti alla community') ?>
+                                   title="<?=
+                                   Module::t('amoscommunity',
+                                       "Devi essere validato per poter effettuare l'iscrizione alla community")
+                                   ?> <?= $community->title ?>">
+                                       <?=
+                                       Module::t('amoscommunity', 'Iscriviti alla community')
+                                       ?>
                                 </a>
                             <?php } ?>
 
@@ -253,7 +385,7 @@ $moduleCommunity = Yii::$app->getModule('community');
                             $url = $community->communityLogo->getUrl('scope_community', false, true);
                         }
 
-                        echo $logo = Html::img(
+                        echo $logo    = Html::img(
                             $url,
                             [
                                 'alt' => $community->getAttributeLabel('communityLogo'),
@@ -271,10 +403,10 @@ $moduleCommunity = Yii::$app->getModule('community');
                         <?php else : ?>
                             <div id="moreTextJs">
                                 <?php
-                                $moreContentTextLink = Module::t('amoslayout', 'espandi descrizione') . ' ' . AmosIcons::show("chevron-down");
+                                $moreContentTextLink  = Module::t('amoslayout', 'espandi descrizione').' '.AmosIcons::show("chevron-down");
                                 $moreContentTitleLink = Module::t('amoslayout', 'Leggi la descrizione completa');
 
-                                $lessContentTextLink = Module::t('amoslayout', 'riduci descrizione') . ' ' . AmosIcons::show("chevron-up");
+                                $lessContentTextLink  = Module::t('amoslayout', 'riduci descrizione').' '.AmosIcons::show("chevron-up");
                                 $lessContentTitleLink = Module::t('amoslayout', 'Riduci testo');
                                 ?>
                                 <div class="changeContentJs partialContent">
@@ -306,10 +438,33 @@ $moduleCommunity = Yii::$app->getModule('community');
                     < ?= Module::t('amoscommunity', 'community:') ?>
                 < ?php endif; ?> -->
                 <a href="/community/join/open-join?id=<?= $community->id ?>" class=""
-                   title="<?= Module::t('amoscommunity', 'Vai alla community principale') . ':' . ' ' . $community->name ?>">
-                    <?= $community->name ?>
+                   title="<?= Module::t('amoscommunity', 'Vai alla community principale').':'.' '.$community->name ?>">
+                       <?= $community->name ?>
                 </a>
             </p>
         </div>
     <?php endif ?>
-<?php endif ?>
+    <?php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ endif ?>

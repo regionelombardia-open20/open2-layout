@@ -5,6 +5,9 @@ use open20\amos\core\icons\AmosIcons;
 $currentControllerAction     = $currentController."/".$currentAction;
 $activeTargetActionArray     = [];
 $activeTargetControllerArray = [];
+if (empty($mainMenu['framework'])) {
+    $mainMenu['framework'] = 'am';
+}
 
 
 if (isset($dinamicSubMenu) && !empty($dinamicSubMenu)) {
@@ -47,7 +50,7 @@ $collapseClass = str_replace(' ', '', $mainMenu['label']);
                 <div class="step-sidebar">
                     <a class="nav-link align-items-center d-flex" data-toggle="collapse" href="#collapseSidebarMenu<?= $collapseClass ?>" title="<?= $mainMenu['titleLink'] ?>" role="button" aria-expanded="false" aria-controls="collapseSidebarMenu<?= $collapseClass ?>">
                         <div class="mx-auto text-center">
-                            <?= AmosIcons::show((!empty($mainMenu['icon']) ? $mainMenu['icon'] : ''), ['class' => 'icon icon-white'], 'am') ?>
+                            <?= AmosIcons::show((!empty($mainMenu['icon']) ? $mainMenu['icon'] : ''), ['class' => 'icon icon-white'], $mainMenu['framework']) ?>
                             <div><?= $mainMenu['label'] ?></div>
                         </div>
                     </a>
@@ -87,7 +90,7 @@ $collapseClass = str_replace(' ', '', $mainMenu['label']);
                 <div class="step-sidebar">
                     <a class="nav-link align-items-center d-flex" href="<?= $mainMenu['url'] ?>" title="<?= $mainMenu['titleLink'] ?>">
                         <div class="mx-auto text-center">
-                            <?= AmosIcons::show((!empty($mainMenu['icon']) ? $mainMenu['icon'] : ''), ['class' => 'icon icon-white'], 'am') ?>
+                            <?= AmosIcons::show((!empty($mainMenu['icon']) ? $mainMenu['icon'] : ''), ['class' => 'icon icon-white'], $mainMenu['framework']) ?>
                             <div><?= $mainMenu['label'] ?></div>
                         </div>
                     </a>

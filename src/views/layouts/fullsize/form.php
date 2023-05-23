@@ -56,7 +56,7 @@ $showSidebarForm = (isset($this->params['showSidebarForm'])) ? $this->params['sh
 FormAsset::register($this);
 IEAssets::register($this);
 ?>
-<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
 
 <?php $this->beginPage() ?>
 
@@ -107,26 +107,13 @@ IEAssets::register($this);
 
     <section id="bk-page" class="fullsizeFormLayout" role="main">
 
-        <?php
-        if (
-            !empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS
-            && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
-        ) :
-        ?>
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
-        <?php endif; ?>
-
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
 
         <div id="record_form" class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
 
-            <?php if (empty(\Yii::$app->params['dashboardEngine'])) : ?>
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
-            <?php endif; ?>
-
-            <div class="page-content" >
+            <div class="page-content">
                 <div class="<?= ($showSidebarForm) ? 'layout-sidebarForm' : 'layout-standardForm' ?>">
                     <?php
                     if ($showSidebarForm) {
@@ -142,7 +129,25 @@ IEAssets::register($this);
                         <?php } ?>
                         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
 
+                        <?php if (
+                            !empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine']
+                            == WidgetAbstract::ENGINE_ROWS
+                        ) : ?>
+
+                            <?php
+                            $isLayoutInScope = false;
+                            $moduleCwh = \Yii::$app->getModule('cwh');
+                            if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                                $scope = $moduleCwh->getCwhScope();
+                                $isLayoutInScope = (!empty($scope)) ? true : false;
+                            }
+                            ?>
+
+                            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
+                        <?php endif; ?>
+
                         <div class="page-header">
+
                             <?php
                             if (is_array($this->params['titleButtons']) && !empty($this->params['titleButtons'])) {
                                 echo "<div class='w-100 text-right m-b-20'>";
@@ -176,18 +181,18 @@ IEAssets::register($this);
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']

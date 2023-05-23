@@ -128,7 +128,7 @@ $disablePlatformLinks = isset(Yii::$app->params['disablePlatformLinks']) ? Yii::
                     $logoTextClass = 'title-text' . (isset($logoConf['logoPosition']) ? ' ' . $logoConf['logoPosition'] : '');
                     ?>
                     <div class="login-logo-text">
-                        <p class="<?= $logoTextClass ?>"><?= $logoConf['logoText'] ?></p>
+                        <h1 class="<?= $logoTextClass ?>" style="font-size:18px; font-weight:bold"><?= $logoConf['logoText'] ?></h1>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>

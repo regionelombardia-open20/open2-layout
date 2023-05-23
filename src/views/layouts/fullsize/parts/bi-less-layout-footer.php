@@ -3,6 +3,7 @@
 use app\components\CmsHelper;
 use open20\amos\core\helpers\Html;
 use luya\admin\models\Lang;
+use app\components\CmsMenu;
 
 ?>
 
@@ -18,23 +19,13 @@ $cmsDefaultEngMenuCustomClass = 'cms-menu-container-default cms-menu-container-d
 $cmsSecondaryMenuCustomClass = 'cms-menu-container-secondary';
 $cmsFooterMenuCustomClass = 'cms-menu-container-footer';
 
-$cmsDefaultMenuFooter = CmsHelper::BiHamburgerMenuRender(
-    Yii::$app->menu->findAll([
-        'depth' => 1,
-        'container' => $mainMenu
-    ]),
-    $iconSubmenu,
-    true,
-    $currentAsset
+$menu3                = new CmsMenu();
+$cmsDefaultMenuFooter = $menu3->luyaMenu(
+    $mainMenu, $iconSubmenu, true, $currentAsset
 );
-
-$cmsFooterMenu  = CmsHelper::BiHamburgerMenuRender(
-    Yii::$app->menu->findAll([
-        'depth' => 1,
-        'container' => $footerMenu
-    ]),
-    $iconSubmenu,
-    true
+$menu4                = new CmsMenu();
+$cmsFooterMenu        = $menu4->luyaMenu(
+    $footerMenu, $iconSubmenu, true
 );
 
 /**

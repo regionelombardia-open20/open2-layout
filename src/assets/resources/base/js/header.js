@@ -41,6 +41,17 @@ $(window).on("scroll", function () {
   }
 });
 
+// PUSH UP GUIDE
+$(window).on("scroll", function () {
+  if
+    ($(window).scrollTop() >= 99) {
+    $(".bi-guide").addClass("push-up");
+  }
+  else {
+    $(".bi-guide").removeClass("push-up");
+  }
+});
+
 // BACK TO TOP
 
 $(function() {

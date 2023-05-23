@@ -8,7 +8,7 @@ $customPaginationClass = (isset($customPaginationClass)) ? $customPaginationClas
 $currentViewClass = ((Yii::$app->controller instanceof CrudController &&
     isset(Yii::$app->controller->currentView['name']) &&
     (Yii::$app->controller->currentView['name'] == 'grid')) ?
-    'table_switch table-responsive' :
+    'table_switch' :
     ''
 );
 

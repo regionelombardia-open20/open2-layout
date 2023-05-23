@@ -5,7 +5,6 @@ $currentControllerAction = $currentController."/".$currentAction;
 $activeTargetActionArray = [];
 $activeTargetControllerArray = [];
 
-
 if (isset($dinamicSubMenu) && !empty($dinamicSubMenu)) {
     foreach ($dinamicSubMenu as $k => $singleMenu) {
         if(!empty($singleMenu['activeTargetController'])){
@@ -54,7 +53,8 @@ $collapseClass = str_replace(' ','', $mainMenu['label']);
 
 <?php else : ?>
     <?php
-    if(!empty($singleMenu['activeTargetController'])){
+
+    if(!empty($mainMenu['activeTargetController'])){
         $isActive = ($currentControllerAction == $mainMenu['activeTargetController']."/".$mainMenu['activeTargetAction']);
     }else {
         $isActive = ($currentAction == $mainMenu['activeTargetAction']);

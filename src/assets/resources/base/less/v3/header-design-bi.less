@@ -7,28 +7,6 @@
         color: contrast(@brand-primary-color);
     }
 
-    .d-none {
-        display: none !important;
-    }
-
-    .d-sm-block {
-        @media (min-width: 576px) {
-            display: block !important;
-        }
-    }
-
-    .d-md-block {
-        @media (min-width: 768px) {
-            display: block !important;
-        }
-    }
-
-    .d-lg-block {
-        @media (min-width: 992px) {
-            display: block !important;
-        }
-    }
-
     font-size: 16px;
 
     @media (min-width: 576px) {
@@ -237,6 +215,15 @@
             padding-top: 0 !important;
             height: 94px;
 
+            .container-fluid {
+                .it-header-center-content-wrapper {
+                    .it-right-zone {
+                        justify-content: flex-end;
+                        flex-grow: 1;
+                    }
+                }
+            }
+
             .container,
             .container-fluid {
 
@@ -294,6 +281,10 @@
                                     align-items: center;
                                     padding-right: 24px;
 
+                                    .text-secondary {
+                                        color: @brandbook-btn-tertiary-color;
+                                    }
+
                                     &:first-child {
                                         display: block;
                                     }
@@ -305,15 +296,15 @@
                                         max-height: 54px;
                                         margin-right: 0;
 
-                                        @media screen and (-ms-high-contrast: active),
-                                        (-ms-high-contrast: none) {
+                                        @media screen and (min-width:992px) {
+                                            height: 54px;
+                                        }
+
+                                        @media screen and (-ms-high-contrast: active) and (-ms-high-contrast: none) {
                                             width: 100%;
                                         }
 
-                                        @media screen and (min-width:992px) {
-                                            max-height: 54px;
-                                            height: 54px;
-                                        }
+
 
                                     }
                                 }
@@ -388,16 +379,16 @@
                                         // height: 24px;
 
                                         // @media (min-width:992px) {
-                                            width: 48px;
-                                            height: 48px;
-                                            border-radius: 24px;
-                                            display: block;
-                                            background: @brand-primary-color;
-                                            display: flex;
-                                            justify-content: center;
-                                            align-items: center;
-                                            margin-left: 16px;
-                                            transition: all 0.3s;
+                                        width: 48px;
+                                        height: 48px;
+                                        border-radius: 24px;
+                                        display: block;
+                                        background: @brand-primary-color;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        margin-left: 16px;
+                                        transition: all 0.3s;
                                         // }
 
                                         span {
@@ -409,8 +400,8 @@
                                             font-size: 20px;
 
                                             // @media (min-width:992px) {
-                                                height: 24px;
-                                                color: contrast(@brand-primary-color);
+                                            height: 24px;
+                                            color: contrast(@brand-primary-color);
                                             // }
                                         }
                                     }
@@ -456,6 +447,7 @@
 
         @media (min-width: 992px) {
             padding-left: 18px;
+
             a {
                 text-decoration: none;
                 color: @tertiary-color;
@@ -542,7 +534,8 @@
                     border: none;
                     z-index: 0;
                     position: relative;
-                    > .am-close-circle-o{
+
+                    >.am-close-circle-o {
                         font-size: 32px !important;
                         color: @black-color;
                     }
@@ -974,7 +967,9 @@
     .it-header-wrapper {
         .it-nav-wrapper {
             .it-header-center-wrapper {
-                .container {
+
+                .container,
+                .container-fluid {
                     .row {
                         .col-12 {
                             .it-header-center-content-wrapper {
@@ -1180,6 +1175,7 @@
                                                 text-decoration: none;
                                                 padding: 16px 24px;
                                                 text-transform: uppercase;
+                                                white-space: normal;
 
                                                 .am-4 {
                                                     font-size: 1em;
@@ -1367,22 +1363,24 @@
             }
         }
 
-        .modal-dialog{
-            &.modal-dialog-left{
+        .modal-dialog {
+            &.modal-dialog-left {
                 margin: 0 auto 0 0;
                 transform: translate(-100%, 0);
                 -webkit-transform: translate(-100%, 0);
                 -ms-transform: translate(-100%, 0);
                 -o-transform: translate(-100%, 0);
-                }
+            }
+
             &.modal-dialog-right {
                 margin: 0 0 0 auto;
-                transform: translate(100%,0);
-            -webkit-transform: translate(100%,0);
-            -ms-transform: translate(100%,0);
-            -o-transform: translate(100%,0);
+                transform: translate(100%, 0);
+                -webkit-transform: translate(100%, 0);
+                -ms-transform: translate(100%, 0);
+                -o-transform: translate(100%, 0);
             }
         }
+
         &.in {
             .modal-dialog {
                 -webkit-transform: translate(0, 0);
@@ -1391,6 +1389,7 @@
                 transform: translate(0, 0);
             }
         }
+
         &.in {
             .modal-dialog {
                 -webkit-transform: translate(0, 0);
@@ -1417,6 +1416,18 @@
                 .nav-item {
                     float: none;
                     border-bottom: 1px solid #e9e6f2;
+
+                    &.cms-menu-double-action {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+
+                        >.nav-link+.dropdown-toggle+.dropdown-menu {
+                            width: 100%;
+                        }
+                    }
 
                     .nav-link {
                         display: block;
@@ -1584,23 +1595,35 @@
         border-radius: 50%;
     }
 }
+
 #alwaysHamburgerMenu {
     &.modal-always-hamburger-menu-left {
-        + #headerContent {
+        +#headerContent {
             .it-brand-wrapper {
                 // padding-left: 60px; Riccardo perchè è stato messo? Riccardo
 
                 @media (min-width: 992px) and (max-width: 1310px) {
                     padding-left: 45px !important;
                 }
+
+                &.alwaysmenu-with-container-fluid {
+                    position: absolute;
+                    left: 58px;
+                    margin-left: 0 !important;
+                    padding-left: 0 !important;
+
+                }
             }
-            .btn-always-hamburger-menu{
-                padding: 0 24px;
+
+            .btn-always-hamburger-menu {
+                padding: 0 !important;
+                margin: 0 24px !important;
             }
         }
     }
+
     &.modal-always-hamburger-menu-right {
-        + #headerContent {
+        +#headerContent {
             .it-brand-wrapper {
                 padding-right: 60px;
 
@@ -1608,7 +1631,8 @@
                     padding-right: 45px !important;
                 }
             }
-            .btn-always-hamburger-menu{
+
+            .btn-always-hamburger-menu {
                 padding: 0 24px;
                 right: 0;
             }

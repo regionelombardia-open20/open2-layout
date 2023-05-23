@@ -262,8 +262,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                     </div>
                     <div class="modal-body">
                         <?= $cmsDefaultMenu ?>
-                        <?php 
-                            if ($customPlatformMenu) : 
+                        <?php
+                        if ($customPlatformMenu) :
                             echo $this->render($customPlatformMenu, [
                                 'currentAsset' => $currentAsset,
                                 'iconSubmenu' => $iconSubmenu
@@ -361,16 +361,16 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         ) : '';
                                         ?>
                                         <div class="nav-item">
-                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities','My activities')?>"  title="<?=
-                                                                                                                                                                                            AmosMyActivities::t('amosmyactivities', 'My activities')
-                                                                                                                                                                                            ?>">
-                                                                                                                                                                                            
+                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities', 'My activities') ?>" title="<?=
+                                                                                                                                                                                                                                                                    AmosMyActivities::t('amosmyactivities', 'My activities')
+                                                                                                                                                                                                                                                                    ?>">
+
                                                 <span class="dash dash-bell"></span>
                                                 <?= $menuMyActivitiesModuleBulletCount ?>
                                             </a>
                                         </div>
                                     <?php endif; ?>
-                                    
+
                                     <!-- TO FRONTEND LINK -->
                                     <?php if (isset(\Yii::$app->params['toFrontendLink']) && \Yii::$app->params['toFrontendLink']) : ?>
                                         <div class="nav-item">
@@ -447,7 +447,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             </a>
                                         </div>
                                     <?php endif; ?>
-                                    
+
                                 <?php endif; ?>
 
                                 <!-- USER -->
@@ -489,7 +489,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         </div>
                                     <?php else : ?>
                                         <div class="dropdown menu-profile">
-                                            <a href="#" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?= Yii::t('amoscore', 'Apri menu utente')?>">
+                                            <a href="#" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?= Yii::t('amoscore', 'Apri menu utente') ?>">
                                                 <span class="rounded-icon">
                                                     <img class="icon icon-primary rounded-circle" src="<?=
                                                                                                         (!empty($userImage) ? $userImage : \Yii::$app->params['platform']['frontendUrl'] . '/img/defaultProfiloM.png')
@@ -567,7 +567,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                 <div class="row flexbox">
                     <div class="col-12">
                         <div class="it-header-center-content-wrapper flexbox">
-                            <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu || (!$alwaysHamburgerMenu)) ? 'pl-0' : 'pl-md-0' ?>">
+                            <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu || (!$alwaysHamburgerMenu)) ? 'pl-0' : 'pl-md-0' ?> <?= (($fluidContainerHeader && $alwaysHamburgerMenu) ? 'alwaysmenu-with-container-fluid' : '') ?>">
                                 <?= $this->render("bi-less-logo"); ?>
                             </div>
                             <div class="it-right-zone flexbox">
@@ -654,6 +654,12 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
     </div>
 
 </div>
+<?php if ($customPlatformGuide) : ?>
+    <?= $this->render("bi-less-guide", [
+        'currentAsset' => $currentAsset,
+        'pathView' => $customPlatformGuide
+    ]); ?>
+<?php endif; ?>
 <!-- ASSISTANCE -->
 <?php if (!$hideAssistance) : ?>
     <?php

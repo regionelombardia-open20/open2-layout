@@ -61,5 +61,5 @@ return [
     "Community ristretta ai partecipanti"=>"Community ristretta ai partecipanti",
     "Community aperta" => "Community aperta",
     "Community chiusa" => "Community chiusa",
-
+    "#reader_user_cannot_create" => "Il ruolo di lettore non permette la pubblicazione di contenuti",
 ];

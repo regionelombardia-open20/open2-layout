@@ -46,6 +46,7 @@ textarea {
 }
 
 .select2-container--krajee .select2-selection,
+.select2-container--krajee-bs4 .select2-selection,
 select,
 .form-control {
   border: none;
@@ -67,7 +68,9 @@ select,
   background-color: #FFF;
 }
 
-.select2-container--krajee .select2-selection--single .select2-selection__arrow {
+.select2-container--krajee .select2-selection--single .select2-selection__arrow,
+.select2-container--krajee-bs4 .select2-selection--single .select2-selection__arrow
+{
   border: none;
   border-left: none;
   border-top-right-radius: 0;
@@ -79,15 +82,21 @@ select,
   width: 20px;
 }
 
-.select2-container--krajee .select2-selection--single .select2-selection__placeholder {
+.select2-container--krajee .select2-selection--single .select2-selection__placeholder,
+.select2-container--krajee-bs4 .select2-selection--single .select2-selection__placeholder
+{
   color: $secondary;
 }
 
-.select2-container--krajee .select2-selection__clear {
+.select2-container--krajee .select2-selection__clear,
+.select2-container--krajee-bs4 .select2-selection__clear
+{
   margin-right: 24px;
 }
 
-.select2-container--krajee .select2-dropdown {
+.select2-container--krajee .select2-dropdown,
+.select2-container--krajee-bs4 .select2-dropdown
+{
   border-color: transparent;
 }
 
@@ -267,6 +276,10 @@ input[type="checkbox"] {
 
   input {
     display: inherit;
+    &.file-caption-name {
+      border: none;
+      width: 100%;
+    }
   }
 }
 
@@ -940,7 +953,11 @@ input[type="checkbox"] {
     }
   }
 }
-
+.input-group {
+  .form-control {
+    height: inherit;
+  }
+}
 .input-group-addon {
   background-color: #FFF;
 }
@@ -1006,13 +1023,15 @@ input[type="checkbox"] {
 }
 
 #cont-customTagsDefault {
-  .select2-container--krajee .select2-selection {
+  .select2-container--krajee .select2-selection, .select2-container--krajee-bs4 .select2-selection {
     height: auto !important;
   }
 }
 
 .select2-container .selection .select2-selection.select2-selection--multiple::after,
-.select2-container.select2-container--krajee .selection .select2-selection.select2-selection--multiple::after {
+.select2-container.select2-container--krajee .selection .select2-selection.select2-selection--multiple::after,
+.select2-container.select2-container--krajee-bs4 .selection .select2-selection.select2-selection--multiple::after
+{
   right: 9px;
   top: 20px;
 

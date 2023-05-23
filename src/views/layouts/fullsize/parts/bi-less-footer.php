@@ -2,7 +2,20 @@
 /* versione piattaforma */
 $versione = Yii::t('amoscore', 'Versione') . ' ' . ((isset(\Yii::$app->params['versione'])) ? \Yii::$app->params['versione'] : '1.0');
 
+use luya\cms\models\NavContainer;
+use luya\cms\models\NavItemPage;
 use yii\helpers\Html;
+
+$container = NavContainer::findOne(['alias' => "footercms"]);
+$cms_content = "";
+if(!is_null($container)){
+    $navs = $container->navs;
+    $nav = reset($navs);
+    if(!is_null($nav)){
+        $page = NavItemPage::findOne(['nav_item_id' => $nav->id]);
+        $cms_content = $page->getContent();
+    }
+}
 ?>
 <footer id="footerContent" class="it-footer mt-auto w-100">
   <div class="it-footer-main py-1 py-md-4 bg-tertiary">
@@ -41,6 +54,7 @@ use yii\helpers\Html;
           <?php endif ?>
         </div>
       </div>
+      <?= $cms_content ?>
       <div role="contentinfo" aria-label="Copyleft" class="py-1 py-md-4">
       <hr class="border-white">
         <div class="row">

@@ -421,14 +421,14 @@ if (isset($model)) {
                         <?php
                         $url = '/img/img_default.jpg';
                         if (!is_null($model->getEventLogo())) {
-                            $url = $model->getEventLogo()->getUrl('original', false, true);
+                            $url = $model->getEventLogo()->getWebUrl('original', false, true);
                         }
                         ?>
 
                         <div class="external-image-container">
                             <div class="image-wrapper">
                                 <?php
-                                $url = $model->getEventsImageUrl('square_large', true);
+                                $url = $model->getEventsImageUrl('square_large', false);
                                 $logo = Html::img($url, [
                                     'alt' => $model->getAttributeLabel('eventLogo'),
                                     'class' => 'event-image img-fluid w-100'
