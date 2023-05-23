@@ -60,7 +60,7 @@ if ($countArrayUrl) {
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
 
 <head>
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
@@ -75,8 +75,8 @@ if ($countArrayUrl) {
 
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
-    
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
+
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
@@ -98,8 +98,26 @@ if ($countArrayUrl) {
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeListLayout" role="main">
+    <?php
+    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        } else {
+            $showSidebarRedattore = false;
+        }
+    }
+    ?>
 
+    <section id="bk-page" class="fullsizeListLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
+
+        <?php if ($showSidebarRedattore) : ?>
+            <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
+                'currentAsset' => $currentAsset
+            ]); ?>
+        <?php endif ?>
+        <div class="main-content w-100">
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
@@ -108,7 +126,7 @@ if ($countArrayUrl) {
                                     == true) ? 'container-full-width' : ''
                                 ?>">
 
-            <div class="page-content">
+            <div class="page-content mb-100 m-t-15">
 
                 <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
 
@@ -210,7 +228,7 @@ if ($countArrayUrl) {
                 <?= $content ?>
             </div>
         </div>
-
+                    </div>                
     </section>
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
@@ -220,25 +238,25 @@ if ($countArrayUrl) {
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
             ]); ?>
         <?php endif ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-backtotop-button"); ?>
-        <?php } else { ?>
+    <?php } else { ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "sponsors"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "footer_text"); ?>
     <?php } ?>

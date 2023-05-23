@@ -96,5 +96,5 @@ $previousUrl = !empty(Yii::$app->session->get('previousUrl')) ? Yii::$app->sessi
             </div>
         </div>
     </div>
-<?php endif; ?>
+<?php endif; 
 

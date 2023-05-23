@@ -35,12 +35,14 @@ body {
   #bk-page {
 
     //margin-top: 50px !important;
-    >.container {
+    .container {
       //padding-bottom: 60px; commented because container-message it's too distance
       padding-top: 10px;
 
       &.container-full-width {
         width: 100%;
+        max-width: 100%;
+        padding: 0 4%;
       }
     }
   }
@@ -1144,14 +1146,14 @@ div[class*="-view"] {
     position: relative;
     margin: @margin-medium 0;
 
-     .post-header {
+    .post-header {
       display: flex;
-//      flex-direction: row;
+      //      flex-direction: row;
       align-items: center;
       flex-wrap: wrap;
-//      margin-bottom: 25px;
+      //      margin-bottom: 25px;
     }
- 
+
     @media (max-width: 767px) {
       align-items: flex-end;
       margin-bottom: 25px;

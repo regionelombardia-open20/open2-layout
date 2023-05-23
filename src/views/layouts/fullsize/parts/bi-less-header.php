@@ -25,6 +25,7 @@ if (!empty($layoutModule->addHeaderNavItemsClass)) {
     }
 }
 
+$globalSearchFormUrl = isset(\Yii::$app->params['layoutConfigurations']['globalSearchFormUrl']) ? \Yii::$app->params['layoutConfigurations']['globalSearchFormUrl'] : "";
 ?>
 
 <?php
@@ -48,7 +49,7 @@ $disableSettings = (isset(\Yii::$app->params['hideSettings']) && !is_array(\Yii:
 
 if (!$disableSettings) {
     /* ordinamenti dashboard */
-    $ordinamentiDashboard     = (\Yii::$app->controller instanceof \open20\amos\dashboard\controllers\base\DashboardController)
+    $ordinamentiDashboard = (\Yii::$app->controller instanceof \open20\amos\dashboard\controllers\base\DashboardController)
         ?: false;
     $menuOrdinamentiDashboard = Html::tag(
         'li',
@@ -64,7 +65,7 @@ if (!$disableSettings) {
     );
 
     /* gestisci widget */
-    $gestisciWidget     = ($this->context->module->id == AmosDashboard::getModuleName() && Yii::$app->user->can('CAN_MANAGE_DASHBOARD'))
+    $gestisciWidget = ($this->context->module->id == AmosDashboard::getModuleName() && Yii::$app->user->can('CAN_MANAGE_DASHBOARD'))
         ?: false;
     $menuGestisciWidget = Html::tag(
         'li',
@@ -79,26 +80,46 @@ if (!$disableSettings) {
     );
 }
 
+/**
+ * slideshow
+ */
+if (\Yii::$app->getModule('slideshow')) {
+    $slideshow = new \open20\amos\slideshow\models\Slideshow;
+    $route = "/" . \Yii::$app->request->getPathInfo();
+    $idSlideshow = $slideshow->hasSlideshow($route);
+
+    if (empty($idSlideshow)) {
+        $route2 = \Yii::$app->urlManager->parseRequest(\Yii::$app->request);
+        if (!empty($route2[1])) {
+            $route = "/" . $route2[0];
+            $idSlideshow = $slideshow->hasSlideshow($route);
+        }
+    }
+    if ($idSlideshow) {
+        $slideshowLabel = $slideshow->findOne($idSlideshow)->label;
+        echo \open20\amos\slideshow\widgets\SlideshowWidget::widget(['route' => $route]);
+    }
+}
+
 /* languages */
 $actualLang = CmsLanguageUtility::getAppLanguage();
-$languages  = CmsLanguageUtility::getTranslationMenu();
+$languages = CmsLanguageUtility::getTranslationMenu();
 $uniqueLang = true;
 if (!empty($languages) && ($languages != '')) {
     foreach ($languages as $lang) {
-        $uniqueLang    = false;
+        $uniqueLang = false;
         $menuLanguages .= Html::tag('li', $lang);
     }
 }
 
 
-
 /* user menu */
 if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
-    $userModule      = CurrentUser::getUserProfile();
+    $userModule = CurrentUser::getUserProfile();
     /* info generiche */
-    $userImage       = str_replace(".it/it/", ".it/", $userModule->getAvatarUrl('table_small'));
+    $userImage = str_replace(".it/it/", ".it/", $userModule->getAvatarUrl('table_small'));
     $userNomeCognome = $userModule->getNomeCognome();
-    $userAltImg      = strtoupper(substr($userModule->nome, 0, 1) . substr($userModule->cognome, 0, 1));
+    $userAltImg = strtoupper(substr($userModule->nome, 0, 1) . substr($userModule->cognome, 0, 1));
 
     if ($userModule->sesso == 'Maschio') {
         $userWelcomeMessage = Yii::t('amoscore', 'Benvenuto<br>') . ' ' . $userNomeCognome;
@@ -243,9 +264,6 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
 ?>
 
 
-
-
-
 <?php if (!($hideHamburgerMenu)) : ?>
     <?php if ($alwaysHamburgerMenu) : ?>
         <!-- MODALE PER HAMBURGER MENU -->
@@ -330,8 +348,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                     <!-- CHAT MODULE -->
                                     <?php if (\Yii::$app->getModule('chat')) : ?>
                                         <?php
-                                        $chatModuleWidget          = new \open20\amos\chat\widgets\icons\WidgetIconChat();
-                                        $chatModuleBulletCount     = $chatModuleWidget->getBulletCount();
+                                        $chatModuleWidget = new \open20\amos\chat\widgets\icons\WidgetIconChat();
+                                        $chatModuleBulletCount = $chatModuleWidget->getBulletCount();
                                         $menuChatModuleBulletCount = ($chatModuleBulletCount > 0) ? Html::tag(
                                             'span',
                                             $chatModuleBulletCount,
@@ -352,8 +370,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                     <!-- MY ACTIVITIES MODULE -->
                                     <?php if (\Yii::$app->getModule('myactivities')) : ?>
                                         <?php
-                                        $myactivitiesModuleWidget          = new \open20\amos\myactivities\widgets\icons\WidgetIconMyActivities();
-                                        $myactivitiesModuleBulletCount     = $myactivitiesModuleWidget->getBulletCount();
+                                        $myactivitiesModuleWidget = new \open20\amos\myactivities\widgets\icons\WidgetIconMyActivities();
+                                        $myactivitiesModuleBulletCount = $myactivitiesModuleWidget->getBulletCount();
                                         $menuMyActivitiesModuleBulletCount = ($myactivitiesModuleBulletCount > 0) ? Html::tag(
                                             'span',
                                             $myactivitiesModuleBulletCount,
@@ -362,8 +380,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         ?>
                                         <div class="nav-item">
                                             <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities', 'My activities') ?>" title="<?=
-                                                                                                                                                                                                                                                                    AmosMyActivities::t('amosmyactivities', 'My activities')
-                                                                                                                                                                                                                                                                    ?>">
+                                                                                                                                                                                                                                                                        AmosMyActivities::t('amosmyactivities', 'My activities')
+                                                                                                                                                                                                                                                                        ?>">
 
                                                 <span class="dash dash-bell"></span>
                                                 <?= $menuMyActivitiesModuleBulletCount ?>
@@ -380,9 +398,9 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                                                                                                                         '#frontend'
                                                                                                                                     )
                                                                                                                                     ?>" <?=
-                                                                                                                                        (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
-                                                                                                                                            ? 'target="_blank"' : ''
-                                                                                                                                        ?>>
+                                                        (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
+                                                            ? 'target="_blank"' : ''
+                                                        ?>>
                                                 <svg class="icon">
                                                     <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_exit_to_app"></use>
                                                 </svg>
@@ -429,9 +447,9 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                     <!-- EXPORTJOBS MODULE -->
                                     <?php if (\Yii::$app->getModule('exportjobs') && !\Yii::$app->user->isGuest && Yii::$app->user->can('EXPORT_READER')) : ?>
                                         <?php
-                                        $widget      = new \frontend\modules\exportjobs\models\TaskExportJob();
-                                        $myReportModuleBulletCount     = 0;
-                                        $myReportModuleBulletCount     = $widget->getBulletCount();
+                                        $widget = new \frontend\modules\exportjobs\models\TaskExportJob();
+                                        $myReportModuleBulletCount = 0;
+                                        $myReportModuleBulletCount = $widget->getBulletCount();
                                         $menuMyReportModuleBulletCount = ($myReportModuleBulletCount > 0) ? Html::tag(
                                             'span',
                                             $myReportModuleBulletCount,
@@ -489,7 +507,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         </div>
                                     <?php else : ?>
                                         <div class="dropdown menu-profile">
-                                            <a href="#" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?= Yii::t('amoscore', 'Apri menu utente') ?>">
+                                            <a href="javascript:void(0)" class="btn btn-primary btn-icon btn-full dropdown-toggle flexbox" role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?= Yii::t('amoscore', 'Apri menu utente') ?>">
                                                 <span class="rounded-icon">
                                                     <img class="icon icon-primary rounded-circle" src="<?=
                                                                                                         (!empty($userImage) ? $userImage : \Yii::$app->params['platform']['frontendUrl'] . '/img/defaultProfiloM.png')
@@ -526,8 +544,8 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         <a class="nav-link dropdown-toggle" href="javascript::void(0)" title="Lingua corrente <?= $actualLang ?>" id="dropdownMenuTranslation" data-toggle="dropdown" aria-expanded="false">
                                             <?= $actualLang ?>
                                             <!--<svg class="icon-expand icon icon-sm">
-                                            <use xlink:href="< ?= $currentAsset->baseUrl ?>/node_modules/bootstrap-italia/dist/svg/sprite.svg#it-expand"></use>
-                                        </svg>-->
+                                                <use xlink:href="< ?= $currentAsset->baseUrl ?>/node_modules/bootstrap-italia/dist/svg/sprite.svg#it-expand"></use>
+                                            </svg>-->
                                             <span class="am am-chevron-down" style="color:white;"></span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuTranslation">
@@ -583,14 +601,40 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
 
                                 <?php endif ?>
                                 <?php if (!($hideGlobalSearch)) : ?>
-                                    <?php if (isset($pageSearchLink)) { ?>
-                                        <?=
-                                        $this->render("bi-less-header-search", [
-                                            'currentAsset' => $currentAsset,
-                                            'pageSearchLink' => $pageSearchLink
-                                        ]);
-                                        ?>
-                                    <?php }; ?>
+                                    <?php if ($enableGlobalSearchForm) : ?>
+                                        <a class="btn btn-xs border-tertiary btn-collapse-search d-block d-sm-none" data-toggle="collapse" href="#collapseGlobalHeaderForm" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            <span class="icon icon-primary icon-search mdi mdi-magnify"></span>
+                                            <span class="icon icon-secondary icon-close mdi mdi-close"></span>
+                                            <span class="sr-only"><?= Module::t('amosdesign', 'Cerca') ?></span>
+                                        </a>
+                                        <div id="collapseGlobalHeaderForm" class="global-header-form collapse">
+                                            <form novalidate action="<?= $globalSearchFormUrl ?>" method="GET">
+                                                <div><label class="control-label sr-only" for="globalSearch"><?= Module::t('amoslayout', 'Cerca') ?></label>
+                                                </div>
+                                                <div>
+                                                    <div class="input-group globalSearch">
+                                                        <input type="text" id="globalSearch" class="form-control" name="global-search" placeholder="<?= Module::t('amoslayout', 'Cerca nel sito') ?>">
+                                                        <span class="input-group-btn">
+                                                            <button id="globalSearchBtn" title="<?= Module::t('amosdesign', 'Cerca') ?>" class="btn btn-default" type="submit">
+                                                                <span class="mdi mdi-magnify icon-span"></span>
+                                                                <span class="sr-only"><?= Module::t('amosdesign', 'Cerca') ?></span>
+                                                            </button>
+                                                        </span>
+                                                    </div><!-- /input-group -->
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    <?php else : ?>
+                                        <?php if (isset($pageSearchLink)) { ?>
+                                            <?=
+                                            $this->render("bi-less-header-search", [
+                                                'currentAsset' => $currentAsset,
+                                                'pageSearchLink' => $pageSearchLink
+                                            ]);
+                                            ?>
+                                        <?php }; ?>
+                                    <?php endif ?>
                                 <?php endif ?>
                             </div>
                         </div>
@@ -654,6 +698,12 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
     </div>
 
 </div>
+
+<?php if (\Yii::$app->getModule('favorites')) { ?>
+    <?php
+    echo \open20\amos\favorites\widgets\SelectFavoriteUrlsWidget::widget();
+    ?>
+<?php } ?>
 <?php if ($customPlatformGuide) : ?>
     <?= $this->render("bi-less-guide", [
         'currentAsset' => $currentAsset,

@@ -10,6 +10,7 @@
  */
 
 use open20\amos\layout\assets\FormAsset;
+use open20\amos\layout\assets\ExitFormWithoutSaveAsset;
 use open20\amos\layout\assets\IEAssets;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -51,6 +52,9 @@ if ($countArrayUrl) {
 }
 
 FormAsset::register($this);
+if (isset(\Yii::$app->params['layoutConfigurations']['ExitFormWithoutSave'])) {
+    ExitFormWithoutSaveAsset::register($this);
+}
 IEAssets::register($this);
 
 ?>

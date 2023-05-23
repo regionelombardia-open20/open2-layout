@@ -1,7 +1,6 @@
 var test = 0;
 
 $(document).ready(function () {
-
     //attiva l'evento di evidenza delle tab dopo il validate del form
     FormActions.afterValidate();
 

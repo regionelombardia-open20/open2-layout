@@ -39,6 +39,14 @@
     font-style: normal;
 }
 
+/*---------------- SEMIBOLD 600 -------------------*/
+@font-face {
+    font-family: 'titillium-web';
+    src: url('./titillium-web/TitilliumWeb-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
 /*---------------- BOLD 700 -------------------*/
 @font-face {
     font-family: 'titillium-web';

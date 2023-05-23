@@ -67,7 +67,8 @@ JS;
 $this->registerJs($jsCommentsContainer);
 ?>
 
-<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+
+<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -81,7 +82,7 @@ $this->registerJs($jsCommentsContainer);
 
 <body>
     <?php $this->beginBody() ?>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?php
@@ -104,13 +105,32 @@ $this->registerJs($jsCommentsContainer);
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeDetailNewsLayout" role="main">
+    <?php
+    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        } else {
+            $showSidebarRedattore = false;
+        }
+    }
+    ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+    <section id="bk-page" class="fullsizeDetailNewsLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+        <?php if ($showSidebarRedattore) : ?>
+            <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
+                'currentAsset' => $currentAsset
+            ]); ?>
+        <?php endif ?>
 
-        <div class="w-100">
+        <div class="w-100 main-content">
+
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+
 
             <div class="page-content">
 
@@ -134,18 +154,17 @@ $this->registerJs($jsCommentsContainer);
                         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
                     </div>
                 <?php endif; ?>
+
+
+                <?php if ($this instanceof AmosView) : ?>
+                    <?php $this->beginViewContent() ?>
+                <?php endif; ?>
+                <?= $content ?>
+                <?php if ($this instanceof AmosView) : ?>
+                    <?php $this->endViewContent() ?>
+                <?php endif; ?>
             </div>
-
-            <?php if ($this instanceof AmosView) : ?>
-                <?php $this->beginViewContent() ?>
-            <?php endif; ?>
-            <?= $content ?>
-            <?php if ($this instanceof AmosView) : ?>
-                <?php $this->endViewContent() ?>
-            <?php endif; ?>
-
         </div>
-
     </section>
 
 
@@ -156,18 +175,18 @@ $this->registerJs($jsCommentsContainer);
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']

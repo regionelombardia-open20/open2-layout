@@ -44,7 +44,6 @@ toolbar on views used for add element, order, download, search, change view, hig
   background-color: @toolbar-background-color;
   padding: @padding-medium @padding-default;
   margin-bottom: @margin-min; // same as [data-toggle-element^="form"] margin-top
-  float: left;
   width: 100%;
 
   #change-view-dropdown-download { // into grid view
@@ -62,7 +61,6 @@ toolbar on views used for add element, order, download, search, change view, hig
   }
 
   & + div[class$="-index"] { //order and search div
-    float: left;
     width: 100%;
 
     [data-toggle-element^="form"] {
@@ -82,7 +80,7 @@ toolbar on views used for add element, order, download, search, change view, hig
   .btn-tools-container {
     width: 100%;
     float: left;
-    padding: @padding-default 0;
+    padding:0;
 
     > .btn + .btn,
     > .btn-group + .btn { /*all btn not in tools-right*/

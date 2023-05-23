@@ -51,7 +51,7 @@ toolbar on views used for add element, order, download, search, change view, hig
   background-color: @toolbar-background-color;
   padding: @padding-medium 0;
   margin-bottom: @margin-min; // same as [data-toggle-element^="form"] margin-top
-  float: left;
+  
   width: 100%;
   // .active-filter {
   //   background-color: darken(@secondary-color, 30%);
@@ -76,7 +76,6 @@ toolbar on views used for add element, order, download, search, change view, hig
 
   &+div[class$="-index"] {
     //order and search div
-    float: left;
     width: 100%;
 
     [data-toggle-element^="form"] {
@@ -95,7 +94,7 @@ toolbar on views used for add element, order, download, search, change view, hig
 
   .btn-tools-container {
     width: 100%;
-    float: left;
+    float: none;
     //.flexbox;
     .flexbox-wrap;
     //align-items: center;

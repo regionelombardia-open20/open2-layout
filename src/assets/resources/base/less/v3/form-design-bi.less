@@ -74,8 +74,9 @@ div[class*="-form"]:not(.section-form) {
     // for h2 tags (h2 because h1 it's into layout header)
     color: inherit;
     border-bottom: none;
-    padding-bottom: 5px;
-    .h3;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    font-size: 1.4em;
 
     .amos-tooltip {
       font-size: 0.8em;
@@ -229,8 +230,9 @@ form {
         border-bottom-color: @border-form-focus-color;
         box-shadow: none;
       }
+
       &[disabled],
-      &[readonly]{
+      &[readonly] {
         background-color: #eeeeee;
         cursor: not-allowed;
       }
@@ -319,6 +321,71 @@ form {
   color: #000;
 }
 
+.alert {
+  position: relative;
+  margin-bottom: 1rem;
+  border-radius: 0;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  padding: 15px;
+  padding-left: 4em;
+  width: 100%;
+  border-left: 8px solid #b4c2ca;
+  border-bottom: 1px solid #b4c2ca;
+  border-right: 1px solid #b4c2ca;
+  border-top: 1px solid #b4c2ca;
+  margin-top: 20px;
+  p {
+    margin: 0;
+  }
+  .close {
+    opacity: 0.5;
+    font-size: 24px;
+  }
+
+  &::after {
+    left: 20px;
+    top: 14px;
+    font: normal normal normal 32px/1 "Material Design Icons";
+    position: absolute;
+  }
+
+  &.alert-success {
+    border-left: 8px solid #008055;
+
+    &::after {
+      content: "\F05E1";
+      color: #008055;
+    }
+  }
+
+  &.alert-info {
+    border-left: 8px solid #5d7083;
+
+    &::after {
+      content: "\F02FD";
+      color: #5d7083;
+    }
+  }
+
+  &.alert-warning {
+    border-left: 8px solid #995c00;
+
+    &::after {
+      content: "\F05D6";
+      color: #995c00;
+    }
+  }
+  &.alert-danger {
+    border-left: 8px solid #d9364f;
+
+    &::after {
+      content: "\F0CE6";
+      color: #d9364f;
+    }
+  }
+}
+
 //-----------------------------------------------
 // REDACTOR
 //-----------------------------------------------
@@ -376,6 +443,7 @@ form {
           width: 100% !important;
           padding: 6px 12px;
           height: 45px;
+
           &::placeholder {
             color: @font-form-color;
             opacity: 1;
@@ -390,7 +458,9 @@ form {
 
       .select2-selection__choice {
         white-space: normal;
-
+        &:first-child {
+          margin-right: 50px;
+        }
         .select2-selection__choice__remove {
           position: relative;
           bottom: 2px;
@@ -419,19 +489,25 @@ form {
       &::after {
         //force add 'select2-selection__arrow b' (triangle) in select2 multiple
         content: ' ';
-        position: absolute;
+        position: relative;
         border-color: #888 transparent transparent transparent;
         border-style: solid;
         border-width: 5px 6px 0 6px;
-        right: 13px;
-        margin-top: -2px;
-        top: 50%;
-        cursor: pointer
+        right: inherit;
+        margin-top: 12px;
+        top: inherit;
+        cursor: pointer;
+        margin-left: -25px;
+        margin-right: 10px;
+        margin-top: 12px;
+        bottom: inherit;
+        float:right;
       }
 
       .select2-selection__clear {
-        bottom: 13px;
-        right: 25px;
+        bottom: inherit;
+        right:30px;
+        top:13px;
       }
     }
   }
@@ -450,7 +526,22 @@ form {
   }
 
 }
+.select2-selection__rendered{
+  li:first-child{
+      margin-right: 50px !important;
 
+  }
+}
+.select2-selection__choice {
+  white-space: normal;
+  margin-right: 50px !important;
+  &:first-child {
+    margin-right: 50px !important;
+  } 
+}
+.select2-selection__choice:first-child {
+  margin-right: 50px !important;
+}
 //override select
 .has-success .select2-container--krajee .select2-selection,
 .has-success.select2-container--krajee .select2-dropdown,
@@ -467,6 +558,14 @@ form {
 .file-caption {
   .file-caption-name {
     height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    background: none;
+    outline: none;
+
     &::placeholder {
       color: @font-form-color;
       opacity: 1;
@@ -503,6 +602,11 @@ form {
       }
     }
   }
+}
+
+ul.ui-widget.ui-widget-content {
+  .input-style(@border-form-color);
+  border-radius: 4px;
 }
 
 .fileinput-caption {
@@ -619,7 +723,7 @@ form {
   border-top: 1px solid @error-form-color;
 }
 
-.has-error .help-block,
+.has-error .help-block.help-block-error,
 .has-error.radio label,
 .has-error.checkbox label,
 .has-error.radio-inline label,
@@ -813,7 +917,7 @@ select {
 
   background-position: bottom 9px right 4px !Important;
   background-repeat: no-repeat !important;
-  background-image: url(../img/select.png) !important;
+  // background-image: url(../img/select.png) !important;
 }
 
 //-----------------------------------------------
@@ -937,10 +1041,12 @@ ul.kv-tree>li.kv-parent {
 .input-group-addon {
   color: @font-form-color;
 
+  &.kv-date-picker,
   &.kv-datetime-picker {
     border: 1px solid;
   }
 
+  &.kv-date-remove,
   &.kv-datetime-remove {
     border-top: 1px solid;
     border-bottom: 1px solid;
@@ -1055,4 +1161,28 @@ ul.kv-tree>li.kv-parent {
       font-weight: normal;
     }
   }
+}
+
+.globalSearch {
+  input {
+    border-right: none;
+  }
+
+  .btn {
+    border-left: 0;
+    height: 45px;
+    border-color: @border-form-color;
+
+    .icon-span {
+      font-size: 32px;
+    }
+  }
+}
+
+.select2-container--krajee-bs3 .select2-selection--single .select2-selection__clear,
+.select2-container--krajee-bs3 .select2-selection--multiple .select2-selection__clear {
+  display: flex;
+  align-items: center;
+  top: 0;
+  right: 35px;
 }

@@ -19,6 +19,32 @@
   button {
     margin-bottom: 5px;
   }
+  &.accordionPage {
+    .panel {
+      box-shadow: none;
+      border: none;
+    }
+    .panel-heading {
+      background-color: #f0f0f0;
+      color: #000;
+      padding: 5px 10px;
+      border: none;
+      cursor: inherit;
+      .panel-title {
+        font-size: 1.4em;
+        line-height: 1.25;
+        a {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .panel-body {
+      border: 1px solid #ddd;
+    }
+  }
 }
 
 .first-accordion{ /* used for mix accordion and form section space */

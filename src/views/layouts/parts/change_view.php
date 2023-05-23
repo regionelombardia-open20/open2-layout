@@ -89,10 +89,10 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                         }
                     }
                 }
-                $htmlCountFilter = '';
-                $tooltipText     = Module::t('amoslayout', 'Ricerca');
+                $htmlCountFilter = '<span class="m-l-5">' . Module::t('amoslayout', 'Filtri') . '</span>';
+                $tooltipText     = Module::t('amoslayout', 'Azzera opzioni di ricerca');
                 if ($countFilterActive > 0) {
-                    $htmlCountFilter   = "<span class='m-l-10'>$countFilterActive</span>";
+                    $htmlCountFilter   = "<span class='m-l-5'>" . Module::t('amoslayout', 'Filtri') . " ($countFilterActive)</span>";
                     $filterActiveClass = 'btn-secondary-outline active-filter';
                     $tooltipText       = Module::t('amoslayout', 'Filtri di ricerca applicati: {x}',
                             [
@@ -193,7 +193,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
 
             <?php
             //DOWNLOAD ENABLED?
-            if (isset(Yii::$app->request->queryParams['download'])) {
+            if (empty(\Yii::$app->params['hideDownload']) && isset(Yii::$app->request->queryParams['download'])) {
                 echo Html::tag('div', '', ['id' => 'change-view-download-btn', 'class' => 'btn-group hidden']);
                 Event::on(View::className(), View::EVENT_END_BODY,
                     function ($event) {

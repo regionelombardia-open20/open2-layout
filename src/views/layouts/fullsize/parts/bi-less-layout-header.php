@@ -173,13 +173,36 @@ if (isset(\Yii::$app->view->params['hideGlobalSearchHeader'])) {
     }
 }
 
+if (isset(\Yii::$app->view->params['enableGlobalSearchForm'])) {
+    $enableGlobalSearchFormCheck = (\Yii::$app->view->params['enableGlobalSearchForm']);
+} else {
+    if (isset(\Yii::$app->params['layoutConfigurations']['enableGlobalSearchForm'])) {
+        $enableGlobalSearchFormCheck = (\Yii::$app->params['layoutConfigurations']['enableGlobalSearchForm']);
+    } else {
+        $enableGlobalSearchFormCheck = false;
+    }
+}
+
 if (isset(\Yii::$app->view->params['hideUserMenuHeader'])) {
     $hideUserMenuHeaderCheck = (\Yii::$app->view->params['hideUserMenuHeader']);
 } else {
+    $hideUserMenuHeaderCheck = (\Yii::$app->params['layoutConfigurations']['hideUserMenuHeader']);
     if (isset(\Yii::$app->params['layoutConfigurations']['hideUserMenuHeader'])) {
-        $hideUserMenuHeaderCheck = (\Yii::$app->params['layoutConfigurations']['hideUserMenuHeader']);
-    } else {
-        $hideUserMenuHeaderCheck = false;
+        $check = 0;
+        if (\Yii::$app->user->can('ADMIN')) {
+            $check = 1;
+        }
+        if (!$check && isset(\Yii::$app->params['layoutConfigurations']['hideUserMenuHeaderPermissions'])) {
+            $permissions = \Yii::$app->params['layoutConfigurations']['hideUserMenuHeaderPermissions'];
+            foreach ($permissions as $pr) {
+                if (\Yii::$app->user->can($pr)) {
+                    $check = 1;
+                }
+            }
+        }
+        if ($check == 1) {
+            $hideUserMenuHeaderCheck = false;
+        }
     }
 }
 
@@ -266,6 +289,7 @@ $hideTopHeaderForGuestUser = (($hideTopHeaderForGuestUserCheck == true) && \Yii:
     'alwaysHamburgerMenuRight' => $alwaysHamburgerMenuRightCheck,
     'hideLangSwitchMenu' => \Yii::$app->params['layoutConfigurations']['hideLangSwitchMenuHeader'],
     'hideGlobalSearch' => $hideGlobalSearchHeaderCheck,
+    'enableGlobalSearchForm' => $enableGlobalSearchFormCheck,
     'hideUserMenu' => $hideUserMenuHeaderCheck,
     'fluidContainerHeader' => $fluidContainerHeaderCheck,
     'customUserMenu' => \Yii::$app->params['layoutConfigurations']['customUserMenuHeader'],

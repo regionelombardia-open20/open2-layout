@@ -11,6 +11,7 @@
 
 use open20\amos\layout\assets\FormAsset;
 use open20\amos\layout\assets\IEAssets;
+use open20\amos\layout\assets\ExitFormWithoutSaveAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use open20\amos\core\widget\WidgetAbstract;
@@ -54,6 +55,9 @@ if ($countArrayUrl) {
 $showSidebarForm = (isset($this->params['showSidebarForm'])) ? $this->params['showSidebarForm'] : false;
 
 FormAsset::register($this);
+if (isset(\Yii::$app->params['layoutConfigurations']['ExitFormWithoutSave'])) {
+    ExitFormWithoutSaveAsset::register($this);
+}
 IEAssets::register($this);
 ?>
 <?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
@@ -103,10 +107,26 @@ IEAssets::register($this);
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
+    <?php
+    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        } else {
+            $showSidebarRedattore = false;
+        }
+    }
+    ?>
 
+    <section id="bk-page" class="fullsizeFormLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
 
-    <section id="bk-page" class="fullsizeFormLayout" role="main">
-
+        <?php if ($showSidebarRedattore) : ?>
+            <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
+                'currentAsset' => $currentAsset
+            ]); ?>
+        <?php endif ?>
+        <div class="w-100 main-content">
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
@@ -170,7 +190,7 @@ IEAssets::register($this);
                 </div>
             </div>
         </div>
-
+        </div>
 
     </section>
 

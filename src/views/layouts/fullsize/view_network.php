@@ -65,7 +65,7 @@ if ($countArrayUrl) {
 <html lang="<?= Yii::$app->language ?>">
 
 <head>
-    <?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+    <?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
 
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
         'title' => (($isLuyaApplication && Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
@@ -78,7 +78,7 @@ if ($countArrayUrl) {
     <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
 
     <?php $this->beginBody() ?>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
 
@@ -101,36 +101,52 @@ if ($countArrayUrl) {
 
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
+    <?php
+    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    } else {
+        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        } else {
+            $showSidebarRedattore = false;
+        }
+    }
+    ?>
+    <section id="bk-page" class="fullsizeNetworkLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
+        <?php if ($showSidebarRedattore) : ?>
+            <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
+                'currentAsset' => $currentAsset
+            ]); ?>
+        <?php endif ?>
+        <div class="w-100 main-content">
 
-    <section id="bk-page" class="fullsizeNetworkLayout" role="main">
-
-        <div class="container">
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
-
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
-
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
-        </div>
+            <div class="container">
 
 
-        <div class="dashboard-content">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+            </div>
+            <div class="dashboard-content">
 
-            <!-- <div class="network-breadcrumb">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+
+                <!-- <div class="network-breadcrumb">
                 < ?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
             </div> -->
 
-            <?php if ($this instanceof \open20\amos\core\components\AmosView) : ?>
-                <?php $this->beginViewContent() ?>
-            <?php endif; ?>
+                <?php if ($this instanceof \open20\amos\core\components\AmosView) : ?>
+                    <?php $this->beginViewContent() ?>
+                <?php endif; ?>
 
-            <?= $content ?>
+                <?= $content ?>
 
-            <?php if ($this instanceof AmosView) : ?>
-                <?php $this->endViewContent() ?>
-            <?php endif; ?>
+                <?php if ($this instanceof AmosView) : ?>
+                    <?php $this->endViewContent() ?>
+                <?php endif; ?>
 
+            </div>
         </div>
     </section>
 
@@ -141,18 +157,18 @@ if ($countArrayUrl) {
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
@@ -165,7 +181,7 @@ if (isset(\Yii::$app->view->params['hideCookieBar'])) {
 
     <?php /* echo $this->render("parts" . DIRECTORY_SEPARATOR . "assistance"); */ ?>
 
-   
+
 
     <?php $this->endBody() ?>
 

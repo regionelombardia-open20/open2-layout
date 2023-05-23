@@ -6,6 +6,7 @@ function calcMainContentMarginTop() {
   var spaceFromHeaderToMainContent = '0';
   $('#bk-page').css('margin-top', Number(headerHeight) + Number(spaceFromHeaderToMainContent));
   $('#bk-page').css('min-height', Number(viewportHeight) - (Number(headerHeight) + Number(footerHeight)));
+  $('.container-favourites').css('top', Number(headerHeight) + Number('15'));
 
 };
 

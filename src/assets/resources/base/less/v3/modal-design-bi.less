@@ -77,12 +77,34 @@
 .modal-content {
     .modal-body {
         font-size: 1em;
-        .container-messages{
+
+        .container-messages {
             width: auto;
         }
     }
 
     .btn {
         padding: 6px 12px !important;
+    }
+}
+
+.bootstrap-dialog {
+    .modal-header {
+        background-color: #fff;
+    }
+
+    .bootstrap-dialog-title {
+        color:#000;
+    }
+    .bootstrap-dialog-message {
+        font-size:1em;
+    }
+    &.type-warning {
+        .modal-header {
+            background-color: #fff;
+        }
+        .bootstrap-dialog-title {
+            color:#a61919;
+        }
     }
 }

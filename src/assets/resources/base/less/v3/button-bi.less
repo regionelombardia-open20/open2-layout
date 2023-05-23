@@ -188,9 +188,9 @@ span {
     border-radius: 4px;
   }
 
-  &.btn-file {
-    height: 46px;
-
+  &.btn-file, &.fileinput-cancel-button {
+    height: 45px;
+    margin: 0;
     &:hover {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
@@ -447,7 +447,7 @@ a[class*='link-all'] {
   }
 }
 
-.input-group-btn {
+.input-group-btn:not(:last-child) {
   .btn {
     margin-top: 0px;
     margin-left: 0px !important;

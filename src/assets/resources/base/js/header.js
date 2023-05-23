@@ -11,9 +11,12 @@ $(window).ready(function(){
 });
 
 $(window).on("scroll", function () {
+  var headerHeight = $('#headerContent').outerHeight();
+
   if ($(window).scrollTop() > $('#headerContent').outerHeight()) { 
     $("body").addClass("shrink");
-    
+    $('#bk-page > #sidebarLeftRedattore > .sidebar-nav.affix-top').css('top', Number(headerHeight) + (Number(20)));
+
   } else {
     $("body").removeClass("shrink");
     var marginHeader = $('#headerContent').outerHeight();
@@ -24,9 +27,12 @@ $(window).on("scroll", function () {
   if ($(window).scrollTop() > $('#headerFixed').outerHeight()) { 
     
     $("body").addClass("shrink");
-    
+    $('#bk-page > #sidebarLeftRedattore > .sidebar-nav.affix-top').css('top', Number(headerHeight) + (Number(20)));
+
   } else {
     $("body").removeClass("shrink");
+    $('#bk-page > #sidebarLeftRedattore > .sidebar-nav.affix-top').css('top', Number(headerHeight) + (Number(20)));
+
   
   } 
 });
@@ -67,3 +73,10 @@ $(function() {
     $('body,html').animate({ scrollTop: 0 }, 800)
   })
 })
+
+
+//TOGGLE SIDEBAR REDATTORE
+function toggleSidebar() {
+  var element = document.getElementById("sidebarLeftRedattore");
+  element.classList.toggle("sidebar-small");
+}
