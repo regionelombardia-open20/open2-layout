@@ -1274,11 +1274,14 @@
                                                 padding: 16px 24px;
                                                 text-transform: uppercase;
                                                 white-space: normal;
+                                                min-height: 67px;
 
                                                 .am-4 {
                                                     font-size: 1em;
                                                     margin-left: auto;
                                                     transform: rotate(90deg);
+                                                    width: 24px;
+                                                    text-align: center;
                                                 }
                                             }
                                         }
@@ -1847,6 +1850,19 @@ RICERCA CON FORM
 
         .icon-close {
             display: block;
+        }
+    }
+}
+
+.modal-always-hamburger-menu .modal-dialog.modal-dialog-left .modal-content .modal-body ul[class*="cms-menu-container-"].navbar-nav .nav-item .nav-link + .nav-link.dropdown-toggle{
+    border-left: 1px solid #e9e6f2 !important;
+    width: 67px;
+}
+.cms-menu-double-action {
+    .nav-link {
+        &:first-child {
+            width: ~"calc(100% - 70px)";
+            
         }
     }
 }

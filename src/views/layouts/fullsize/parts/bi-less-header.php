@@ -156,6 +156,23 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
         ]
     );
 
+    /* gestisci profili */
+    if (Yii::$app->user->can('ADMIN')) {
+        $menuUser .= Html::tag(
+            'li',
+            Html::a(
+                Html::tag('span', Module::t('amoscore', 'Gestisci profili')),
+                ['/' . AmosAdmin::getModuleName() . '/user-profile-classes/index'],
+                [
+                    'class' => 'list-item p-0',
+                    'title' => Module::t('amoscore', 'Gestisci profili')
+                ]
+            ),
+            [
+                'class' => 'manage-profile-menu'
+            ]
+        );
+    };
     /* logout */
     if (!empty($customUserMenuLogoutLink)) {
         $btnLogoutUrl = [$customUserMenuLogoutLink];
@@ -398,9 +415,9 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                                                                                                                         '#frontend'
                                                                                                                                     )
                                                                                                                                     ?>" <?=
-                                                        (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
-                                                            ? 'target="_blank"' : ''
-                                                        ?>>
+                                                                                                                                        (isset(\Yii::$app->params['toFrontendLinkNoBlank']) && \Yii::$app->params['toFrontendLinkNoBlank'])
+                                                                                                                                            ? 'target="_blank"' : ''
+                                                                                                                                        ?>>
                                                 <svg class="icon">
                                                     <use xlink:href="<?= $currentAsset->baseUrl ?>/sprite/material-sprite.svg#ic_exit_to_app"></use>
                                                 </svg>

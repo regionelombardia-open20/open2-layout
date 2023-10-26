@@ -22,7 +22,7 @@ use yii\helpers\Html;
     ?>
     <?php foreach ($logoConfigurations as $i => $logoConf) : ?>
 
-        <?php if ($i == 0 && !$logoConf['positionTop']) : ?>
+        <?php if (!$logoConf['positionTop']) : ?>
             <?php
 
             //DEFAULT URL
@@ -109,7 +109,6 @@ use yii\helpers\Html;
                 </div>
             <?php endif; ?>
 
-        <?php endif; ?>
-        <?php $i++; ?>
+        <?php endif; ?>      
     <?php endforeach; ?>
 <?php endif; ?>
