@@ -12,6 +12,8 @@ $moduleCommunity = Yii::$app->getModule('community');
 $eventsModule    = Yii::$app->getModule('events');
 $layoutModule    = Yii::$app->getModule('layout');
 
+$hideNetworkScope = !empty($this->view->params['hideNetworkScope']) && $this->view->params['hideNetworkScope'] ? true : false;
+
 $scope = null;
 if (!empty($moduleCwh)) {
     /** @var \open20\amos\cwh\AmosCwh $moduleCwh */
@@ -53,18 +55,29 @@ if (isset($community)) {
     //TODO check why without register this js the confirmation dialog on delete action (context menu widget) does not make any confirmation popup.
     \yii\web\YiiAsset::register($this);
 
-    if (!is_null($eventsModule) && ($community->context == $eventsModule->model('Event'))) {
-        echo $this->render('events_network_scope', $viewParams);
-    } else if ($community->context == \open20\amos\community\models\Community::className()) {
-        $viewScope = 'community_network_scope';
-        echo $this->render($viewScope, $viewParams);
-    } else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
-        $viewScope = 'community_network_scope';
-        echo $this->render($viewScope, $viewParams);
-    } else {
-        if (!in_array($community->context, $layoutModule->excludeNetworkView)) {
-            $viewScope = 'community_network_scope';
-            echo $this->render($viewScope, $viewParams);
+    if(!$hideNetworkScope) {
+        if (!is_null($eventsModule) && ($community->context == $eventsModule->model('Event'))) {
+            echo $this->render('events_network_scope', $viewParams);
+        } else if ($community->context == \open20\amos\community\models\Community::className() ||
+                    $community->context == \open20\amos\organizzazioni\models\Profilo::className()) {
+           if(property_exists($moduleCommunity, 'enableNewCommunityHeader') && $moduleCommunity->enableNewCommunityHeader){
+               echo \open20\amos\community\widgets\CommunityHeaderWidget::widget(['model' => $model]);
+           }else{
+                $viewScope = 'community_network_scope';
+                echo $this->render($viewScope, $viewParams);
+           }
+        } else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
+                $viewScope = 'community_network_scope';
+                echo $this->render($viewScope, $viewParams);
+        }  else {
+            if (!in_array($community->context, $layoutModule->excludeNetworkView)) {
+                if(property_exists($moduleCommunity, 'enableNewCommunityHeader') && $moduleCommunity->enableNewCommunityHeader){
+                    echo \open20\amos\community\widgets\CommunityHeaderWidget::widget(['model' => $model]);
+           }else{
+                $viewScope = 'community_network_scope';
+                echo $this->render($viewScope, $viewParams);
+           }
+            }
         }
     }
 }

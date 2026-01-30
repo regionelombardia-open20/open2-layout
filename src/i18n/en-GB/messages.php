@@ -70,4 +70,6 @@ return [
     "Filtri di ricerca applicati: {x}" => "Search filters applied: {x}",
     "Ricerca" => "Search",
     "#reader_user_cannot_create" => "The role of reader does not allow content to be published",
+    'Punti di interesse' => 'Points of interest',
+
 ];

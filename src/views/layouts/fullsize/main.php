@@ -20,6 +20,20 @@ use open20\amos\core\helpers\Html;
 /** @var $this \open20\amos\core\components\AmosView */
 /** @var $content string */
 
+$configLayoutCommunity = \open20\amos\layout\utility\LayoutUtility::isEnabledNewCommunityScope();
+$classContainer = $configLayoutCommunity['classContainer'];
+$newCommunityLayout = $configLayoutCommunity['newCommunityLayout'];
+$isLayoutInScope = $configLayoutCommunity['isLayoutInScope'];
+
+$breadcrumbsClassContainer = '';
+if (isset($this->params['breadcrumbsClassContainer'])) {
+    if (!empty($classContainer)) {
+        $breadcrumbsClassContainer .= ' ';
+    }
+    $breadcrumbsClassContainer .= $this->params['breadcrumbsClassContainer'];
+}
+
+
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -28,7 +42,8 @@ $i = 0;
 $moduloId = Yii::$app->controller->module->id;
 $basePath = Yii::$app->getBasePath();
 if ($moduloId != 'app-backend' && $moduloId != 'app-frontend') {
-    if (method_exists(Yii::$app->getModule($moduloId), 'getBasePath')) {
+    $module = Yii::$app->getModule($moduloId);
+    if (!empty($module) && method_exists($module, 'getBasePath')) {
         $basePath = Yii::$app->getModule($moduloId)->getBasePath();
     }
     $percorso .= '/modules/' . $moduloId . '/views/' . $arrayUrl[$countArrayUrl - 2];
@@ -54,7 +69,7 @@ if ($countArrayUrl) {
 }
 ?>
 
-<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application;?>
+<?php $isLuyaApplication = \Yii::$app instanceof luya\web\Application; ?>
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -68,7 +83,7 @@ if ($countArrayUrl) {
 
 <body>
     <?php $this->beginBody() ?>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
         <?php
@@ -91,51 +106,88 @@ if ($countArrayUrl) {
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
 
-    <section id="bk-page" class="fullsizeMainLayout" role="main">
+    <?php
+    if (class_exists('\open20\design\utility\DesignUtility') && method_exists('\open20\design\utility\DesignUtility', 'showSidebarRedattore')) {
+        list($showSidebarRedattore, $openSidebarRedattoreOnLoadPage) = \open20\design\utility\DesignUtility::showSidebarRedattore($this);
+    } else {
+        if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+        } else {
+            if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+                $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+            } else {
+                $showSidebarRedattore = false;
+            }
+        }
+    }
+    ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+    <section id="bk-page" class="fullsizeMainLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
+        <?php if ($showSidebarRedattore) : ?>
+            <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
+                'currentAsset' => $currentAsset
+            ]); ?>
+        <?php endif ?>
+        <div class="main-content w-100">
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+            <?php
+            $classContainerBase = 'container';
+            $classContainerBase = (!empty($this->params['containerFluid'])  && $this->params['containerFluid'] == true) ? 'container-fluid' : 'container';
+            $classContainerFinal = (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) || $isLayoutInScope ? 'container-full-width' : $classContainerBase;
+            ?>
+            <div class="<?= $classContainerFinal ?>">
+                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-        <div class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+            <div class=" <?= ((!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth']
+                                == true) || $newCommunityLayout) ? 'container-full-width' : 'container'
+                            ?>">
+                <div class="page-content">
 
-            <div class="page-content">
+                    <div class="<?= $classContainer . $breadcrumbsClassContainer ?>">
+                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                    </div>
 
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                    <?php if ((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
+                        && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
+                    ) : ?>
 
-                <?php if ((!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS)
-                    && (!isset(\Yii::$app->params['disable_network_scope']) || \Yii::$app->params['disable_network_scope'] == false)
-                ) : ?>
+                        <?php
+                        $isLayoutInScope = false;
+                        $moduleCwh = \Yii::$app->getModule('cwh');
+                        if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                            $scope = $moduleCwh->getCwhScope();
+                            $isLayoutInScope = (!empty($scope)) ? true : false;
+                        }
+                        ?>
 
-                    <?php
-                    $isLayoutInScope = false;
-                    $moduleCwh = \Yii::$app->getModule('cwh');
-                    if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
-                        $scope = $moduleCwh->getCwhScope();
-                        $isLayoutInScope = (!empty($scope)) ? true : false;
-                    }
-                    ?>
-
-                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
-                <?php endif; ?>
-
-                <div class="page-header">
-                    <?php if (!is_null($this->title)) : ?>
-                        <h1 class="title"><?= \Yii::$app->formatter->asHtml($this->title) ?></h1>
-                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                        <?php if ($newCommunityLayout) { ?>
+                            <div class="scope-in-main">
+                            <?php } ?>
+                            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
+                            <?php if ($newCommunityLayout) { ?>
+                            </div>
+                        <?php } ?>
                     <?php endif; ?>
-                </div>
 
-                <?php if ($this instanceof AmosView) : ?>
-                    <?php $this->beginViewContent() ?>
-                <?php endif; ?>
-                <?= $content ?>
-                <?php if ($this instanceof AmosView) : ?>
-                    <?php $this->endViewContent() ?>
-                <?php endif; ?>
+                    <div class="<?= $classContainer ?>">
+                        <div class="page-header">
+                            <?php if (!is_null($this->title)) : ?>
+                                <h1 class="title"><?= \Yii::$app->formatter->asHtml($this->title) ?></h1>
+                                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($this instanceof AmosView) : ?>
+                            <?php $this->beginViewContent() ?>
+                        <?php endif; ?>
+                        <?= $content ?>
+                        <?php if ($this instanceof AmosView) : ?>
+                            <?php $this->endViewContent() ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
-
     </section>
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
@@ -145,18 +197,18 @@ if ($countArrayUrl) {
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']

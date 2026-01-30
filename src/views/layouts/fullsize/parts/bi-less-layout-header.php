@@ -39,7 +39,18 @@ $cmsDefaultMenu        = $menu2->luyaMenu(
 
 
 if (!\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader']) {
-    $cmsPluginMenu = open20\amos\core\module\AmosModule::getModulesFrontEndMenus();
+    if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu']))) {
+        $cmsPluginMenu = $this->render(
+            \Yii::$app->params['layoutConfigurations']['customPlatformPluginMenu'],
+            [
+                'currentAsset' => $currentAsset,
+            ]
+        );
+    } else {
+        if (\Yii::$app->params['layoutConfigurations']['showPluginMenu']) {
+            $cmsPluginMenu = open20\amos\core\module\AmosModule::getModulesFrontEndMenus();
+        }
+    }
 }
 
 if (isset(\Yii::$app->params['menuCmsConfigurations']['secondaryCmsMenu']) || \Yii::$app->params['layoutConfigurations']['showSecondaryMenuHeader']) {
@@ -88,6 +99,13 @@ $cmsSecondaryMenu = Html::tag('ul', $cmsSecondaryMenu, ['class' => 'navbar-nav' 
 
 $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
 
+if (!empty(\Yii::$app->params['layoutConfigurations']['layoutType']) && \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023') {
+    $iconLogin = '<span class="icon-white icon-bs-it-key icon-login icon-sm"></span>';
+    $iconLogout = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';
+} else {
+    $iconLogin = '<span class="mdi mdi-key-variant icon-login ml-auto pl-1"></span>';
+    $iconLogout = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';
+}
 /**
  * if hideTopHeaderForGuestUser is enable, auto add platform access in menu
  */
@@ -106,8 +124,8 @@ if (
     $labelLogout = Module::t('amoslayout', 'Esci');
     $titleLogout = Module::t('amoslayout', 'Esci dalla piattaforma {platformName}', ['platformName' => \Yii::$app->name]);
 
-    $iconLogin      = '<span class="mdi mdi-key-variant icon-login ml-auto pl-1"></span>';
-    $iconLogout      = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';
+
+
 
     if (Yii::$app->user->isGuest) {
         $actionLoginMenu = Html::a(
@@ -278,9 +296,12 @@ if (isset(\Yii::$app->view->params['hideTopHeaderForGuestUser']) && is_bool(\Yii
 $hideTopHeaderForGuestUser = (($hideTopHeaderForGuestUserCheck == true) && \Yii::$app->user->isGuest);
 ?>
 <?= $this->render("bi-less-header", [
+    'iconLogin' => $iconLogin,
+    'iconLogout' => $iconLogout,
     'iconSubmenu' => $iconSubmenu,
     'currentAsset' => $currentAsset,
     'cmsDefaultMenu' => $cmsDefaultMenu,
+    'cmsPluginMenu' => $cmsPluginMenu,
     'cmsSecondaryMenu' => $cmsSecondaryMenu,
     'privacyPolicyLink' => \Yii::$app->params['linkConfigurations']['privacyPolicyLinkCommon'],
     'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon'],

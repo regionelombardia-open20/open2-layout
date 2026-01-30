@@ -21,14 +21,18 @@ use app\components\CmsHelper;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+$configLayoutCommunity = \open20\amos\layout\utility\LayoutUtility::isEnabledNewCommunityScope();
+$classContainer = $configLayoutCommunity['classContainer'];
+$newCommunityLayout = $configLayoutCommunity['newCommunityLayout'];
+$isLayoutInScope = $configLayoutCommunity['isLayoutInScope'];
 
-$urlCorrente   = Url::current();
-$arrayUrl      = explode('/', $urlCorrente);
+$urlCorrente = Url::current();
+$arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
-$percorso      = '';
-$i             = 0;
-$moduloId      = Yii::$app->controller->module->id;
-$basePath      = Yii::$app->getBasePath();
+$percorso = '';
+$i = 0;
+$moduloId = Yii::$app->controller->module->id;
+$basePath = Yii::$app->getBasePath();
 if ($moduloId != 'app-backend' && $moduloId != 'app-frontend') {
     $basePath = \Yii::$app->getModule($moduloId)->getBasePath();
     $percorso .= '/modules/' . $moduloId . '/views/' . $arrayUrl[$countArrayUrl - 2];
@@ -60,28 +64,29 @@ if (isset(\Yii::$app->params['layoutConfigurations']['ExitFormWithoutSave'])) {
 }
 IEAssets::register($this);
 ?>
-<?php $isLuyaApplication = \Yii::$app instanceof  luya\web\Application; ?>
+<?php $isLuyaApplication = \Yii::$app instanceof luya\web\Application; ?>
 
 <?php $this->beginPage() ?>
 
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>">
 
-<head>
-    <?=
-    $this->render(
-        "parts" . DIRECTORY_SEPARATOR . "head",
-        [
-            'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection']
-                : $this->title
-        ]
-    );
-    ?>
-</head>
+    <head>
+        <?=
+        $this->render(
+            "parts" . DIRECTORY_SEPARATOR . "head",
+            [
+                'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection']
+                    : $this->title
+            ]
+        );
+        ?>
+    </head>
 
-<body>
+    <body>
     <!-- add for fix error message Parametri mancanti -->
-    <input type="hidden" id="saveDashboardUrl" value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>" />
+    <input type="hidden" id="saveDashboardUrl"
+           value="<?= Yii::$app->urlManager->createUrl(['dashboard/manager/save-dashboard-order']); ?>"/>
     <?php $this->beginBody() ?>
 
     <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
@@ -108,18 +113,24 @@ IEAssets::register($this);
     <?php endif; ?>
 
     <?php
-    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    if (class_exists('\open20\design\utility\DesignUtility') && method_exists('\open20\design\utility\DesignUtility', 'showSidebarRedattore')) {
+        list($showSidebarRedattore, $openSidebarRedattoreOnLoadPage) = \open20\design\utility\DesignUtility::showSidebarRedattore($this);
     } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
         } else {
-            $showSidebarRedattore = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+                $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+            } else {
+                $showSidebarRedattore = false;
+            }
         }
     }
     ?>
 
-    <section id="bk-page" class="fullsizeFormLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
+    <section id="bk-page"
+             class="fullsizeFormLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>"
+             role="main">
 
         <?php if ($showSidebarRedattore) : ?>
             <?= $this->render("@vendor/open20/design/src/views/layouts/parts/bi-sidebar-redattore", [
@@ -127,69 +138,82 @@ IEAssets::register($this);
             ]); ?>
         <?php endif ?>
         <div class="w-100 main-content">
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "messages"); ?>
 
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
+            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "help"); ?>
 
-        <div id="record_form" class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
+            <div id="record_form"
+                 class="<?= ((!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true)) || $newCommunityLayout ? 'container-full-width' : 'container' ?>">
 
-            <div class="page-content">
-                <div class="<?= ($showSidebarForm) ? 'layout-sidebarForm' : 'layout-standardForm' ?>">
-                    <?php
-                    if ($showSidebarForm) {
-                        echo $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-sidebarForm", ['viewParams' => \Yii::$app->getView()->params['bi-menu-sidebar']]);
-                    }
-                    ?>
+                <div class="page-content">
+                    <div class="<?= ($showSidebarForm) ? 'layout-sidebarForm' : 'layout-standardForm' ?>">
+                        <?php
+                        if ($showSidebarForm) {
+                            echo $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-sidebarForm", ['viewParams' => \Yii::$app->getView()->params['bi-menu-sidebar']]);
+                        }
+                        ?>
 
-                    <div class="<?= ($showSidebarForm) ? 'main-with-sidebar flexbox flexbox-column' : 'w-100' ?>">
-                        <?php if ($showSidebarForm) { ?>
-                            <a class="btn-sidebar btn-lg" role="button" title="Visualizza sidebar" data-toggle="collapse" href="#sidebarForm" aria-expanded="false" aria-controls="sidebarForm">
-                                <span class="mdi mdi-24px mdi-apps mdi-flip-h"></span>
-                            </a>
-                        <?php } ?>
-                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                        <div class="<?= ($showSidebarForm) ? 'main-with-sidebar flexbox flexbox-column' : 'w-100' ?>">
+                            <?php if ($showSidebarForm) { ?>
+                                <a class="btn-sidebar btn-lg" role="button" title="Visualizza sidebar"
+                                   data-toggle="collapse" href="#sidebarForm" aria-expanded="false"
+                                   aria-controls="sidebarForm">
+                                    <span class="mdi mdi-24px mdi-apps mdi-flip-h"></span>
+                                </a>
+                            <?php } ?>
 
-                        <?php if (
-                            !empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine']
-                            == WidgetAbstract::ENGINE_ROWS
-                        ) : ?>
+                            <div class="<?= $classContainer ?>">
+                                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                            </div>
 
-                            <?php
-                            $isLayoutInScope = false;
-                            $moduleCwh = \Yii::$app->getModule('cwh');
-                            if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
-                                $scope = $moduleCwh->getCwhScope();
-                                $isLayoutInScope = (!empty($scope)) ? true : false;
-                            }
-                            ?>
+                            <?php if (
+                                !empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine']
+                                == WidgetAbstract::ENGINE_ROWS
+                            ) : ?>
 
-                            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
-                        <?php endif; ?>
-
-                        <div class="page-header">
-
-                            <?php
-                            if (is_array($this->params['titleButtons']) && !empty($this->params['titleButtons'])) {
-                                echo "<div class='w-100 text-right m-b-20'>";
-                                foreach ($this->params['titleButtons'] as $button) {
-                                    echo $button;
+                                <?php
+                                $isLayoutInScope = false;
+                                $moduleCwh = \Yii::$app->getModule('cwh');
+                                if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                                    $scope = $moduleCwh->getCwhScope();
+                                    $isLayoutInScope = (!empty($scope)) ? true : false;
                                 }
-                                echo "</div>";
-                            }
-                            ?>
-
-                            <?php if (!is_null($this->title)) : ?>
-                                <h1 class="title"><?= Html::encode($this->title) ?></h1>
-                                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                                ?>
+                                <?php if ($newCommunityLayout) { ?>
+                                    <div class="scope-in-update">
+                                <?php } ?>
+                                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
+                                <?php if ($newCommunityLayout) { ?>
+                                    </div>
+                                <?php } ?>
                             <?php endif; ?>
 
-                        </div>
+                            <div class="<?= $classContainer ?>">
+                                <div class="page-header">
+                                    <?php
+                                    if (is_array($this->params['titleButtons']) && !empty($this->params['titleButtons'])) {
+                                        echo "<div class='w-100 text-right m-b-20'>";
+                                        foreach ($this->params['titleButtons'] as $button) {
+                                            echo $button;
+                                        }
+                                        echo "</div>";
+                                    }
+                                    ?>
 
-                        <?= $content ?>
+                                    <?php if (!is_null($this->title)) : ?>
+                                        <h1 class="title"><?= Html::encode($this->title) ?></h1>
+                                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "textHelp"); ?>
+                                    <?php endif; ?>
+
+                                </div>
+
+                                <?= $content ?>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
     </section>
@@ -228,7 +252,7 @@ IEAssets::register($this);
 
     <?php $this->endBody() ?>
 
-</body>
+    </body>
 
-</html>
+    </html>
 <?php $this->endPage() ?>

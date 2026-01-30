@@ -6,9 +6,15 @@ use open20\amos\layout\Module;
 <?php
 $currentAction = $this->context->action->id;
 $currentController = Yii::$app->controller->id;
+
+$sidebarColorBackgroundClass = 'neutral-2-bg-a6';
+if(!empty(\Yii::$app->params['sidebarColorBackgroundClass'])){
+    $sidebarColorBackgroundClass = \Yii::$app->params['sidebarColorBackgroundClass'];
+}
+
 ?>
 
-<nav role="navigation" aria-label="Form sidebar" class="sidebarForm white-color neutral-2-bg-a6 collapse" id="sidebarForm">
+<nav role="navigation" aria-label="Form sidebar" class="sidebarForm white-color <?= $sidebarColorBackgroundClass ?> collapse" id="sidebarForm">
 
   <div class="sidebar-sticky sidebar-content py-4">
     <ul class="nav flex-md-column justify-content-center">

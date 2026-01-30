@@ -16,18 +16,27 @@ use open20\amos\layout\assets\BaseAsset;
 BaseAsset::register($this);
 
 /* JSLoggingAsset::register($this); */
+$seoTitle='';
+if(\Yii::$app->getModule('seo') && method_exists($this,'getSeoTitle') && !empty($this->getSeoTitle())){
+	$seoTitle=$this->getSeoTitle();
+}else{
+	$seoTitle=Html::encode($title);
+
+}
+
+$seoTitle=$seoTitle.' - '. Yii::$app->name;
 ?>
 
 <meta charset="<?= Yii::$app->charset ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?= Html::csrfMetaTags() ?>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title><?= Html::encode($title) ?> - <?= Html::encode(Yii::$app->name) ?></title>
+<title><?= $seoTitle ?></title>
 <!--<link rel="stylesheet" type="text/css" href="/css/print_style.css" media="print">-->
-<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?><?= Yii::$app->params['favicon'] ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?><?= Yii::$app->params['favicon'] ?>" type="image/x-icon">
 <?php $this->head() ?>
 
-<script type="text/javascript">
+<script>
     var isIE9TO11 = navigator.appVersion.indexOf("Trident/");
     if (isIE9TO11 > -1) {/*! svg4everybody v1.0.0 | github.com/jonathantneal/svg4everybody */
 (function (document, uses, requestAnimationFrame, CACHE, IE9TO11) {

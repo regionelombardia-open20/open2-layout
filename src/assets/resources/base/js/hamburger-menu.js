@@ -13,6 +13,10 @@ $(document).ready(function () {
 
     $(".dropdown-submenu a.dropdown-toggle").click(function(){
         $(this).parents('.dropdown-submenu').first().toggleClass("show");
+        $(this).attr("aria-expanded", function(index, attr){
+            return attr == "true" ? "false" : "true";
+        });
       });
+
 
 });

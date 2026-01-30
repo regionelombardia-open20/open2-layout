@@ -11,9 +11,12 @@ use yii\helpers\Html;
         <div class="d-flex align-items-center flex-wrap">
             <div class="mr-auto my-2">
                 <h3 class="mb-0"><?= Html::encode($this->title) ?></h3>
+                <?php if (!empty($this->params['subtitle'])) { ?>
+                    <?= $this->params['subtitle'] ?>
+                <?php } ?>
             </div>
             <?php if ((!empty($this->params['enableLayoutList']) && $this->params['enableLayoutList'] == true)
-                || (!empty(\Yii::$app->params['enableLayoutList']) &&  \Yii::$app->params['enableLayoutList'])) { ?>
+                || (!empty(\Yii::$app->params['enableLayoutList']) && \Yii::$app->params['enableLayoutList'])) { ?>
                 <?= $this->render("bi-additional-button", [
                     'currentAsset' => $currentAsset
                 ]); ?>

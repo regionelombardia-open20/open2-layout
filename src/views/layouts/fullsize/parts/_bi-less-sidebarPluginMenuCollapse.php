@@ -41,7 +41,10 @@ $collapseClass = str_replace(' ', '', $mainMenu['label']);
 
 <?php else: ?>
     
-        <?php if (isset($dinamicSubMenu) && !empty($dinamicSubMenu) ) : ?>
+        <?php
+        $isActive = false;
+        if (isset($dinamicSubMenu) && !empty($dinamicSubMenu) ) :
+            ?>
 
             <li class="nav-item <?=
             ((in_array($currentAction, $activeTargetActionArray) || in_array($currentControllerAction,
@@ -62,10 +65,21 @@ $collapseClass = str_replace(' ', '', $mainMenu['label']);
                     <ul class="nav sub-nav flex-column justify-content-center text-center">
                         <?php foreach ($dinamicSubMenu as $singleMenu) : ?>
                             <?php
-                            if (!empty($singleMenu['activeTargetController'])) {
-                                $isActive = ($currentControllerAction == $singleMenu['activeTargetController']."/".$singleMenu['activeTargetAction']);
+                            if (is_array($singleMenu['activeTargetAction'])) {
+                                foreach ($singleMenu['activeTargetAction'] as $action) {
+                                    if ($isActive) continue;
+                                    if (!empty($singleMenu['activeTargetController'])) {
+                                        $isActive = ($currentControllerAction == $singleMenu['activeTargetController'] . "/" . $action);
+                                    } else {
+                                        $isActive = ($currentAction == $action);
+                                    }
+                                }
                             } else {
-                                $isActive = ($currentAction == $singleMenu['activeTargetAction']);
+                                if (!empty($singleMenu['activeTargetController'])) {
+                                    $isActive = ($currentControllerAction == $singleMenu['activeTargetController'] . "/" . $singleMenu['activeTargetAction']);
+                                } else {
+                                    $isActive = ($currentAction == $singleMenu['activeTargetAction']);
+                                }
                             }
                             ?>
 
@@ -79,10 +93,21 @@ $collapseClass = str_replace(' ', '', $mainMenu['label']);
 
         <?php else : ?>
             <?php
-            if (!empty($mainMenu['activeTargetController'])) {
-                $isActive = ($currentControllerAction == $mainMenu['activeTargetController']."/".$mainMenu['activeTargetAction']);
+            if (is_array($mainMenu['activeTargetAction'])) {
+                foreach ($mainMenu['activeTargetAction'] as $action) {
+                    if ($isActive) continue;
+                    if (!empty($mainMenu['activeTargetController'])) {
+                        $isActive = ($currentControllerAction == $mainMenu['activeTargetController'] . "/" . $action);
+                    } else {
+                        $isActive = ($currentAction == $action);
+                    }
+                }
             } else {
-                $isActive = ($currentAction == $mainMenu['activeTargetAction']);
+                if (!empty($mainMenu['activeTargetController'])) {
+                    $isActive = ($currentControllerAction == $mainMenu['activeTargetController'] . "/" . $mainMenu['activeTargetAction']);
+                } else {
+                    $isActive = ($currentAction == $mainMenu['activeTargetAction']);
+                }
             }
             ?>
 

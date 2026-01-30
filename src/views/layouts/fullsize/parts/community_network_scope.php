@@ -426,6 +426,10 @@ $moduleCommunity = Yii::$app->getModule('community');
                     </div>
 
                 </div>
+                <?php if($isOpenCommunity && !$isSigned) {
+                    echo  Module::t('amoslayout', 'Iscriviti alla community per visualizzarne tutti i contenuti');
+                }
+                ?>
             </div>
         </div>
     <?php else : ?>

@@ -20,9 +20,11 @@ $moduleCwh = Yii::$app->getModule('cwh');
 $moduleCommunity = Yii::$app->getModule('community');
 $eventsModule = Yii::$app->getModule('events');
 $layoutModule = Yii::$app->getModule('layout');
+$eventsbuilderModule    = Yii::$app->getModule('eventsbuilder');
 
 $currentAction = \Yii::$app->controller->module->id . '/' . \Yii::$app->controller->id . '/' . \Yii::$app->controller->action->id;
 $hideScopeInAction = !empty(\Yii::$app->params['hideScopeinAction']) ? \Yii::$app->params['hideScopeinAction'] : [];
+$hideNetworkScope = !empty(\Yii::$app->params['hideNetworkScope']) && \Yii::$app->params['hideNetworkScope'] ? true : false;
 
 $scope = null;
 if (!empty($moduleCwh)) {
@@ -48,9 +50,11 @@ $model = null;
  */
 if ($controller->hasProperty('model')) {
     $model = $controller->model;
-    if ($model->hasProperty('community_id')) {
-        $communityId = $model->community_id;
-        $community = \open20\amos\community\models\Community::findOne($communityId);
+    if($model->hasProperty('isNewRecord') && !$model->isNewRecord) {
+        if ($model->hasProperty('community_id')) {
+            $communityId = $model->community_id;
+            $community = \open20\amos\community\models\Community::findOne($communityId);
+        }
     }
 }
 
@@ -58,9 +62,8 @@ if ($controller->hasProperty('model')) {
 $adminModule = AmosAdmin::instance();
 /** @var AmosModule|OrganizationsModuleInterface $organizzazioniModule */
 $organizzazioniModule = Yii::$app->getModule($adminModule->getOrganizationModuleName());
-
 if (isset($community)) {
-    if (!in_array($currentAction, $hideScopeInAction)) {
+    if (!in_array($currentAction, $hideScopeInAction) && !$hideNetworkScope) {
         $viewParams = [
             'community' => $community,
             'model' => $model,
@@ -71,26 +74,34 @@ if (isset($community)) {
         \yii\web\YiiAsset::register($this);
 
         if ($community->context == \open20\amos\community\models\Community::className()) {
-            $viewScope = 'community_network_scope';
-            $viewParams['isLayoutInScope'] = $isLayoutInScope;
-            echo $this->render($viewScope, $viewParams);
+            if(property_exists($moduleCommunity, 'enableNewCommunityHeader') && $moduleCommunity->enableNewCommunityHeader){
+               echo \open20\amos\community\widgets\CommunityHeaderWidget::widget(['model' => $community]);
+           }else{
+                $viewScope = 'community_network_scope';
+                $viewParams['isLayoutInScope'] = $isLayoutInScope;
+                echo $this->render($viewScope, $viewParams);
+           }
         } else if (!is_null($organizzazioniModule) && ($community->context == $organizzazioniModule->getOrganizationModelClass())) {
-            $viewScope = 'organizzazioni_network_scope';
-            if(!empty($community->parent_id)){
-                $viewScope = 'organizzazioni_subcommunity_network_scope';
+            if($moduleCommunity->enableNewCommunityHeader){
+                echo \open20\amos\community\widgets\CommunityHeaderWidget::widget(['model' => $community, 'isOrganizzazioniCommunity' => true]);
+            }else {
+                $viewScope = 'organizzazioni_network_scope';
+                if (!empty($community->parent_id)) {
+                    $viewScope = 'organizzazioni_subcommunity_network_scope';
+                }
+
+                /** @var Record|OrganizationsModelInterface $organizationModel */
+                $organizationModel = Yii::createObject($organizzazioniModule->getOrganizationModelClass());
+
+                /** @var Record|OrganizationsModelInterface $organization */
+                $organization = $organizationModel::findOne(['community_id' => $community->id]);
+
+                $viewParams['organizzazioniModule'] = $organizzazioniModule;
+                $viewParams['organization'] = (!is_null($organization) ? $organization : null);
+                $viewParams['isLayoutInScope'] = $isLayoutInScope;
+
+                echo $this->render($viewScope, $viewParams);
             }
-
-            /** @var Record|OrganizationsModelInterface $organizationModel */
-            $organizationModel = Yii::createObject($organizzazioniModule->getOrganizationModelClass());
-
-            /** @var Record|OrganizationsModelInterface $organization */
-            $organization = $organizationModel::findOne(['community_id' => $community->id]);
-
-            $viewParams['organizzazioniModule'] = $organizzazioniModule;
-            $viewParams['organization'] = (!is_null($organization) ? $organization : null);
-            $viewParams['isLayoutInScope'] = $isLayoutInScope;
-
-            echo $this->render($viewScope, $viewParams);
         } else {
             if (!is_null($eventsModule) && ($community->context == $eventsModule->model('Event'))) {
                 /** @var Event $eventModel */
@@ -104,7 +115,12 @@ if (isset($community)) {
                 } else {
                     echo $this->render('events_network_scope', $viewParams);
                 }
-            } else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
+            } else if (!is_null($eventsbuilderModule) && ($community->context == $eventsbuilderModule->model('Event'))) {
+                $eventModel = $eventsbuilderModule->createModel('Event');
+                $event = $eventModel::findOne(['community_id' => $community->id]);
+                $viewParams['model'] = $event;
+                echo $this->render('eventsbuilder_network_scope', $viewParams);
+            }else if (!is_null(Yii::$app->getModule('challenge')) && $community->context == \amos\challenge\models\ChallengeTeam::className()) {
                 $viewScope = 'challenge_network_scope';
                 echo $this->render($viewScope, $viewParams);
             } else {

@@ -31,8 +31,9 @@ if (isset($createNewBtnParams) && !is_null($createNewBtnParams) && is_array($cre
 ?>
 <div class="container-change-view ">
     <div class="btn-tools-container">
-        <?= CreateNewButtonWidget::widget($createNewWidgetConfig); ?>
-
+        <?php if (isset($createNewBtnParams) && !is_null($createNewBtnParams) && is_array($createNewBtnParams)) { ?>
+            <?= CreateNewButtonWidget::widget($createNewWidgetConfig); ?>
+        <?php } ?>
         <div class="tools-right">
             <?php
             //ORDER ENABLED?

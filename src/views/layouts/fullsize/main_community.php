@@ -21,6 +21,11 @@ use app\components\CmsHelper;
 /** @var $this \open20\amos\core\components\AmosView */
 /** @var $content string */
 
+$configLayoutCommunity = \open20\amos\layout\utility\LayoutUtility::isEnabledNewCommunityScope();
+$classContainer = $configLayoutCommunity['classContainer'];
+$newCommunityLayout = $configLayoutCommunity['newCommunityLayout'];
+$isLayoutInScope = $configLayoutCommunity['isLayoutInScope'];
+
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -55,19 +60,19 @@ if ($countArrayUrl) {
 
 
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>">
 
-<head>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
-        'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
-    ]); ?>
-</head>
+    <head>
+        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
+            'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
+        ]); ?>
+    </head>
 
-<body>
+    <body>
     <?php $this->beginBody() ?>
 
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
@@ -98,11 +103,20 @@ if ($countArrayUrl) {
 
         <div class="page-content">
 
-            <div class="container <?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container-full-width' : '' ?>">
+            <div class=" <?= ((!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth']
+                    == true) || $newCommunityLayout) ? 'container-full-width' : 'container'
+            ?>">
 
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
-
-                <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+                <div class="<?= $classContainer ?>">
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-breadcrumbs"); ?>
+                </div>
+                <?php if ($newCommunityLayout) { ?>
+                <div class="scope-in-main_community">
+                    <?php } ?>
+                    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope"); ?>
+                    <?php if ($newCommunityLayout) { ?>
+                </div>
+            <?php } ?>
             </div>
 
 
@@ -127,18 +141,18 @@ if ($countArrayUrl) {
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-       <?php
-if (isset(\Yii::$app->view->params['hideCookieBar'])) {
-        $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
-            $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+        <?php
+        if (isset(\Yii::$app->view->params['hideCookieBar'])) {
+            $hideCookieBarCheck = (\Yii::$app->view->params['hideCookieBar']);
         } else {
-            $hideCookieBarCheck = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['hideCookieBar'])) {
+                $hideCookieBarCheck = (\Yii::$app->params['layoutConfigurations']['hideCookieBar']);
+            } else {
+                $hideCookieBarCheck = false;
+            }
         }
-    }
-?>
-<?php if (!$hideCookieBarCheck) : ?>
+        ?>
+        <?php if (!$hideCookieBarCheck) : ?>
             <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-cookiebar", [
                 'currentAsset' => $currentAsset,
                 'cookiePolicyLink' => \Yii::$app->params['linkConfigurations']['cookiePolicyLinkCommon']
@@ -154,7 +168,7 @@ if (isset(\Yii::$app->view->params['hideCookieBar'])) {
 
     <?php $this->endBody() ?>
 
-</body>
+    </body>
 
-</html>
+    </html>
 <?php $this->endPage() ?>

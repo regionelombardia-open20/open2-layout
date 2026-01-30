@@ -8,6 +8,7 @@
  * @package    open20\amos\layout\views\layouts\parts
  * @category   CategoryName
  */
+
 use open20\amos\core\controllers\CrudController;
 use open20\amos\core\forms\ContentSettingsMenuWidget;
 use open20\amos\core\forms\CreateNewButtonWidget;
@@ -21,6 +22,7 @@ use yii\base\Event;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 use yii\web\View;
 use open20\amos\layout\Module;
 
@@ -50,11 +52,11 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 isset(\Yii::$app->controller->module->params['searchParams']) &&
                 isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]) &&
                 (
-                (is_array(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]) &&
-                isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable']) &&
-                \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable']) ||
-                (is_bool(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]) &&
-                \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]))
+                    (is_array(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]) &&
+                        isset(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable']) &&
+                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]['enable']) ||
+                    (is_bool(\Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]) &&
+                        \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id]))
             ) {
                 //check if the controller is istance of CrucController to retrieve the setted searchModel
                 if (\Yii::$app->controller instanceof CrudController) {
@@ -63,7 +65,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                     $classSearch = $modelSearch->formName();
                 } else {
                     //use the previous mode to calculate the modelSearch name
-                    $classSearch = Inflector::id2camel(\Yii::$app->controller->id, '-').'Search';
+                    $classSearch = Inflector::id2camel(\Yii::$app->controller->id, '-') . 'Search';
                 }
 
                 $paramsSearch = \Yii::$app->controller->module->params['searchParams'][\Yii::$app->controller->id];
@@ -90,14 +92,14 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                     }
                 }
                 $htmlCountFilter = '<span class="m-l-5">' . Module::t('amoslayout', 'Filtri') . '</span>';
-                $tooltipText     = Module::t('amoslayout', 'Azzera opzioni di ricerca');
+                $tooltipText = Module::t('amoslayout', 'Azzera opzioni di ricerca');
                 if ($countFilterActive > 0) {
-                    $htmlCountFilter   = "<span class='m-l-5'>" . Module::t('amoslayout', 'Filtri') . " ($countFilterActive)</span>";
+                    $htmlCountFilter = "<span class='m-l-5'>" . Module::t('amoslayout', 'Filtri') . " ($countFilterActive)</span>";
                     $filterActiveClass = 'btn-secondary-outline active-filter';
-                    $tooltipText       = Module::t('amoslayout', 'Filtri di ricerca applicati: {x}',
-                            [
-                                'x' => $countFilterActive
-                    ]);
+                    $tooltipText = Module::t('amoslayout', 'Filtri di ricerca applicati: {x}',
+                        [
+                            'x' => $countFilterActive
+                        ]);
                 }
             }
             if ($paramsSearch) {
@@ -106,36 +108,40 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                         'div',
                         AmosIcons::show(
                             'tune', [
-                            // 'class' => '',
+                                // 'class' => '',
                             ]
-                        ).$htmlCountFilter,
+                        ) . $htmlCountFilter,
                         [
-                            'class' => 'btn-group btn show-hide-element active '.$filterActiveClass,
+                            'class' => 'btn-group btn show-hide-element active ' . $filterActiveClass,
                             'data-toggle-element' => 'form-search',
                             'title' => $tooltipText,
                             //'data-toggle' => 'tooltip'
-                            'tabindex' => 0
+                            'tabindex' => 0,
+                            'aria-label' => 'Opzioni di ricerca',
+                            'role' => 'button',
                         ]
                     );
                 } else {
                     if (!isset($this->params['disable-search']) || (isset($this->params['disable-search']) && $this->params['disable-search']
-                        == false)) {
+                            == false)) {
                         echo Html::tag(
                             'div',
                             AmosIcons::show(
                                 'tune',
                                 [
-                                // 'class' => 'btn btn-secondary show-hide-element ' . $filterActiveClass,
-                                // 'data-toggle-element' => 'form-search',
-                                // 'title' => Module::t('amoslayout', 'Cerca')
+                                    // 'class' => 'btn btn-secondary show-hide-element ' . $filterActiveClass,
+                                    // 'data-toggle-element' => 'form-search',
+                                    // 'title' => Module::t('amoslayout', 'Cerca')
                                 ]
-                            ).$htmlCountFilter,
+                            ) . $htmlCountFilter,
                             [
-                                'class' => 'btn-group btn show-hide-element '.$filterActiveClass,
+                                'class' => 'btn-group btn show-hide-element ' . $filterActiveClass,
                                 'data-toggle-element' => 'form-search',
                                 'title' => $tooltipText,
                                 //'data-toggle' => 'tooltip'
-                                'tabindex' => 0
+                                'tabindex' => 0,
+                                'aria-label' => 'Opzioni di ricerca',
+                                'role' => 'button',
                             ]
                         );
 
@@ -161,18 +167,21 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                             'class' => 'btn btn-secondary show-hide-element',
                             'data-toggle-element' => 'form-order',
                             'title' => Module::t('amoslayout', 'Cambia ordinamento'),
-                        //'data-toggle' => 'tooltip'
+                            //'data-toggle' => 'tooltip'
                         ]
                     ),
                     [
+                        'role' => 'button',
                         'class' => 'btn-group',
-                        'tabindex' => 0
+                        'tabindex' => 0,
+                        'aria-label' => 'Cambia ordinamento'
                     ]
                 );
             }
             ?>
 
             <?php
+            // VIEW TYPE
             $changeViewType = true;
             if (
                 isset(\Yii::$app->controller->module) &&
@@ -190,6 +199,30 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                 ]);
             }
             ?>
+
+            <?php
+            // MAP
+            if (isset(\Yii::$app->controller->module) &&
+                isset(\Yii::$app->controller->module->params) &&
+                !empty(\Yii::$app->controller->module->params['mapParams'][\Yii::$app->controller->id]['enable']) &&
+                !Yii::$app->controller->view->params['hideMapSearch']
+            ) { ?>
+
+                <div class="btn-group" role="group">
+                    <div id="btnMapView">
+                        <?= Html::a(AmosIcons::show('map', []),
+                            Url::to([\Yii::$app->controller->id . '/' . \Yii::$app->controller->action->id, 'map' => true]),
+                            [
+                                'class' => 'btn-group btn btn-secondary show-map-element dropdown-toggle',
+                                'data-toggle-element' => 'map-search',
+                                'title' => Module::t('amoslayout', 'Punti di interesse'),
+                                //'data-toggle' => 'tooltip'
+                                'tabindex' => 0
+                            ]
+                        ); ?>
+                    </div>
+                </div>
+            <?php } ?>
 
             <?php
             //DOWNLOAD ENABLED?
@@ -211,7 +244,7 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                 $exportConfigExists = isset($controller->exportConfig) && is_array($controller->exportConfig);
 
                                 // Setting dataProvider as variable. It can be overwritten if necessary.
-                                $dataProvider       = $controller->getDataProvider();
+                                $dataProvider = $controller->getDataProvider();
 
                                 if (
                                     $exportConfigExists &&
@@ -234,32 +267,66 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                         $confAllDataProv['sort'] = $dataProvider->getSort();
                                     }
                                     $exportAllDataProvider = new ActiveDataProvider($confAllDataProv);
-                                    $exportDataProvider    = $exportAllDataProvider;
+                                    $exportDataProvider = $exportAllDataProvider;
                                 } else {
                                     $exportDataProvider = $dataProvider;
                                 }
 
+                                // Gli attributi con chiave numerica hanno bisogno di essere ridefiniti
+                                // Quelli classici contengono solo una stringa con il loro nome oppure sono array senza indice
+                                $newColumns = [];
+                                foreach ($columns as $k => $v) {
+                                    if (is_numeric($k) && (gettype($v) === 'string' || isset($v['attribute']))) {
+                                        $value = $columns[$k];
+                                        if (!empty($v['attribute']) && !empty($value)) {
+                                            $newColumns += [$v['attribute'] => $value];
+                                        } else {
+                                            $newColumns += [$value => ['attribute' => $value]];
+                                        }
+                                    } else {
+                                        $newColumns[$k] = $v;
+                                    }
+                                }
+
+                                /*
+                                 * Personalizzazione formati attivati per il download
+                                 * Se un formato è presente nell'array, sarà disabilitato automaticamente
+                                 * a prescindere dal valore datogli.
+                                 */
+
+                                // Formati di default
+                                $formats = [
+                                    ExportMenu::FORMAT_HTML => false,
+                                    ExportMenu::FORMAT_CSV => false,
+                                    ExportMenu::FORMAT_TEXT => false,
+                                    ExportMenu::FORMAT_PDF => false,
+                                ];
+                                // formatEnabled deve essere un array con i formati da utilizzare (come sopra)
+                                if(isset($controller->exportConfig['formatEnabled']) && is_array($controller->exportConfig['formatEnabled'])) {
+                                    foreach($controller->exportConfig['formatEnabled'] as $format => $enabled) {
+                                        if($enabled === true) {
+                                            unset($formats[$format]);
+                                        }
+                                    }
+                                }
+
                                 $exportMenuParams = [
                                     'dataProvider' => $exportDataProvider,
-                                    'columns' => $columns,
-                                    'selectedColumns' => array_keys($columns),
+                                    'columns' => $newColumns,
+                                    'selectedColumns' => array_keys($newColumns),
                                     'showColumnSelector' => false,
                                     'showConfirmAlert' => false,
                                     'filename' => Yii::$app->view->title,
                                     'clearBuffers' => true,
-                                    'exportConfig' => [
-                                        ExportMenu::FORMAT_HTML => false,
-                                        ExportMenu::FORMAT_CSV => false,
-                                        ExportMenu::FORMAT_TEXT => false,
-                                        ExportMenu::FORMAT_PDF => false
-                                    ],
+                                    'exportConfig' => $formats,
                                     'noExportColumns' => $noExportColumns,
                                     'dropdownOptions' => [
                                         'class' => 'btn btn-secondary',
                                         'icon' => AmosIcons::show('download'),
                                         'title' => Module::t('amoslayout', 'Scarica'),
                                         //'data-toggle' => 'tooltip'
-                                        'tabindex' => 0
+                                        'tabindex' => 0,
+                                        'aria-label' => 'Scarica',
                                     ],
                                 ];
 
@@ -271,10 +338,100 @@ if (isset($this->params['createNewBtnParams']) && !is_null($this->params['create
                                     $exportMenuParams['emptyText'] = $controller->exportConfig['emptyText'];
                                 }
 
-                                // Renders a export dropdown menu
-                                echo Html::beginTag('div',
-                                    ['id' => 'change-view-dropdown-download', 'class' => 'hidden']);
-                                echo ExportMenu::widget($exportMenuParams);
+                                $enableBackgroundDownload = false;
+
+                                // Check if it's enabled background download with module taskmanager
+                                $moduleTaskmanager = \Yii::$app->getModule('taskmanager');
+                                if ($moduleTaskmanager) {
+                                    if (isset($controller->exportConfig['enableBackgroundDownload'])) {
+                                        $enableBackgroundDownload = $controller->exportConfig['enableBackgroundDownload'];
+                                        if (isset($controller->exportConfig['backgroundDownloadOptions'])) {
+                                            if (isset($controller->exportConfig['backgroundDownloadOptions']['exportAction'])) {
+                                                $exportAction = $controller->exportConfig['backgroundDownloadOptions']['exportAction'];
+                                            }
+                                            if (isset($controller->exportConfig['backgroundDownloadOptions']['redirectUrl'])) {
+                                                $redirectUrl = $controller->exportConfig['backgroundDownloadOptions']['redirectUrl'];
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // Renders an export dropdown menu
+                                echo Html::beginTag('div', [
+                                    'id' => 'change-view-dropdown-download',
+                                    'class' => 'hidden'
+                                ]);
+
+                                if ($enableBackgroundDownload && !empty($exportAction)) {
+                                    echo Html::beginTag('div', ['class' => 'dropdown']);
+                                    echo Html::button(
+                                        AmosIcons::show('download'), [
+                                            'class' => 'btn btn-secondary dropdown-toggle',
+                                            'data-toggle' => 'dropdown',
+                                            'title' => Module::t('amoslayout', 'Scarica'),
+                                        ]
+                                    );
+                                    echo \yii\bootstrap\Dropdown::widget([
+                                        'encodeLabels' => false,
+                                        'items' => [
+                                            [
+                                                'label' => Html::a(
+                                                    Html::tag('span', '', ['class' => 'mdi mdi-file-excel-box text-success m-r-5']) . 'Excel 2007+',
+                                                    '#',
+                                                    [
+                                                        'title' => Module::t('amoslayout', 'Scarica in formato .xlsx'),
+                                                        'data-toggle' => 'modal',
+                                                        'data-target' => '#modal-export',
+                                                    ]
+                                                ),
+                                                'url' => '#',
+                                            ],
+                                        ],
+                                    ]);
+
+                                    echo Html::endTag('div');
+
+                                    // Modal
+                                    \yii\bootstrap\Modal::begin([
+                                        'id' => 'modal-export',
+                                        'header' => '<h5>' . Module::t('amoslayout', 'Esportazione') . '</h5>',
+                                    ]);
+
+                                    // Modal body
+                                    $modalBody = Module::t('amoslayout', 'Sei sicuro di voler avviare l\'esportazione?');
+                                    if (!empty($redirectUrl)) {
+                                        $modalBody .= '<br>';
+                                        $modalBody .= Module::t('amoslayout', 'Una volta confermato, verrai reindirizzato alla pagina "<a href="' . "{url}" . '" target="_blank">Le mie esportazioni</a>".', [
+                                            'url' => $redirectUrl
+                                        ]);
+                                    }
+                                    echo $modalBody;
+
+                                    // Modal footer
+                                    \open20\amos\core\forms\ActiveForm::begin([
+                                        'action' => $exportAction,
+                                        'method' => 'post',
+                                    ]);
+                                    $encryptionKey = Yii::$app->params['encryptionKey'];
+                                    if (empty($encryptionKey)) {
+                                        /** @var Module $moduleLayout */
+                                        $moduleLayout = Module::instance();
+                                        $encryptionKey = $moduleLayout->encryptionKey;
+                                    }
+                                    $query = openssl_encrypt($exportDataProvider->query->createCommand()->getRawSql(), 'AES-128-ECB', $encryptionKey);
+                                    echo Html::hiddenInput('redirectUrl', !empty($redirectUrl) ? $redirectUrl : '');
+                                    echo Html::hiddenInput('query', $query);
+                                    echo Html::beginTag('div', ['class' => 'modal-footer', 'style' => 'border-top: none']);
+                                    echo Html::button('Annulla', ['class' => 'btn btn-secondary m-r-10', 'data-dismiss' => 'modal']);
+                                    echo Html::submitButton(Module::t('amoslayout', 'Conferma'), ['class' => 'btn btn-primary']);
+                                    echo Html::endTag('div');
+                                    \open20\amos\core\forms\ActiveForm::end();
+
+                                    \yii\bootstrap\Modal::end();
+                                } else {
+                                    echo ExportMenu::widget($exportMenuParams);
+                                }
+
                                 echo Html::endTag('div');
                             }
                         }

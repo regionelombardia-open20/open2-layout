@@ -16,8 +16,12 @@ if(!is_null($container)){
         $cms_content = $page->getContent();
     }
 }
+$classLayout = '';
+if (!empty(\Yii::$app->params['layoutConfigurations']['layoutType']) && \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023') {
+    $classLayout = \Yii::$app->params['layoutConfigurations']['layoutType'];
+}
 ?>
-<footer id="footerContent" class="it-footer mt-auto w-100">
+<footer id="footerContent" class="it-footer mt-auto w-100 <?= $classLayout ?>">
   <div class="it-footer-main py-1 py-md-4 bg-tertiary">
     <div class="container noprint">
       <div class="row">

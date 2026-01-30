@@ -31,7 +31,7 @@ $isVisible = isset(Yii::$app->params['layoutConfigurations']['hideBreadCrumb']) 
                 'url' => ((!empty(\Yii::$app->params['befe']) && \Yii::$app->params['befe'] == true) ? '/site/to-menu-url?url='.Yii::$app->homeUrl
                         : Yii::$app->homeUrl),
                 'encode' => false,
-                'title' => 'home'
+                'title' => Yii::t('amosplatform', 'Vai alla homepage')
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             'options' => [

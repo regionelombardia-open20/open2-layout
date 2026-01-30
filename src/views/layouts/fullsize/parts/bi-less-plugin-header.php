@@ -26,7 +26,10 @@ if (\Yii::$app->controller instanceof \open20\amos\core\controllers\CrudControll
     }
     $canCreateController = $forceCreateNewButtonWidget || \Yii::$app->controller->can('CREATE');
 }
-$canCreate = (isset(\Yii::$app->view->params['canCreate'])) ? \Yii::$app->view->params['canCreate'] : !$isGuest && $canCreateController;
+if(!isset($canCreate)) {
+    $canCreate = (isset(\Yii::$app->view->params['canCreate'])) ? \Yii::$app->view->params['canCreate'] : !$isGuest && $canCreateController;
+}
+
 $canManage = (isset($canManage)) ? $canManage : !$isGuest;
 
 $hideCreate = (isset($hideCreate)) ? $hideCreate : false;
@@ -35,22 +38,29 @@ $hideManage = (isset($hideManage)) ? $hideManage : false;
 $hideSecondAction = (isset($hideSecondAction)) ? $hideSecondAction : true;
 $iconSecondAction = (!empty($iconSecondAction)) ? $iconSecondAction : 'plus-circle-o';
 
-$titlePreventCreate = (!empty($titlePreventCreate)) ? $titlePreventCreate : Module::t(
-    'amoslayout',
-    'Accedi o registrati alla piattaforma {platformName} per creare un contenuto',
-    ['platformName' => \Yii::$app->name]
-);
-$titleCanNotCreate = (!empty($titleCanNotCreate)) ? $titleCanNotCreate : Module::t(
-    'amoslayout',
-    'Non hai il permesso per creare un contenuto della piattaforma {platformName}',
-    ['platformName' => \Yii::$app->name]
-);
+$titlePreventCreate = $titlePreventCreate
+    ?? Yii::$app->params['titlesPluginHeader']['titlePreventCreate']
+    ?? Module::t(
+        'amoslayout',
+        'Accedi o registrati alla piattaforma {platformName} per creare un contenuto',
+        ['platformName' => \Yii::$app->name]
+    );
 
-$titlePreventSecondAction = (isset($titlePreventSecondAction)) ? $titlePreventSecondAction : Module::t(
-    'amoslayout',
-    'Accedi o registrati alla piattaforma {platformName} per eseguire questa operazione',
-    ['platformName' => \Yii::$app->name]
-);
+$titleCanNotCreate = $titleCanNotCreate
+    ?? Yii::$app->params['titlesPluginHeader']['titleCanNotCreate']
+    ?? Module::t(
+        'amoslayout',
+        'Non hai il permesso per creare un contenuto della piattaforma {platformName}',
+        ['platformName' => \Yii::$app->name]
+    );
+
+$titlePreventSecondAction = $titlePreventSecondAction
+    ?? Yii::$app->params['titlesPluginHeader']['titlePreventSecondAction']
+    ?? Module::t(
+        'amoslayout',
+        'Accedi o registrati alla piattaforma {platformName} per eseguire questa operazione',
+        ['platformName' => \Yii::$app->name]
+    );
 
 $moduleCwh = \Yii::$app->getModule('cwh');
 if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
@@ -64,20 +74,25 @@ if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
             $canSecondAction = $canCreate && $canCreateMemberActive;
             $canCreate = $canCreate && $canCreateMemberActive;
             $communityName = $community->name;
-            $titleScopePreventSecondAction = (isset($titleScopePreventSecondAction)) ? $titleScopePreventSecondAction : Module::t(
-                'amoslayout',
-                'Per {labelSecondAction} iscriviti alla community {communityName}',
-                [
-                    'communityName' => $communityName,
-                    'labelSecondAction' => $labelSecondAction,
 
-                ]
-            );
-            $titleScopePreventCreate = (isset($titleScopePreventCreate)) ? $titleScopePreventCreate : Module::t(
-                'amoslayout',
-                'Per creare un contenuto iscriviti alla community {communityName}',
-                ['communityName' => $communityName]
-            );
+            $titleScopePreventSecondAction = $titleScopePreventSecondAction
+                ?? Yii::$app->params['titlesPluginHeader']['titleScopePreventSecondAction']
+                ?? Module::t(
+                    'amoslayout',
+                    'Per {labelSecondAction} iscriviti alla community {communityName}',
+                    [
+                        'communityName' => $communityName,
+                        'labelSecondAction' => $labelSecondAction,
+                    ]
+                );
+
+            $titleScopePreventCreate = $titleScopePreventCreate
+                ?? Yii::$app->params['titlesPluginHeader']['titleScopePreventCreate']
+                ?? Module::t(
+                    'amoslayout',
+                    'Per creare un contenuto iscriviti alla community {communityName}',
+                    ['communityName' => $communityName]
+                );
         }
     }
 }

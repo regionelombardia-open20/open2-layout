@@ -57,6 +57,15 @@ class Module extends AmosModule implements ModuleInterface, BootstrapInterface
     public $breadcrumbsIconHomeText = false;
 
     public $excludeNetworkView = ['amos\planner\models\PlanWork'];
+    
+    public $open2CommunityOrganizationView = false;
+    
+
+    /**
+     * Encryption key
+     * @var string $encryptionKey
+     */
+    public $encryptionKey = 'v1yxz2eDe-rrZHFsKxZ00DuGjGozxDMIp2LgxhaOChLdfG_OuWgIZw5qkuwCaVWy';
 
     /**
      * @inheritdoc

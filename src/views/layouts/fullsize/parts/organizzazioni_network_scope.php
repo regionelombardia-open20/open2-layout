@@ -25,6 +25,7 @@ use yii\helpers\Url;
 use open20\amos\core\helpers\Html;
 use yii\helpers\StringHelper;
 use open20\amos\core\utilities\StringUtils;
+use open20\amos\community\widgets\JoinCommunityWidget;
 
 /**
  * @var \open20\amos\organizzazioni\Module $organizzazioniModule
@@ -57,6 +58,7 @@ $button = [
     ]
 ];
 $communityPresent = (!is_null($organization->community) && is_null($organization->community->deleted_at));
+
 
 if ($organizzazioniModule->enableCommunityCreation) {
     if (!$communityPresent) {
@@ -144,12 +146,18 @@ if (isset($community)) {
     open20\amos\community\assets\AmosCommunityAsset::register($this);
     $fixedCommunityType = (!is_null($moduleCommunity->communityType));
     $org = Profilo::findOne(['community_id' => $community->id]);
-∏?>
+?>
 
     <?php if (!$isLayoutInScope) : ?>
 
         <div class="network-scope-wrapper scope-organizzazioni-wrapper">
-            <div class="container border-dashed">
+            <?php if(Yii::$app->getModule('layout')->open2CommunityOrganizationView){
+                echo '<div class="container">';
+                }else{ 
+                    echo '<div class="container border-dashed">';
+                }
+?> 
+            
                 <div class="scope-title-container">
                     <div class="scope-title">
                         <?php if (isset($this->params['CommunityParams']['outsideCommunity']) && $this->params['CommunityParams']['outsideCommunity']) : ?>
@@ -300,6 +308,7 @@ if (isset($community)) {
                     </div>
 
                 </div>
+                <?php if(Yii::$app->getModule('layout')->open2CommunityOrganizationView == false){ ?>
                 <div class="row p-t-15">
                     <div class="col-sm-4">
                         <?php
@@ -400,7 +409,8 @@ if (isset($community)) {
                             </div>
                         <?php endif ?>
                     </div>
-                </div>
+                </div> 
+            <?php } ?>
             </div>
         </div>
         <!-- END: community data -->

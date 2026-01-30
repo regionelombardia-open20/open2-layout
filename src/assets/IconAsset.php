@@ -21,6 +21,9 @@ class IconAsset extends AssetBundle
         'icon-flag/css/flag-icon.css',  //http://flag-icon-css.lip.is
         'icon-ic/style.css',  //genereted by icon-moon
         'materialdesignicons/css/materialdesignicons.min.css',
+        'materialdesignicons/css/twitter-x-brand.css',
+        'materialdesignicons/css/materialdesignicons-two-tone.css',
+        'bs-lombardia/icon-bootstrap-lombardia.css',
     ];
     
     public $js = [

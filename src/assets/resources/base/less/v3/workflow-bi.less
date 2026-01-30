@@ -30,11 +30,14 @@ workflow buttons on bottom page in create/update view
     @media (max-width:991px){
       .flexbox-row;
       .flexbox-wrap;
-      .workflow-button-container + .workflow-button-container{
+
+    }
+    .workflow-button-container + .workflow-button-container{
+      @media (min-width:510px) and (max-width:991px) {
         margin-left: @margin-default;
+
       }
     }
-
     .workflow-button-container {
       @media (max-width:430px) {
         max-width: 100%;

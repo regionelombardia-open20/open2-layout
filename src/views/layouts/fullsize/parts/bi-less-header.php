@@ -17,6 +17,11 @@ $adminModule = AmosAdmin::instance();
 /** @var Module $layoutModule */
 $layoutModule = Module::instance();
 
+$classLayout = '';
+if (!empty(\Yii::$app->params['layoutConfigurations']['layoutType']) && \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023') {
+    $classLayout = \Yii::$app->params['layoutConfigurations']['layoutType'];
+}
+
 $addItems = false;
 if (!empty($layoutModule->addHeaderNavItemsClass)) {
     $addItemsObj = Yii::createObject($layoutModule->addHeaderNavItemsClass);
@@ -278,45 +283,51 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
         );
     }
 }
-?>
 
+if (!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) :
+    $cmsDefaultMenu .= $cmsPluginMenu;
+endif;
+?>
 
 <?php if (!($hideHamburgerMenu)) : ?>
     <?php if ($alwaysHamburgerMenu) : ?>
-        <!-- MODALE PER HAMBURGER MENU -->
-        <div class="modal-always-hamburger-menu <?= ($alwaysHamburgerMenuRight) ? 'modal-always-hamburger-menu-right' : 'modal-always-hamburger-menu-left' ?> modal it-dialog-scrollable fade" tabindex="-1" role="dialog" id="alwaysHamburgerMenu">
-            <div class="modal-dialog <?= ($alwaysHamburgerMenuRight) ? 'modal-dialog-right' : 'modal-dialog-left' ?>" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="it-brand-wrapper flexbox">
-                            <?= $this->render("bi-less-logo"); ?>
+        <?php if (empty(\Yii::$app->params['layoutConfigurations']['layoutType'])) { ?>
+            <!-- MODALE PER HAMBURGER MENU -->
+            <div class="modal-always-hamburger-menu <?= $classLayout ?> <?= ($alwaysHamburgerMenuRight) ? 'modal-always-hamburger-menu-right' : 'modal-always-hamburger-menu-left' ?> modal it-dialog-scrollable fade" tabindex="-1" role="dialog" id="alwaysHamburgerMenu">
+                <div class="modal-dialog <?= ($alwaysHamburgerMenuRight) ? 'modal-dialog-right' : 'modal-dialog-left' ?>" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="it-brand-wrapper flexbox">
+
+                                <?= $this->render("bi-less-logo"); ?>
+                            </div>
+                            <button class="close ml-0" type="button" data-dismiss="modal" aria-label="Close">
+                                <span class="text-muted mdi mdi-close-circle-outline"></span>
+                            </button>
                         </div>
-                        <button class="close ml-0 mr-auto" type="button" data-dismiss="modal" aria-label="Close">
-                            <span class="text-muted am am-close-circle-o"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <?= $cmsDefaultMenu ?>
-                        <?php
-                        if ($customPlatformMenu) :
-                            echo $this->render($customPlatformMenu, [
-                                'currentAsset' => $currentAsset,
-                                'iconSubmenu' => $iconSubmenu
-                            ]);
-                        endif;
-                        ?>
-                        <?php if ($showSecondaryMenu) : ?>
-                            <?= $cmsSecondaryMenu ?>
-                        <?php endif ?>
+                        <div class="modal-body">
+                            <?= $cmsDefaultMenu ?>
+                            <?php
+                            if ($customPlatformMenu) :
+                                echo $this->render($customPlatformMenu, [
+                                    'currentAsset' => $currentAsset,
+                                    'iconSubmenu' => $iconSubmenu
+                                ]);
+                            endif;
+                            ?>
+                            <?php if ($showSecondaryMenu) : ?>
+                                <?= $cmsSecondaryMenu ?>
+                            <?php endif ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     <?php endif ?>
 <?php endif ?>
 
 
-<div id="headerContent" class="it-header-wrapper <?= ($enableHeaderSticky) ? 'it-header-sticky' : 'navbar-fixed-top' ?>">
+<div id="headerContent" class="it-header-wrapper <?= $classLayout ?> <?= ($enableHeaderSticky) ? 'it-header-sticky' : 'navbar-fixed-top' ?>">
 
     <?php if (!$hideTopHeaderForGuestUser) : ?>
 
@@ -377,7 +388,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             <a class="nav-link" href="/site/to-menu-url?url=/messages" data-toggle="tooltip" data-placement="bottom" title="<?=
                                                                                                                                                             AmosChat::t('amoschat', 'Messaggi privati')
                                                                                                                                                             ?>">
-                                                <span class="am am-comments"></span>
+                                                <span class="mdi mdi-forum"></span>
                                                 <?= $menuChatModuleBulletCount ?>
                                             </a>
                                         </div>
@@ -396,11 +407,11 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         ) : '';
                                         ?>
                                         <div class="nav-item">
-                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities', 'My activities') ?>" title="<?=
+                                            <a class="nav-link" href="/site/to-menu-url?url=/myactivities/my-activities/index" data-toggle="tooltip" data-placement="bottom" aria-label="<?= AmosMyActivities::t('amosmyactivities', 'My activities') ?>" title="<?=
                                                                                                                                                                                                                                                                         AmosMyActivities::t('amosmyactivities', 'My activities')
                                                                                                                                                                                                                                                                         ?>">
 
-                                                <span class="dash dash-bell"></span>
+                                                <span class="mdi mdi-bell"></span>
                                                 <?= $menuMyActivitiesModuleBulletCount ?>
                                             </a>
                                         </div>
@@ -474,9 +485,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                         ) : '';
                                         ?>
                                         <div class="nav-item d-none d-sm-block">
-                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/exportjobs/my-export/index" data-toggle="tooltip" data-placement="bottom" title="<?=
-                                                                                                                                                                                    \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs', 'Le mie esportazioni')
-                                                                                                                                                                                    ?>">
+                                            <a class="nav-link pl-5" href="/site/to-menu-url?url=/exportjobs/my-export/index" data-toggle="tooltip" data-placement="bottom" title="<?= \frontend\modules\exportjobs\AmosExportJobs::t('exportjobs', 'Le mie esportazioni') ?>">
                                                 <span class="dash dash-bar-chart"></span>
                                                 <?= $menuMyReportModuleBulletCount ?>
                                             </a>
@@ -508,7 +517,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                             <?php else : ?>
 
                                                 <?php
-                                                $labelSigninOrSignup = Module::t('amoslayout', 'Accedi o Registrati');
+                                                $labelSigninOrSignup = Module::t('amoslayout', 'Accedi') . ' <span class="font-weight-normal">' . Module::t('amoslayout', 'o Registrati') . '</span>';
                                                 $titleSigninOrSignup = Module::t('amoslayout', 'Accedi o registrati alla piattaforma {platformName}', ['platformName' => \Yii::$app->name]);
                                                 $socialAuthModule = Yii::$app->getModule('socialauth');
                                                 if ($socialAuthModule && ($socialAuthModule->enableRegister == false)) {
@@ -517,7 +526,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                                 }
                                                 ?>
                                                 <a href="<?= $loginUrl ?>" class="btn btn-icon btn-full btn-primary mr-0 flexbox" title="<?= $titleSigninOrSignup ?>">
-                                                    <span class="icon mdi mdi-key-variant light flexbox"> </span>
+                                                    <?= $iconLogin ?>
                                                     <span class="d-none d-sm-block text-uppercase"><?= $labelSigninOrSignup ?></span>
                                                 </a>
                                             <?php endif ?>
@@ -603,6 +612,16 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                     <div class="col-12">
                         <div class="it-header-center-content-wrapper flexbox">
                             <div class="it-brand-wrapper flexbox <?= ($hideHamburgerMenu || (!$alwaysHamburgerMenu)) ? 'pl-0' : 'pl-md-0' ?> <?= (($fluidContainerHeader && $alwaysHamburgerMenu) ? 'alwaysmenu-with-container-fluid' : '') ?>">
+                                <?php if (
+                                    !empty(\Yii::$app->params['layoutConfigurations']['layoutType']) &&
+                                    \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023' &&
+                                    !$hideHamburgerMenu
+                                ) {  ?>
+                                    <button class="btn btn-icon btn-hamburger-menu-rl_2023 <?= ($hideHamburgerMenu || !$alwaysHamburgerMenu) ? ' hidden-md hidden-lg' : '' ?>" type="button" aria-expanded="false" aria-controls="sidebar-menu-hamburger-rl_2023" aria-label="Apri/chiudi Menu Principale">
+                                        <span class="mdi mdi-menu icon-md icon-open-menu"> </span>
+                                        <span class="mdi mdi-close icon-md icon-close-menu"></span>
+                                    </button>
+                                <?php } ?>
                                 <?= $this->render("bi-less-logo"); ?>
                             </div>
                             <div class="it-right-zone flexbox">
@@ -630,7 +649,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                                 </div>
                                                 <div>
                                                     <div class="input-group globalSearch">
-                                                        <input type="text" id="globalSearch" class="form-control" name="global-search" placeholder="<?= Module::t('amoslayout', 'Cerca nel sito') ?>">
+                                                        <input type="text" id="globalSearch" aria-label="Cerca sul sito" class="form-control" name="global-search" placeholder="<?= Module::t('amoslayout', 'Cerca...') ?>">
                                                         <span class="input-group-btn">
                                                             <button id="globalSearchBtn" title="<?= Module::t('amosdesign', 'Cerca') ?>" class="btn btn-default" type="submit">
                                                                 <span class="mdi mdi-magnify icon-span"></span>
@@ -660,18 +679,19 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
             </div>
         </div>
         <?php if (!$hideHamburgerMenu) : ?>
-            <?php if (!$alwaysHamburgerMenu) : ?>
+            <?php if (!$alwaysHamburgerMenu && empty(\Yii::$app->params['layoutConfigurations']['layoutType'])) : ?>
                 <div class="it-header-navbar-wrapper <?= ($disableThemeLight) ? '' : 'theme-light-desk' ?> shadow-none">
                     <div class="<?= ($fluidContainerHeader) ? 'container-fluid' : 'container' ?>">
                         <div class="row">
                             <div class="col-12">
 
                                 <!--start nav-->
-                                <nav role="navigation" aria-label="Megamenu" class="navbar navbar-expand-lg has-megamenu">
-                                    <button class="custom-navbar-toggler" type="button" aria-controls="hamburgerMenu" aria-expanded="false" aria-label="Toggle navigation" data-toggle="collapse" data-target="#hamburgerMenu">
-                                        <span class="am am-menu"> </span>
-                                    </button>
-
+                                <nav role="navigation" aria-label="Megamenu" class="navbar navbar-expand-lg has-megamenu  <?= ($hideHamburgerMenu || !$alwaysHamburgerMenu) ? ' ' : 'visible-md-block visible-lg-block' ?>">
+                                    <?php if (empty(\Yii::$app->params['layoutConfigurations']['layoutType']) || \Yii::$app->params['layoutConfigurations']['layoutType'] != 'layout_rl_2023') : ?>
+                                        <button class="custom-navbar-toggler" type="button" aria-controls="hamburgerMenu" aria-expanded="false" aria-label="<?= Yii::t('amoscore', 'Attiva/disattiva navigazione') ?>" data-toggle="collapse" data-target="#hamburgerMenu">
+                                            <span class="am am-menu"> </span>
+                                        </button>
+                                    <?php endif ?>
                                     <div class="navbar-collapsable" id="hamburgerMenu" style="display: none;">
                                         <div class="overlay" style="display: none;"></div>
                                         <div class="menu-wrapper z-index-1">
@@ -681,7 +701,7 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                                                     <?= $this->render("bi-less-logo"); ?>
                                                 </div>
 
-                                                <button class="btn close-menu" type="button" aria-controls="hamburgerMenu" aria-expanded="flase" aria-label="Toggle navigation" data-toggle="collapse" data-target="#hamburgerMenu">
+                                                <button class="btn close-menu" type="button" aria-controls="hamburgerMenu" aria-expanded="false" aria-label="<?= Yii::t('amoscore', 'Chiudi il menu') ?>" data-toggle="collapse" data-target="#hamburgerMenu">
                                                     <span class="text-muted am am-close-circle-o"> </span>
                                                 </button>
                                             </div>
@@ -705,15 +725,39 @@ if (!$hideUserMenu && !CurrentUser::isPlatformGuest()) {
                     </div>
                 </div>
             <?php else : ?>
-                <button class="btn btn-icon btn-always-hamburger-menu" type="button" data-toggle="modal" data-target="#alwaysHamburgerMenu" aria-label="Menu Principale">
-                    <span class="am am-menu am-1"> </span>
-                </button>
-
+                <?php if (empty(\Yii::$app->params['layoutConfigurations']['layoutType'])) { ?>
+                    <button class="btn btn-icon btn-always-hamburger-menu" type="button" data-toggle="modal" data-target="#alwaysHamburgerMenu" aria-label="Menu Principale">
+                        <span class="mdi mdi-menu icon-md"> </span>
+                    </button>
+                <?php } ?>
             <?php endif ?>
         <?php endif; ?>
 
     </div>
+    <?php if (!empty(\Yii::$app->params['layoutConfigurations']['layoutType']) && \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023') { ?>
 
+        <div id="sidebar-menu-hamburger-rl_2023" aria-hidden="true" role="complementary">
+            <div class="sidebar-wrapper it25-sidebar-wrapper">
+                <div class="sidebar-linklist-wrapper it25-sidebar-links">
+                    <div class="link-list-wrapper">
+                        <?= $cmsDefaultMenu ?>
+                        <?php
+                        if ($customPlatformMenu) :
+                            echo $this->render($customPlatformMenu, [
+                                'currentAsset' => $currentAsset,
+                                'iconSubmenu' => $iconSubmenu
+                            ]);
+                        endif;
+                        ?>
+                        <?php if ($showSecondaryMenu) : ?>
+                            <?= $cmsSecondaryMenu ?>
+                        <?php endif ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <?php } ?>
 </div>
 
 <?php if (\Yii::$app->getModule('favorites')) { ?>

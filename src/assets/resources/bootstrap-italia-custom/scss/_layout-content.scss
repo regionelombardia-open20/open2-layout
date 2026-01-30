@@ -26,6 +26,10 @@ body {
 
 .box-container {
     max-width: 1384px;
+    &.box-container-fullwidth {
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
 #mainContent {

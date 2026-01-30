@@ -55,6 +55,18 @@
   color: #435960;
 }
 
+.text-primary {
+  color: darken(@primary-color, 15%);
+}
+
+.text-secondary {
+  color: darken(@secondary-color, 15%);
+}
+
+.text-tertiary {
+  color: darken(@tertiary-color, 15%);
+}
+
 .container-fluid {
   width: 100%;
   padding-right: 15px;
@@ -160,6 +172,10 @@ a.link-list-title {
   @media (min-width: 768px) {
     display: flex !important;
   }
+}
+
+.align-items-center {
+  align-items: center;
 }
 
 .used-filter-container {
@@ -416,6 +432,7 @@ a.link-list-title {
   .radio-filter {
     display: flex;
     flex-wrap: wrap;
+
     label {
       display: flex;
       align-items: baseline;
@@ -424,9 +441,107 @@ a.link-list-title {
       margin-right: 24px;
       margin-top: 8px;
     }
+
     input {
       width: 15px;
       height: 15px;
     }
   }
+}
+
+
+
+.chip {
+  display: inline-flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #f5f5f5;
+  border: 1px solid #c5c7c9;
+  border-radius: 12px;
+  min-height: 24px;
+  // min-width: 100px;
+  padding: 0 16px 2px 8px;
+  transition: all .05s;
+  margin-top: 4px;
+  margin-bottom: 8px;
+
+  &.chip-simple {
+    padding-right: 8px;
+  }
+
+  .chip-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: @secondary-color;
+    transform: translateY(1px);
+  }
+
+  .chip-label {
+    font-size: .8rem;
+    // height: 16px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: @secondary-color;
+    margin-bottom: 0;
+    // transform: translateY(-2px);
+    transition: color .05s;
+    text-decoration: none;
+  }
+
+
+  &.chip-default {
+    background-color: @secondary-color;
+    border-color: @secondary-color;
+    color: #fff;
+
+    .chip-icon,
+    .chip-label {
+      color: #fff;
+    }
+  }
+  &.chip-primary {
+    background-color: @primary-color;
+    border-color: @primary-color;
+    color: contrast(@primary-color);
+
+    .chip-icon,
+    .chip-label {
+      color: contrast(@primary-color);
+    }
+  }
+  &.chip-warning {
+    background-color: @warning-color;
+    border-color: @warning-color;
+    color: contrast(@warning-color);
+
+    .chip-icon,
+    .chip-label {
+      color: contrast(@warning-color);
+    }
+  }
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.icon-xs {
+  font-size: 16px !important;
+}
+
+.icon-sm {
+  font-size: 24px !important;
+}
+
+.icon-md {
+  font-size: 32px !important;
+}
+
+.icon-lg {
+  font-size: 48px !important;
+}
+
+.icon-xl {
+  font-size: 64px !important;
 }

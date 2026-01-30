@@ -1,11 +1,11 @@
 /* AMOS-LAYOUT */
 
 /*ICONS DEFAULT VARIABLES*/
-@icon-folder:#F8D484;
-@icon-blue:#104281;
-@icon-green:#2E8034;
-@icon-red:#C3191D;
-@icon-black:#000000;
+@icon-folder: #F8D484;
+@icon-blue: #104281;
+@icon-green: #2E8034;
+@icon-red: #C3191D;
+@icon-black: #000000;
 
 /*
 ICON DOCUMENTS
@@ -13,30 +13,34 @@ ICON DOCUMENTS
 .graphics-dashboard-container,
 div[class*="-form"],
 div[class*="-view"],
-div[class*="-index"]{
+div[class*="-index"] {
   .dash-folder-open {
     color: @icon-folder;
   }
+
   .dash-download-docx,
   .dash-file-word-o,
   .dash-download-doc,
   .dash-file-doc-o,
-  .dash-file-docx-o{
+  .dash-file-docx-o {
     color: @icon-blue;
   }
+
   .dash-download-xlsx,
   .dash-file-excel-o,
   .dash-download-xls,
   .dash-file-xls-o,
-  .dash-file-xlsx-o{
+  .dash-file-xlsx-o {
     color: @icon-green;
   }
+
   .dash-download-pdf,
   .dash-file-pdf-o,
   .dash-file-pdf-o2,
   .dash-download-rtf {
     color: @icon-red;
   }
+
   .dash-download-txt,
   .dash-file-text-o,
   .dash-file-txt-o,
@@ -46,15 +50,44 @@ div[class*="-index"]{
     color: @icon-black;
   }
 
-  .grid-view{
+  .grid-view {
     .dash-folder-open {
       font-size: 2.2em;
     }
+
     span[class*="dash-file-"],
     span[class*="dash-doc-"],
-    span[class*="dash-download-"]{
+    span[class*="dash-download-"] {
       font-size: 2.5em;
     }
   }
 
+}
+
+
+// GOOGLE FONT TWO TONE PER IOS
+// Hack per Safari iOS
+// @supports (-webkit-touch-callout: none) {
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) {
+  @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+    .material-icons-two-tone {
+      position: relative;
+      background-color: transparent !important;
+    }
+
+    .material-icons-two-tone::before {
+      content: attr(data-icon);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, @primary-color, @primary-color);
+      /* Modifica con il tuo colore primario */
+      -webkit-background-clip: unset !important;
+      // background-clip: inherit !important;
+      display: inline-block;
+      mix-blend-mode: screen;
+    }
+  }
 }

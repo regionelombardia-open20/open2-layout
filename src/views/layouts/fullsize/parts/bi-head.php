@@ -21,6 +21,6 @@ use yii\helpers\Html;
 <?= Html::csrfMetaTags() ?>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title><?= Html::encode(Yii::$app->name) ?> - <?= Html::encode($this->title) ?></title>
-<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?><?= Yii::$app->params['favicon'] ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?><?= Yii::$app->params['favicon'] ?>" type="image/x-icon">
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> -->
 <?php $this->head() ?>

@@ -77,6 +77,33 @@ override bootstrap modal in amos-core utility
 @modal-warning-color: @warning-color;
 @modal-danger-color: @danger-color;
 
+#confirm-remove-tag-modal.modal {
+  .modal-dialog {
+      .modal-content {
+
+          .modal-header {
+              .modal-title {
+                  font-size: 24px;
+                  display: flex;
+                  align-items: baseline;
+                  line-height: 1.2;
+                  text-transform: none;
+                  color: #000;
+                  .modal-icon-title {
+                      font-size: 32px;
+                      margin-right: 10px;
+                  }
+                  .close {
+                      margin-left: auto;
+                  }
+              }
+
+          }
+      }
+
+  }
+}
+
 .modal-utility {
   .modal-content {
     padding: 0;
@@ -94,6 +121,7 @@ override bootstrap modal in amos-core utility
       .am, .dash {
         margin: 0 @margin-min;
       }
+
     }
     .close { /* x button */
       color: contrast(@brand-primary-color);

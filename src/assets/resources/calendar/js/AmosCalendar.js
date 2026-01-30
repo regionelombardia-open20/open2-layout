@@ -13793,7 +13793,7 @@
                             ' style="' + skinCss + '"' :
                             '') +
                         '>' +
-                        '<div class="fc-content" id="cal-event-' + eventDef.id + '">' +
+                        '<div class="fc-content color-'+eventDef.color+'" id="cal-event-' + eventDef.id + '">' +
                         (timeText ?
                             '<div class="fc-time"' +
                             ' data-start="' + util_1.htmlEscape(startTimeText) + '"' +
@@ -14457,7 +14457,7 @@
                             ' style="' + skinCss + '"' :
                             '') +
                         '>' +
-                        '<div class="fc-content" id="cal-event-' + eventDef.id + '">' +
+                        '<div class="fc-content color-'+eventDef.color+'" id="cal-event-' + eventDef.id + '">' +
                         (this.dayGrid.isRTL ?
                                 titleHtml + ' ' + timeHtml : // put a natural space in between
                                 timeHtml + ' ' + titleHtml //

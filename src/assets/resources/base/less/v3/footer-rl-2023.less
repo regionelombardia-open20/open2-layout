@@ -1,0 +1,45 @@
+.layout_rl_2023.it-footer {
+    .container-title {
+        padding-bottom: 0 !important;
+        .footer-title {
+            font-size: 18px !important;
+        }
+    }
+    .it-footer-main {
+        hr {
+            display: none;
+        }
+        .link-list-wrapper {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            .cms-menu-container-default {
+                display: none;
+            }
+
+            .cms-menu-container-footer {
+                // column-count: 2;
+                display: flex;
+                flex-wrap: wrap;
+                li {
+                    padding-right: 5px;
+                    padding-left: 5px;
+                    &:not(:last-child) {
+                        a {
+                            display: inline;
+                            &:after {
+                                content: '|';
+                                padding: 0 5px 0 10px;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    div[role="contentinfo"] {
+        small {
+            font-size: 18px !important;
+        }
+    }
+}

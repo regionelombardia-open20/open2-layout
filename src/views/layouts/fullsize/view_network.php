@@ -102,15 +102,19 @@ if ($countArrayUrl) {
         <div class="container-bordo-logo"><img src="<?= Yii::$app->params['logo-bordo'] ?>" alt=""></div>
     <?php endif; ?>
     <?php
-    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
-    } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        if(class_exists('\open20\design\utility\DesignUtility') && method_exists('\open20\design\utility\DesignUtility', 'showSidebarRedattore')) {
+            list($showSidebarRedattore, $openSidebarRedattoreOnLoadPage) = \open20\design\utility\DesignUtility::showSidebarRedattore($this);
         } else {
-            $showSidebarRedattore = false;
+            if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+                $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+            } else {
+                if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+                    $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+                } else {
+                    $showSidebarRedattore = false;
+                }
+            }
         }
-    }
     ?>
     <section id="bk-page" class="fullsizeNetworkLayout <?= ($showSidebarRedattore) ? 'main-with-sidebar-redattore' : 'main-with-sidebar-redattore' ?>" role="main">
         <?php if ($showSidebarRedattore) : ?>

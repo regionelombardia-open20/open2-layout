@@ -11,17 +11,14 @@
 
 use open20\amos\core\components\AmosView;
 use yii\helpers\Url;
-use app\components\CmsHelper;
 use open20\amos\core\helpers\Html;
 use open20\amos\admin\assets\ModuleAdminAsset;
-
+use app\components\CmsMenu;
 
 ModuleAdminAsset::register(Yii::$app->view);
 
-
 /** @var $this \open20\amos\core\components\AmosView */
 /** @var $content string */
-
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -52,6 +49,14 @@ if ($countArrayUrl) {
         ];
     }
 }
+
+if (!empty(\Yii::$app->params['layoutConfigurations']['layoutType']) && \Yii::$app->params['layoutConfigurations']['layoutType'] == 'layout_rl_2023') {
+    $iconLogin      = '<span class="icona a piacere"></span>';
+    $iconLogout      = '<span class="icona a piacere"></span>';
+} else {
+    $iconLogin      = '<span class="mdi mdi-key-variant icon-login ml-auto pl-1"></span>';
+    $iconLogout      = '<span class="mdi mdi-exit-to-app icon-login ml-auto pl-1"></span>';
+}
 ?>
 
 
@@ -60,18 +65,20 @@ if ($countArrayUrl) {
 <html lang="<?= Yii::$app->language ?>">
 
 <head>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
+    <?=
+    $this->render("parts" . DIRECTORY_SEPARATOR . "head", [
         'title' => ((Yii::$app->isCmsApplication()) && !empty($this->params['titleSection'])) ? $this->params['titleSection'] : $this->title
-    ]); ?>
+    ]);
+    ?>
 </head>
 
 <body>
     <?php $this->beginBody() ?>
-    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?> 
+    <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-skiplink"); ?>
 
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
-        $iconSubmenu    = '<span class="am am-chevron-right am-4"> </span>';
+        $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
 
         $mainMenu = (isset(\Yii::$app->params['menuCmsConfigurations']['mainCmsMenu'])) ? \Yii::$app->params['menuCmsConfigurations']['mainCmsMenu'] : 'default';
         $secondaryMenu = (isset(\Yii::$app->params['menuCmsConfigurations']['secondaryCmsMenu'])) ? \Yii::$app->params['menuCmsConfigurations']['secondaryCmsMenu'] : 'secondary';
@@ -82,29 +89,21 @@ if ($countArrayUrl) {
         $cmsFooterMenuCustomClass = 'cms-menu-container-footer';
         $cmsPluginMenuCustomClass = 'cms-menu-container-plugin';
 
-        $cmsDefaultMenu = CmsHelper::BiHamburgerMenuRender(
-            Yii::$app->menu->findAll([
-                'depth' => 1,
-                'container' => $mainMenu
-            ]),
+        $menu1 = new CmsMenu();
+        $cmsDefaultMenu = $menu1->luyaMenu(
+            $mainMenu,
             $iconSubmenu,
             false
         );
-
-        $cmsDefaultMenuFooter = CmsHelper::BiHamburgerMenuRender(
-            Yii::$app->menu->findAll([
-                'depth' => 1,
-                'container' => $mainMenu
-            ]),
+        $menu2 = new CmsMenu();
+        $cmsDefaultMenuFooter = $menu2->luyaMenu(
+            $mainMenu,
             $iconSubmenu,
             true
         );
-
-        $cmsFooterMenu  = CmsHelper::BiHamburgerMenuRender(
-            Yii::$app->menu->findAll([
-                'depth' => 1,
-                'container' => $footerMenu
-            ]),
+        $menu3 = new CmsMenu();
+        $cmsFooterMenu = $menu3->luyaMenu(
+            $footerMenu,
             $iconSubmenu,
             true
         );
@@ -114,11 +113,9 @@ if ($countArrayUrl) {
         }
 
         if (\Yii::$app->params['layoutConfigurations']['showSecondaryMenuHeader']) {
-            $cmsSecondaryMenu = CmsHelper::BiHamburgerMenuRender(
-                Yii::$app->menu->findAll([
-                    'depth' => 1,
-                    'container' => $secondaryMenu
-                ]),
+            $menu4 = new CmsMenu();
+            $cmsSecondaryMenu = $menu4->luyaMenu(
+                $secondaryMenu,
                 $iconSubmenu,
                 false
             );
@@ -133,14 +130,17 @@ if ($countArrayUrl) {
 
         $cmsPluginMenu = Html::tag('ul', $cmsPluginMenu, ['class' => 'navbar-nav' . ' ' . $cmsPluginMenuCustomClass]);
 
-        if (!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) : 
+        if (!(\Yii::$app->params['layoutConfigurations']['hideCmsMenuPluginHeader'])) :
             $cmsDefaultMenu .= $cmsPluginMenu;
         endif;
         ?>
         <?php
         $currentAsset = isset($currentAsset) ? $currentAsset : open20\amos\layout\assets\BiLessAsset::register($this);
         ?>
-        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-header", [
+        <?=
+        $this->render("parts" . DIRECTORY_SEPARATOR . "bi-less-header", [
+            'iconLogin' => $iconLogin,
+            'iconLogout' => $iconLogout,
             'currentAsset' => $currentAsset,
             'cmsDefaultMenu' => $cmsDefaultMenu,
             'cmsSecondaryMenu' => $cmsSecondaryMenu,
@@ -164,7 +164,8 @@ if ($countArrayUrl) {
             'disableSmallHeader' => \Yii::$app->params['layoutConfigurations']['disableSmallHeader'],
             'enableHeaderSticky' => \Yii::$app->params['layoutConfigurations']['enableHeaderStickyHeader'],
             'pageSearchLink' => \Yii::$app->params['linkConfigurations']['pageSearchLinkCommon'],
-        ]); ?>
+        ]);
+        ?>
     <?php } ?>
 
     <section id="bk-page" class="fullsizeRegistrationBiLayout" role="main">
@@ -193,15 +194,14 @@ if ($countArrayUrl) {
     <?php if (Yii::$app->isCmsApplication()) { ?>
         <?php
         $iconSubmenu = '<span class="am am-chevron-right am-4"> </span>';
-        $cmsFooterMenu  = app\components\CmsHelper::BiHamburgerMenuRender(
-            Yii::$app->menu->findAll([
-                'depth' => 1,
-                'container' => 'footer'
-            ]),
+        $menu5 = new CmsMenu();
+        $cmsFooterMenu = $menu5->luyaMenu(
+            'footer',
             $iconSubmenu,
-            'cms-menu-container-footer',
-            true
+            true,
+            $currentAsset
         );
+
         if ((isset(\Yii::$app->params['layoutConfigurations']['customPlatformFooter']))) :
 
             $customPlatformFooter = \Yii::$app->params['layoutConfigurations']['customPlatformFooter'];

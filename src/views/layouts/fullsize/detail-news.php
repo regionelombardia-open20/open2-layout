@@ -21,6 +21,11 @@ use app\components\CmsHelper;
 /** @var $this \open20\amos\core\components\AmosView */
 /** @var $content string */
 
+$configLayoutCommunity = \open20\amos\layout\utility\LayoutUtility::isEnabledNewCommunityScope();
+$classContainer = $configLayoutCommunity['classContainer'];
+$newCommunityLayout = $configLayoutCommunity['newCommunityLayout'];
+$isLayoutInScope = $configLayoutCommunity['isLayoutInScope'];
+
 $urlCorrente = Url::current();
 $arrayUrl = explode('/', $urlCorrente);
 $countArrayUrl = count($arrayUrl);
@@ -94,11 +99,11 @@ $this->registerJs($jsCommentsContainer);
                 'currentAsset' => $currentAsset,
             ]
         ); ?>
-        <!--< ?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>-->
     <?php } else { ?>
+    <div id="headerFixed">
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "header"); ?>
         <?= $this->render("parts" . DIRECTORY_SEPARATOR . "logo"); ?>
-
+    </div>
     <?php } ?>
 
     <?php if (isset(Yii::$app->params['logo-bordo'])) : ?>
@@ -106,13 +111,17 @@ $this->registerJs($jsCommentsContainer);
     <?php endif; ?>
 
     <?php
-    if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-        $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
+    if (class_exists('\open20\design\utility\DesignUtility') && method_exists('\open20\design\utility\DesignUtility', 'showSidebarRedattore')) {
+        list($showSidebarRedattore, $openSidebarRedattoreOnLoadPage) = \open20\design\utility\DesignUtility::showSidebarRedattore($this);
     } else {
-        if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
-            $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+        if (isset(\Yii::$app->view->params['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+            $showSidebarRedattore = (\Yii::$app->view->params['showSidebarRedattore']);
         } else {
-            $showSidebarRedattore = false;
+            if (isset(\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']) && !\Yii::$app->user->isGuest) {
+                $showSidebarRedattore = (\Yii::$app->params['layoutConfigurations']['showSidebarRedattore']);
+            } else {
+                $showSidebarRedattore = false;
+            }
         }
     }
     ?>
@@ -150,25 +159,34 @@ $this->registerJs($jsCommentsContainer);
                         $isLayoutInScope = (!empty($scope)) ? true : false;
                     }
                     ?>
-                    <div class="<?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container' : '' ?>">
-                        <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
-                    </div>
-                <?php endif; ?>
+                    <?php if ($newCommunityLayout) { ?>
+                        <div class="scope-in-detail-news">
+                        <?php } ?>
+                        <!-- da aggiungere se sono in community -->
+                        <div class="<?= (!empty($this->params['containerFullWidth']) && $this->params['containerFullWidth'] == true) ? 'container' : '' ?>">
+                            <?= $this->render("parts" . DIRECTORY_SEPARATOR . "network_scope", ['isLayoutInScope' => $isLayoutInScope]); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($newCommunityLayout) { ?>
+                        </div>
+                    <?php } ?>
 
-
-                <?php if ($this instanceof AmosView) : ?>
-                    <?php $this->beginViewContent() ?>
-                <?php endif; ?>
-                <?= $content ?>
-                <?php if ($this instanceof AmosView) : ?>
-                    <?php $this->endViewContent() ?>
-                <?php endif; ?>
+                    <?php if ($this instanceof AmosView) : ?>
+                        <?php $this->beginViewContent() ?>
+                    <?php endif; ?>
+                    <?= $content ?>
+                    <?php if ($this instanceof AmosView) : ?>
+                        <?php $this->endViewContent() ?>
+                    <?php endif; ?>
             </div>
         </div>
     </section>
 
 
     <?php if ($isLuyaApplication && Yii::$app->isCmsApplication()) { ?>
+        <?php
+        $this->trigger('beforeFooter');
+        ?>
         <?= $this->render(
             "parts" . DIRECTORY_SEPARATOR . "bi-less-layout-footer",
             [

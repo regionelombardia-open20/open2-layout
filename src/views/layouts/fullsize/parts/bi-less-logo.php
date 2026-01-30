@@ -75,7 +75,7 @@ use yii\helpers\Html;
             ?>
 
             <!-- IF IS SET LOGO IMAGE -->
-            <?php if (isset($logoConf['logoImg'])) : ?>
+            <?php if (isset($logoConf['logoImg']) && (!empty($logoConf['logoImg']))) : ?>
                 <?php
 
                 $logoImg = Html::img($logoConf['logoImg'], ['class' => 'img-responsive', 'alt' => $logoAlt]);
@@ -88,10 +88,9 @@ use yii\helpers\Html;
                 }
                 ?>
                 <?= $logo; ?>
-            <?php endif; ?>
 
             <!-- IF IS SET LOGO TEXT -->
-            <?php if (isset($logoConf['logoText'])) : ?>
+            <?php elseif (isset($logoConf['logoText'])) : ?>
                 <?php
                 $logoTextClass = 'it-brand-text' . (isset($logoConf['logoClass']) ? ' ' . $logoConf['logoClass'] : '');
                 ?>
