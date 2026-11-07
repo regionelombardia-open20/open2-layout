@@ -1,5 +1,6 @@
 {
     "name": "open20/amos-layout",
+    "license": "GPL-3.0-or-later",
     "description": "Amos Basic Layout",
     "keywords": ["amos", "yii2", "less", "css", "layout"],
     "homepage": "https://bitbucket.org/open20/amos-layout",
